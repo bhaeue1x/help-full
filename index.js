@@ -10,12 +10,12 @@ const app = express();
 app.use(express.json())
 app.use(express.urlencoded())
 app.get('/', (req, res) => {
-    res.json({ run: 'run bot2' })
+    res.json({ run: 'run bot2 wjs' })
 }); app.listen(process.env.PORT || 3000, () => { console.log(`listen`) })
 
 // PING BOT ----
 setInterval(async () => {
-    const res = await fetch('https://gemini-b-ai.onrender.com/')
+    const res = await fetch('https://gemini-wjs-b.onrender.com')
     const data1 = await res.json()
 }, 100 * 1000)
 
@@ -28,22 +28,22 @@ bot.on('message', async (msg) => {
         if (msg.type == 'chat') {
             if (msg._data.quotedMsg) {
                 if (msg._data.quotedMsg.type != 'image') {
-                    console.log(msg)
+                    //console.log(msg)
                     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
                     const generationConfig = { temperature: 0.9, topK: 1, topP: 1, maxOutputTokens: 1000, };
                     const chat = model.startChat({ generationConfig })
                     const result = await chat.sendMessage(msg.body)
-                    console.log("_______rest______text_", result.response.text())
+                    //console.log("_______rest______text_", result.response.text())
                     const txt = result.response.text()
                     await bot.sendMessage(msg.from, txt);
                 }
             } else {
-                console.log('22', msg)
+               // console.log('22', msg)
                 const model = genAI.getGenerativeModel({ model: "gemini-pro" });
                 const generationConfig = { temperature: 0.9, topK: 1, topP: 1, maxOutputTokens: 1000, };
                 const chat = model.startChat({ generationConfig })
                 const result = await chat.sendMessage(msg.body)
-                console.log("_______rest______text_", result.response.text())
+                //console.log("_______rest______text_", result.response.text())
                 const txt = result.response.text()
                 await bot.sendMessage(msg.from, txt);
             }
@@ -55,13 +55,13 @@ bot.on('message', async (ctx) => {
     if (ctx.body != '/start' && ctx.body != '/follow' && ctx.body != '/description') {
         if (ctx.type == 'image') {
             if (ctx.body != '') {
-                console.log('--2img--', ctx)
+               // console.log('--2img--', ctx)
                 const mediaData = await ctx.downloadMedia()
                 const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
                 const prompt = ctx.body;
                 const image = { inlineData: { data: mediaData.data, mimeType: "image/png", } };
                 const result = await model.generateContent([prompt, image]);
-                console.log("_______rest______img_", result.response.text());
+                //console.log("_______rest______img_", result.response.text());
                 const txt = result.response.text()
                 await bot.sendMessage(ctx.from, txt);
             } else {
@@ -80,18 +80,18 @@ bot.on('message', async (ctx) => {
 
 bot.on('message', async (ctx) => {
     if (ctx.body != '/start' && ctx.body != '/follow' && ctx.body != '/description') {
-        console.log(ctx.hasQuotedMsg)
+       // console.log(ctx.hasQuotedMsg)
         if (ctx.type == 'chat' && ctx._data.quotedMsg) {
             if (ctx._data.quotedMsg.type == 'image') {
-                console.log('--2img--', ctx)
+               // console.log('--2img--', ctx)
                 const quotedMessage = await ctx.getQuotedMessage();
                 const mediaData = await quotedMessage.downloadMedia();
-                console.log(mediaData)
+               // console.log(mediaData)
                 const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
                 const prompt = ctx.body;
                 const image = { inlineData: { data: mediaData.data, mimeType: "image/png", } };
                 const result = await model.generateContent([prompt, image]);
-                console.log("_______rest______img_", result.response.text());
+               // console.log("_______rest______img_", result.response.text());
                 const txt = result.response.text()
                 await bot.sendMessage(ctx.from, txt);
             }
@@ -100,7 +100,7 @@ bot.on('message', async (ctx) => {
 })
 
 bot.on('message', async (msg) => {
-    console.log(msg)
+    //console.log(msg)
     if (msg.type == 'ptt') {
         const arr = [
             `انا لا استطيع سماع الرسائل الصوتية`,
