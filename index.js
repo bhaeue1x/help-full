@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json())
 app.use(express.urlencoded())
 app.get('/', (req, res) => {
-    res.json({ run: 'run bot2 wjs' })
+    res.json({ run: 'run bot3 wjs' })
 }); app.listen(process.env.PORT || 3000, () => { console.log(`listen`) })
 
 // PING BOT ----
@@ -72,7 +72,7 @@ bot.on('message', async (ctx) => {
                     `عزيزي لكي استطيع مساعدتك يجب عليك توضيح ماذا تريد من الصورة, أسحب الصورة الى اليسار`
                 ]
                 const random = Math.floor(Math.random() * arr.length - 1) + 1;
-                await msg.reply(arr[random]);
+                await ctx.reply(arr[random]);
             }
         }
     }
