@@ -10,13 +10,18 @@ const app = express();
 app.use(express.json())
 app.use(express.urlencoded())
 app.get('/', (req, res) => {
-    res.json({ run: 'run bot3 wjs' })
+    res.json({ run: 'run bot4 wjs' })
 }); app.listen(process.env.PORT || 3000, () => { console.log(`listen`) })
 
 // PING BOT ----
 setInterval(async () => {
-    const res = await fetch('https://gemini-wjs-b.onrender.com')
-    const data1 = await res.json()
+    try {
+        const res = await fetch('https://gemini-wjs-b.onrender.com')
+        const data1 = await res.json()
+    } catch (err) {
+        console.log('err')
+    }
+
 }, 100 * 1000)
 
 // CONATED BOT BY MY WHATSAPP ---
@@ -28,24 +33,30 @@ bot.on('message', async (msg) => {
         if (msg.type == 'chat') {
             if (msg._data.quotedMsg) {
                 if (msg._data.quotedMsg.type != 'image') {
-                    
+                    try {
+                        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+                        const generationConfig = { temperature: 0.9, topK: 1, topP: 1, maxOutputTokens: 1000, };
+                        const chat = model.startChat({ generationConfig })
+                        const result = await chat.sendMessage(msg.body)
+
+                        const txt = result.response.text()
+                        await bot.sendMessage(msg.from, txt)
+                    } catch (err) {
+                        await bot.sendMessage(msg.from, 'عذرا! يبدو ان هناك ضعف في الأتصال, حاول صياغة سؤالك يطريقه اخرا')
+                    }
+                }
+            } else {
+                try {
                     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
                     const generationConfig = { temperature: 0.9, topK: 1, topP: 1, maxOutputTokens: 1000, };
                     const chat = model.startChat({ generationConfig })
                     const result = await chat.sendMessage(msg.body)
-                    
-                    const txt = result.response.text()
-                    await bot.sendMessage(msg.from, txt);
-                }
-            } else {
 
-                const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-                const generationConfig = { temperature: 0.9, topK: 1, topP: 1, maxOutputTokens: 1000, };
-                const chat = model.startChat({ generationConfig })
-                const result = await chat.sendMessage(msg.body)
-                
-                const txt = result.response.text()
-                await bot.sendMessage(msg.from, txt);
+                    const txt = result.response.text()
+                    await bot.sendMessage(msg.from, txt)
+                } catch (err) {
+                    await bot.sendMessage(msg.from, 'عذرا! يبدو ان هناك ضعف في الأتصال, حاول صياغة سؤالك يطريقه اخرا')
+                }
             }
         }
     }
@@ -55,15 +66,18 @@ bot.on('message', async (ctx) => {
     if (ctx.body != '/start' && ctx.body != '/follow' && ctx.body != '/description') {
         if (ctx.type == 'image') {
             if (ctx.body != '') {
+                try {
+                    const mediaData = await ctx.downloadMedia()
+                    const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
+                    const prompt = ctx.body;
+                    const image = { inlineData: { data: mediaData.data, mimeType: "image/png", } };
+                    const result = await model.generateContent([prompt, image])
+                    const txt = result.response.text()
 
-                const mediaData = await ctx.downloadMedia()
-                const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
-                const prompt = ctx.body;
-                const image = { inlineData: { data: mediaData.data, mimeType: "image/png", } };
-                const result = await model.generateContent([prompt, image]);
-                
-                const txt = result.response.text()
-                await bot.sendMessage(ctx.from, txt);
+                    await bot.sendMessage(ctx.from, txt)
+                } catch (err) {
+                    await bot.sendMessage(ctx.from, 'عذرا! يبدو ان هناك ضعف في الأتصال, حاول صياغة سؤالك يطريقه اخرا')
+                }
             } else {
                 const arr = [
                     `عذرا أسحب الصورة الى اليسار وأكتب تحتها ماذا تريد كي أجيبك`,
@@ -72,7 +86,8 @@ bot.on('message', async (ctx) => {
                     `عزيزي لكي استطيع مساعدتك يجب عليك توضيح ماذا تريد من الصورة, أسحب الصورة الى اليسار`
                 ]
                 const random = Math.floor(Math.random() * arr.length - 1) + 1;
-                await ctx.reply(arr[random]);
+                await ctx.reply(arr[random])
+                    .catch(async () => { await bot.sendMessage(ctx.from, 'عذرا! يبدو ان هناك ضعف في الأتصال, حاول') })
             }
         }
     }
@@ -80,27 +95,29 @@ bot.on('message', async (ctx) => {
 
 bot.on('message', async (ctx) => {
     if (ctx.body != '/start' && ctx.body != '/follow' && ctx.body != '/description') {
-       
         if (ctx.type == 'chat' && ctx._data.quotedMsg) {
             if (ctx._data.quotedMsg.type == 'image') {
-               
-                const quotedMessage = await ctx.getQuotedMessage();
-                const mediaData = await quotedMessage.downloadMedia();
-               
-                const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
-                const prompt = ctx.body;
-                const image = { inlineData: { data: mediaData.data, mimeType: "image/png", } };
-                const result = await model.generateContent([prompt, image]);
-               
-                const txt = result.response.text()
-                await bot.sendMessage(ctx.from, txt);
+                try {
+                    const quotedMessage = await ctx.getQuotedMessage();
+                    const mediaData = await quotedMessage.downloadMedia();
+
+                    const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
+                    const prompt = ctx.body;
+                    const image = { inlineData: { data: mediaData.data, mimeType: "image/png", } };
+                    const result = await model.generateContent([prompt, image])
+
+                    const txt = result.response.text()
+                    await bot.sendMessage(ctx.from, txt)
+                } catch (err) {
+                    await bot.sendMessage(ctx.from, 'عذرا! يبدو ان هناك ضعف في الأتصال, حاول صياغة سؤالك يطريقه اخرا')
+                }
             }
         }
     }
 })
 
 bot.on('message', async (msg) => {
-    
+
     if (msg.type == 'ptt') {
         const arr = [
             `انا لا استطيع سماع الرسائل الصوتية`,
@@ -108,7 +125,8 @@ bot.on('message', async (msg) => {
             `أتمنى لو كان بامكاني سماع الصوت لاكن لم اتدرب بشكل كاف`
         ]
         const random = Math.floor(Math.random() * arr.length - 1) + 1;
-        await msg.reply(arr[random]);
+        await msg.reply(arr[random])
+            .catch(async () => { await bot.sendMessage(msg.from, 'عذرا! يبدو ان هناك ضعف في الأتصال, حاول مجددا') })
     }
 
 })
@@ -127,27 +145,29 @@ bot.on('message', async (msg) => {
 
     
 وأنا قادر على تحليل الصور، بإمكانك ارسال لي صورة مع تحديد ماذا تريد من الصورة بكتابة ماذا تريد تحتها.`
-        await msg.reply(txt1);
+        await msg.reply(txt1)
+            .catch(async () => { await bot.sendMessage(msg.from, 'عذرا! يبدو ان هناك ضعف في الأتصال, حاول مجددا') })
     }
     if (msg.body == '/follow') {
         const txt2 = '`تستطيع متابعتي على ...` \n\n _`Insta`•[instagram.com/bashar1_x]_ \n\n _`Telegram`•[t.me/bashar1_x]_ \n\n _`Facebook`•[facebook.com/bashar1.x]_ \n\n _`Wtatsapp`•[wa.me/0985780023]_'
-        await msg.reply(txt2);
+        await msg.reply(txt2)
+            .catch(async () => { await bot.sendMessage(msg.from, 'عذرا! يبدو ان هناك ضعف في الأتصال, حاول مجددا') })
     }
     if (msg.body == '/description') {
         const txt3 = `
 أنا ذكاء اصطناعي قادر على الإجابة عن كافة الأسئلة والمواضيع العامة،
         
 وانا أملك قاعدة بيانات هائلة من جوجل وأملك سيرفر سريع وسلس بفضل مطوري @bashar 985780023 وكل هذا لكي أقدم افضل أداء وأدق المعلومات؛
-"يتوفل لي نسخه على تلكرام بأمكانك تجربتها https://t.me/helps_full_bot"
+"يتوفل لي نسخه على تلكرام بأمكانك تجربتها https://t.me/helps_full_bot النسخه على تلكرام اسرع وأفضل بأضعاف من التي على واتساب"
         
             
 للمزيد من المعلومات حول هذا البوت، أو حدوث أخطأ أثناء الاستخدام يمكنك مراسلة الحسابات التالية.
 _bashar[0985780023], hamam[0938278247], amjad[0983385125]_`
-        await msg.reply(txt3);
+        await msg.reply(txt3)
+            .catch(async () => { await bot.sendMessage(msg.from, 'عذرا! يبدو ان هناك ضعف في الأتصال, حاول مجددا') })
     }
 })
 
 
 
 bot.initialize();
-
