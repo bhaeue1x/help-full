@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json())
 app.use(express.urlencoded())
 app.get('/', (req, res) => {
-    res.json({ run: 'run bot4 wjs' })
+    res.json({ run: 'run bot5 wjs' })
 }); app.listen(process.env.PORT || 3000, () => { console.log(`listen`) })
 
 // PING BOT ----
@@ -21,7 +21,6 @@ setInterval(async () => {
     } catch (err) {
         console.log('err')
     }
-
 }, 100 * 1000)
 
 // CONATED BOT BY MY WHATSAPP ---
@@ -29,7 +28,7 @@ bot.on('qr', (qr) => { qrcode.generate(qr, { small: true }) })
 bot.on('ready', () => { console.log('bot is ready !') })
 
 bot.on('message', async (msg) => {
-    if (msg.body != '/start' && msg.body != '/follow' && msg.body != '/description') {
+    if (msg.body != 'start' && msg.body != 'follow' && msg.body != 'description') {
         if (msg.type == 'chat') {
             if (msg._data.quotedMsg) {
                 if (msg._data.quotedMsg.type != 'image') {
@@ -41,6 +40,7 @@ bot.on('message', async (msg) => {
 
                         const txt = result.response.text()
                         await bot.sendMessage(msg.from, txt)
+                        run(msg.from)
                     } catch (err) {
                         await bot.sendMessage(msg.from, 'عذرا! يبدو ان هناك ضعف في الأتصال, حاول صياغة سؤالك يطريقه اخرا')
                     }
@@ -54,6 +54,7 @@ bot.on('message', async (msg) => {
 
                     const txt = result.response.text()
                     await bot.sendMessage(msg.from, txt)
+                    run(msg.from)
                 } catch (err) {
                     await bot.sendMessage(msg.from, 'عذرا! يبدو ان هناك ضعف في الأتصال, حاول صياغة سؤالك يطريقه اخرا')
                 }
@@ -63,7 +64,7 @@ bot.on('message', async (msg) => {
 });
 
 bot.on('message', async (ctx) => {
-    if (ctx.body != '/start' && ctx.body != '/follow' && ctx.body != '/description') {
+    if (ctx.body != 'start' && ctx.body != 'follow' && ctx.body != 'description') {
         if (ctx.type == 'image') {
             if (ctx.body != '') {
                 try {
@@ -75,6 +76,7 @@ bot.on('message', async (ctx) => {
                     const txt = result.response.text()
 
                     await bot.sendMessage(ctx.from, txt)
+                    run(ctx.from)
                 } catch (err) {
                     await bot.sendMessage(ctx.from, 'عذرا! يبدو ان هناك ضعف في الأتصال, حاول صياغة سؤالك يطريقه اخرا')
                 }
@@ -94,7 +96,7 @@ bot.on('message', async (ctx) => {
 })
 
 bot.on('message', async (ctx) => {
-    if (ctx.body != '/start' && ctx.body != '/follow' && ctx.body != '/description') {
+    if (ctx.body != 'start' && ctx.body != 'follow' && ctx.body != 'description') {
         if (ctx.type == 'chat' && ctx._data.quotedMsg) {
             if (ctx._data.quotedMsg.type == 'image') {
                 try {
@@ -108,6 +110,7 @@ bot.on('message', async (ctx) => {
 
                     const txt = result.response.text()
                     await bot.sendMessage(ctx.from, txt)
+                    run(ctx.from)
                 } catch (err) {
                     await bot.sendMessage(ctx.from, 'عذرا! يبدو ان هناك ضعف في الأتصال, حاول صياغة سؤالك يطريقه اخرا')
                 }
@@ -128,14 +131,24 @@ bot.on('message', async (msg) => {
         await msg.reply(arr[random])
             .catch(async () => { await bot.sendMessage(msg.from, 'عذرا! يبدو ان هناك ضعف في الأتصال, حاول مجددا') })
     }
-
 })
+
+const run = async (id) => {
+    const random = Math.floor(Math.random() * 5 - 1) + 1;
+    if (random == 1 || random == 3) {
+        try {
+            const txt = '`يجب عليك متابعه المطور ...` \n\n _`Insta`•[instagram.com/bashar1_x]_ \n\n _`Wtatsapp`•[wa.me/0985780023]_'
+            await bot.sendMessage(id, txt)
+        } catch (err) { console.log('err') }
+
+    }
+}
 
 
 // COMMAND RUN BOT ---
 bot.on('message', async (msg) => {
-    if (msg.body == '/start') {
-        const txt1 = '`قائمة الأوامر ...` \n\n */start* _`البدأ والحصول على قائمة الأوامر الخاصة بي`_ \n\n */description* _`الوصف وبعض التعليمات`_ \n\n */follow* _`تستطيع متابعتي على مواقع التواصل`_ \n أكتب آحد الأوامر مع "/" وأرسله \n'
+    if (msg.body == 'start') {
+        const txt1 = '`قائمة الأوامر ...` \n\n *start* _`البدأ والحصول على قائمة الأوامر الخاصة بي`_ \n\n *description* _`الوصف وبعض التعليمات`_ \n\n *follow* _`تستطيع متابعتي على مواقع التواصل`_ \n أكتب آحد الأوامر مع "/" وأرسله \n'
         const txta1 = `\n
  أهلا بك..
 
@@ -148,12 +161,12 @@ bot.on('message', async (msg) => {
         await msg.reply(txt1)
             .catch(async () => { await bot.sendMessage(msg.from, 'عذرا! يبدو ان هناك ضعف في الأتصال, حاول مجددا') })
     }
-    if (msg.body == '/follow') {
-        const txt2 = '`تستطيع متابعتي على ...` \n\n _`Insta`•[instagram.com/bashar1_x]_ \n\n _`Telegram`•[t.me/bashar1_x]_ \n\n _`Facebook`•[facebook.com/bashar1.x]_ \n\n _`Wtatsapp`•[wa.me/0985780023]_'
+    if (msg.body == 'follow') {
+        const txt2 = '`تستطيع متابعتي المطور على ...` \n\n _`Insta`•[instagram.com/bashar1_x]_ \n\n _`Telegram`•[t.me/bashar1_x]_ \n\n _`Facebook`•[facebook.com/bashar1.x]_ \n\n _`Wtatsapp`•[wa.me/0985780023]_'
         await msg.reply(txt2)
             .catch(async () => { await bot.sendMessage(msg.from, 'عذرا! يبدو ان هناك ضعف في الأتصال, حاول مجددا') })
     }
-    if (msg.body == '/description') {
+    if (msg.body == 'description') {
         const txt3 = `
 أنا ذكاء اصطناعي قادر على الإجابة عن كافة الأسئلة والمواضيع العامة،
         
@@ -167,7 +180,6 @@ _bashar[0985780023], hamam[0938278247], amjad[0983385125]_`
             .catch(async () => { await bot.sendMessage(msg.from, 'عذرا! يبدو ان هناك ضعف في الأتصال, حاول مجددا') })
     }
 })
-
 
 
 bot.initialize();
