@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json())
 app.use(express.urlencoded())
 app.get('/', (req, res) => {
-    res.json({ run: 'run bot5 wjs' })
+    res.json({ run: 'run bot1 wjs' })
 }); app.listen(process.env.PORT || 3000, () => { console.log(`listen`) })
 
 // PING BOT ----
@@ -27,8 +27,17 @@ setInterval(async () => {
 bot.on('qr', (qr) => { qrcode.generate(qr, { small: true }) })
 bot.on('ready', () => { console.log('bot is ready !') })
 
+const arr = ['start', 'Start', 'follow', 'Follow', 'description', 'Description']
+const arr2 = [
+    'عذرا! يبدو ان هناك ضعف في الأتصال',
+    'حاول توضيح ما تريد من فضلك',
+    'اعتذر لأني لم افهمك جيدا',
+    'حاول صياغة سؤالك بطريقة افضل',
+    'يجي متابعتي أولا _[instagram.com/bashar1_x]_'
+]
+
 bot.on('message', async (msg) => {
-    if (msg.body != 'start' && msg.body != 'follow' && msg.body != 'description') {
+    if (!arr.includes(msg.body)) {
         if (msg.type == 'chat') {
             if (msg._data.quotedMsg) {
                 if (msg._data.quotedMsg.type != 'image') {
@@ -42,7 +51,7 @@ bot.on('message', async (msg) => {
                         await bot.sendMessage(msg.from, txt)
                         run(msg.from)
                     } catch (err) {
-                        await bot.sendMessage(msg.from, 'عذرا! يبدو ان هناك ضعف في الأتصال, حاول صياغة سؤالك يطريقه اخرا')
+                        await bot.sendMessage(msg.from, arr2[Math.floor(Math.random() * arr2.length - 1) + 1])
                     }
                 }
             } else {
@@ -56,7 +65,7 @@ bot.on('message', async (msg) => {
                     await bot.sendMessage(msg.from, txt)
                     run(msg.from)
                 } catch (err) {
-                    await bot.sendMessage(msg.from, 'عذرا! يبدو ان هناك ضعف في الأتصال, حاول صياغة سؤالك يطريقه اخرا')
+                    await bot.sendMessage(msg.from, arr2[Math.floor(Math.random() * arr2.length - 1) + 1])
                 }
             }
         }
@@ -64,7 +73,7 @@ bot.on('message', async (msg) => {
 });
 
 bot.on('message', async (ctx) => {
-    if (ctx.body != 'start' && ctx.body != 'follow' && ctx.body != 'description') {
+    if (!arr.includes(ctx.body)) {
         if (ctx.type == 'image') {
             if (ctx.body != '') {
                 try {
@@ -78,7 +87,7 @@ bot.on('message', async (ctx) => {
                     await bot.sendMessage(ctx.from, txt)
                     run(ctx.from)
                 } catch (err) {
-                    await bot.sendMessage(ctx.from, 'عذرا! يبدو ان هناك ضعف في الأتصال, حاول صياغة سؤالك يطريقه اخرا')
+                    await bot.sendMessage(ctx.from, arr2[Math.floor(Math.random() * arr2.length - 1) + 1])
                 }
             } else {
                 const arr = [
@@ -89,14 +98,16 @@ bot.on('message', async (ctx) => {
                 ]
                 const random = Math.floor(Math.random() * arr.length - 1) + 1;
                 await ctx.reply(arr[random])
-                    .catch(async () => { await bot.sendMessage(ctx.from, 'عذرا! يبدو ان هناك ضعف في الأتصال, حاول') })
+                    .catch(async () => { await bot.sendMessage(ctx.from, ) })
             }
         }
     }
 })
 
+
+
 bot.on('message', async (ctx) => {
-    if (ctx.body != 'start' && ctx.body != 'follow' && ctx.body != 'description') {
+    if (!arr.includes(ctx.body)) {
         if (ctx.type == 'chat' && ctx._data.quotedMsg) {
             if (ctx._data.quotedMsg.type == 'image') {
                 try {
@@ -112,7 +123,7 @@ bot.on('message', async (ctx) => {
                     await bot.sendMessage(ctx.from, txt)
                     run(ctx.from)
                 } catch (err) {
-                    await bot.sendMessage(ctx.from, 'عذرا! يبدو ان هناك ضعف في الأتصال, حاول صياغة سؤالك يطريقه اخرا')
+                    await bot.sendMessage(ctx.from, arr2[Math.floor(Math.random() * arr2.length - 1) + 1])
                 }
             }
         }
@@ -120,7 +131,6 @@ bot.on('message', async (ctx) => {
 })
 
 bot.on('message', async (msg) => {
-
     if (msg.type == 'ptt') {
         const arr = [
             `انا لا استطيع سماع الرسائل الصوتية`,
@@ -135,20 +145,19 @@ bot.on('message', async (msg) => {
 
 const run = async (id) => {
     const random = Math.floor(Math.random() * 5 - 1) + 1;
-    if (random == 1 || random == 3) {
+    if (random == 3) {
         try {
-            const txt = '`يجب عليك متابعه المطور ...` \n\n _`Insta`•[instagram.com/bashar1_x]_ \n\n _`Wtatsapp`•[wa.me/0985780023]_'
+            const txt = '`يجب عليك متابعه bashar@ ...` \n _`Insta`•[instagram.com/bashar1_x]_'
             await bot.sendMessage(id, txt)
         } catch (err) { console.log('err') }
-
     }
 }
 
 
 // COMMAND RUN BOT ---
 bot.on('message', async (msg) => {
-    if (msg.body == 'start') {
-        const txt1 = '`قائمة الأوامر ...` \n\n *start* _`البدأ والحصول على قائمة الأوامر الخاصة بي`_ \n\n *description* _`الوصف وبعض التعليمات`_ \n\n *follow* _`تستطيع متابعتي على مواقع التواصل`_ \n أكتب آحد الأوامر مع "/" وأرسله \n'
+    if (msg.body == 'start' || msg.body == 'Start') {
+        const txt1 = '`قائمة الأوامر ...` \n\n *start* _`البدأ والحصول على قائمة الأوامر الخاصة بي`_ \n\n *description* _`الوصف وبعض التعليمات`_ \n\n *follow* _`تستطيع متابعتي على مواقع التواصل`_ \n أكتب احد الأوامر " " وأرسله \n'
         const txta1 = `\n
  أهلا بك..
 
@@ -161,17 +170,17 @@ bot.on('message', async (msg) => {
         await msg.reply(txt1)
             .catch(async () => { await bot.sendMessage(msg.from, 'عذرا! يبدو ان هناك ضعف في الأتصال, حاول مجددا') })
     }
-    if (msg.body == 'follow') {
+    if (msg.body == 'follow' || msg.body == 'Follow') {
         const txt2 = '`تستطيع متابعتي المطور على ...` \n\n _`Insta`•[instagram.com/bashar1_x]_ \n\n _`Telegram`•[t.me/bashar1_x]_ \n\n _`Facebook`•[facebook.com/bashar1.x]_ \n\n _`Wtatsapp`•[wa.me/0985780023]_'
         await msg.reply(txt2)
             .catch(async () => { await bot.sendMessage(msg.from, 'عذرا! يبدو ان هناك ضعف في الأتصال, حاول مجددا') })
     }
-    if (msg.body == 'description') {
+    if (msg.body == 'description' || msg.body == 'Description') {
         const txt3 = `
 أنا ذكاء اصطناعي قادر على الإجابة عن كافة الأسئلة والمواضيع العامة،
         
 وانا أملك قاعدة بيانات هائلة من جوجل وأملك سيرفر سريع وسلس بفضل مطوري @bashar 985780023 وكل هذا لكي أقدم افضل أداء وأدق المعلومات؛
-"يتوفل لي نسخه على تلكرام بأمكانك تجربتها https://t.me/helps_full_bot النسخه على تلكرام اسرع وأفضل بأضعاف من التي على واتساب"
+"يتوفر لي نسخة على تلكرام بأمكانك تجربتها https://t.me/helps_full_bot النسخه على تلكرام اسرع وأفضل بأضعاف من التي على واتساب"
         
             
 للمزيد من المعلومات حول هذا البوت، أو حدوث أخطأ أثناء الاستخدام يمكنك مراسلة الحسابات التالية.
