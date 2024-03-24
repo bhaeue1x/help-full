@@ -10,9 +10,8 @@ const app = express();
 app.use(express.json())
 app.use(express.urlencoded())
 app.get('/', (req, res) => {
-    res.json({ run: 'run bot11 wjs' })
+    res.json({ run: 'run bot20 wjs' })
 }); app.listen(process.env.PORT || 3000, () => { console.log(`listen`) })
-
 // PING BOT ----
 setInterval(async () => {
     try {
@@ -22,22 +21,21 @@ setInterval(async () => {
         console.log('err')
     }
 }, 100 * 1000)
-
 // CONATED BOT BY MY WHATSAPP ---
 bot.on('qr', (qr) => { qrcode.generate(qr, { small: true }) })
 bot.on('ready', () => { console.log('bot is ready !') })
 
+const arrprog = ['من مطورك', 'من صنعك', 'من برمجك', 'من اخترعك', 'منو سواك']
 const arr = ['start', 'Start', 'follow', 'Follow', 'description', 'Description']
 const arr2 = [
     'عذرا! يبدو ان هناك ضعف في الأتصال',
     'حاول توضيح ما تريد من فضلك',
     'اعتذر لأني لم افهمك جيدا',
     'حاول صياغة سؤالك بطريقة افضل',
-    'يجي متابعتي أولا _[instagram.com/bashar1_x]_'
+    'يجي متابعت بشار مرشد أولا _[instagram.com/bashar1_x]_'
 ]
-
 bot.on('message', async (msg) => {
-    if (!arr.includes(msg.body)) {
+    if (!arr.includes(msg.body) && !arrprog.includes(msg.body)) {
         if (msg.type == 'chat') {
             if (msg._data.quotedMsg) {
                 if (msg._data.quotedMsg.type != 'image') {
@@ -73,7 +71,7 @@ bot.on('message', async (msg) => {
 });
 
 bot.on('message', async (ctx) => {
-    if (!arr.includes(ctx.body)) {
+    if (!arr.includes(ctx.body) && !arrprog.includes(ctx.body)) {
         if (ctx.type == 'image') {
             if (ctx.body != '') {
                 try {
@@ -98,7 +96,7 @@ bot.on('message', async (ctx) => {
                 ]
                 const random = Math.floor(Math.random() * arr.length - 1) + 1;
                 await ctx.reply(arr[random])
-                    .catch(async () => { await bot.sendMessage(ctx.from, ) })
+                    .catch(async () => { await bot.sendMessage(ctx.from,) })
             }
         }
     }
@@ -107,7 +105,7 @@ bot.on('message', async (ctx) => {
 
 
 bot.on('message', async (ctx) => {
-    if (!arr.includes(ctx.body)) {
+    if (!arr.includes(ctx.body) && !arrprog.includes(ctx.body)) {
         if (ctx.type == 'chat' && ctx._data.quotedMsg) {
             if (ctx._data.quotedMsg.type == 'image') {
                 try {
@@ -144,10 +142,10 @@ bot.on('message', async (msg) => {
 })
 
 const run = async (id) => {
-    const random = Math.floor(Math.random() * 5 - 1) + 1;
+    const random = Math.floor(Math.random() * 7 - 1) + 1;
     if (random == 3) {
         try {
-            const txt = '`يجب عليك متابعه bashar@ ...` \n _`Insta`•[instagram.com/bashar1_x]_'
+            const txt = '`يجب عليك متابعه بشار مرشد@ ...` \n _`Insta`•[instagram.com/bashar1_x]_'
             await bot.sendMessage(id, txt)
         } catch (err) { console.log('err') }
     }
@@ -179,7 +177,7 @@ bot.on('message', async (msg) => {
         const txt3 = `
 أنا ذكاء اصطناعي قادر على الإجابة عن كافة الأسئلة والمواضيع العامة،
         
-وانا أملك قاعدة بيانات هائلة من جوجل وأملك سيرفر سريع وسلس بفضل مطوري @bashar 985780023 وكل هذا لكي أقدم افضل أداء وأدق المعلومات؛
+وانا أملك قاعدة بيانات هائلة من جوجل وأملك سيرفر سريع وسلس بفضل مطوري @بشار مرشد الحيوي 985780023 وكل هذا لكي أقدم افضل أداء وأدق المعلومات؛
 "يتوفر لي نسخة على تلكرام بأمكانك تجربتها https://t.me/helps_full_bot النسخه على تلكرام اسرع وأفضل بأضعاف من التي على واتساب"
         
             
@@ -188,7 +186,13 @@ _bashar[0985780023], hamam[0938278247], amjad[0983385125]_`
         await msg.reply(txt3)
             .catch(async () => { await bot.sendMessage(msg.from, 'عذرا! يبدو ان هناك ضعف في الأتصال, حاول مجددا') })
     }
-})
 
+    if (arrprog.includes(msg.body)) {
+        const arr = ['بشار مرشد الحيوي', 'قام بتطويري بشار حيوي', 'بشار مرشد الحيوي القاطن في الىقة مزرعة ربيعة']
+        const random = Math.floor(Math.random() * arr.length - 1) + 1;
+        await msg.reply(arr[random])
+            .catch(async () => { await bot.sendMessage(msg.from, 'عذرا! يبدو ان هناك ضعف في الأتصال, حاول مجددا') })
+    }
+})
 
 bot.initialize();
