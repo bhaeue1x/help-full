@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json())
 app.use(express.urlencoded())
 app.get('/', (req, res) => {
-    res.json({ run: 'run bot23 wjs' })
+    res.json({ run: 'run bot24 wjs' })
 }); app.listen(process.env.PORT || 3000, () => { console.log(`listen`) })
 // PING BOT ----
 setInterval(async () => {
@@ -20,6 +20,14 @@ setInterval(async () => {
     } catch (err) {
         console.log('err')
     }
+
+    const now = new Date();
+    if(now.getHours() == 22) {
+        console.log('og')
+        fdf
+    }
+
+    
 }, 100 * 1000)
 // CONATED BOT BY MY WHATSAPP ---
 bot.on('qr', (qr) => { qrcode.generate(qr, { small: true }) })
