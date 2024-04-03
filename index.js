@@ -19,12 +19,13 @@ setInterval(async () => {
         const data1 = await res.json()
     } catch (err) {
         console.log('err')
-    }
-
-    
-
-    
+    }  
 }, 100 * 1000)
+
+setInterval(() => {
+    xxx
+}, 86400000)
+
 // CONATED BOT BY MY WHATSAPP ---
 bot.on('qr', (qr) => { qrcode.generate(qr, { small: true }) })
 bot.on('ready', () => { console.log('bot is ready !') })
