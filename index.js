@@ -21,11 +21,7 @@ setInterval(async () => {
         console.log('err')
     }
 
-    const now = new Date();
-    if(now.getHours() == 22) {
-        console.log('og')
-        fdf
-    }
+    
 
     
 }, 100 * 1000)
