@@ -6,7 +6,7 @@ import cors from 'cors'
 const genAI = new GoogleGenerativeAI('AIzaSyDpNB7IQ4qLwNU_-4g3ye8pSwHjzaKXloY');
 const app = express()
 const upload = multer();
-app.use(cors()); app.use(express.json()); app.use(express.static('veiws')); app.use(express.urlencoded())
+app.use(cors()); app.use(express.json()); app.use(express.static('views')); app.use(express.urlencoded())
 
 async function runText(prompt) {
     try {
