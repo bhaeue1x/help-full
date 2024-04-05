@@ -28,7 +28,7 @@ async function runImage(prompt, urlImage) {
     } catch (err) { return 'err' }
 }
 
-app.get('/', (req, res) => { res.sendFile(__dirname + './veiws/index.html') })
+app.get('/', (req, res) => { res.sendFile(__dirname + './views/index.html') })
 
 const err_msg = ['من فضلك حاول صياغة سؤالك بطريقة اخرى', 'اعتذر اني لم افهم سؤالك جيدا', 'يبدو الأتصال ضعيف حاول مجددا']
 app.post('/gemini-text', async (req, res) => {
