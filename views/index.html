@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="apple-touch-icon" href="imge.jpg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="prompt">
+        <button id="prompt-close">×</button>
+        <img id="prompt-image" src="imge.jpg" alt="" />
+        <div class="prompt-div">
+            <input type="text" name="" id="prompt-input" placeholder="اكتب..." />
+            <button type="submit" id="prompt-send">➜</button>
+        </div>
+    </div>
+
+    <div class="bac"></div>
+    <header>
+        <img id="img-file" class="img-file" src="./imge.jpg" alt="photo">
+        <h4 id="inp-name">Help full \ المساعد الكامل</h4>
+        <span class="mineu">|||</span>
+    </header>
+
+    <ul class="message-container" id="message-container">
+
+    </ul>
+    <div class="bac2"></div>
+    <form id="message-form">
+        <textarea placeholder="اكتب..." id="message_input"></textarea>
+        <input type="file" accept="image/*" name="" id="inp_file">
+        <button onclick="inp_file.click()" id="chench">📂</button>
+        <button type="submit" class="send-button">➜</button>
+    </form>
+
+</body>
+<script src="test.js"></script>
+
+</html>

@@ -1,0 +1,243 @@
+* {
+
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    font-family: Arial;
+}
+body {
+    width: 100%;
+    height: 100vh;
+    background: rgb(18, 31, 37);
+}
+#prompt {
+    position: fixed;
+    background: none;
+    width: 330px;
+    height: 400px;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    flex-direction: column;
+    border-radius: 15px;
+    overflow: hidden;
+    z-index: 99999;
+}
+#prompt-close {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    font-size: 35px;
+    color: #FF3500;
+    text-shadow: 0 0 10px #000;
+    font-weight: bold;
+}
+#prompt-image {
+    object-fit: cover;
+    max-height: 350px;
+}
+
+.prompt-div {
+    display: flex;
+}
+#prompt-input {
+    height: 50px;
+    outline: none;
+    flex-grow: 1;
+    border: none;
+    background: rgb(37, 45, 58);
+    direction: rtl;
+    text-align: right;
+    padding: 0px 5px;
+    border-bottom-left-radius: 15px;
+}
+#prompt-send {
+    width: 50px;
+    background: rgb(37, 45, 58);
+    font-size: 30px;
+    border: none;
+    border-bottom-right-radius: 15px;
+    color: #fff;
+}
+header {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    width: 100%;
+    margin-bottom: 7px;
+    position: fixed;
+    z-index: 9999;
+    top: 0px;
+    background: rgb(37, 45, 58);
+    box-shadow: 0 0 18px rgb(18, 31, 37);
+    direction: rtl;
+}
+.bac {
+    height: 50px;
+    width: 100%;
+    background: none;
+    position: relative;
+    z-index: -10;
+}
+.img-file {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 5px;
+}
+#inp-name {
+    margin: 5px;
+    color: #F1F1F1;
+    font-size: 16px;
+    padding-left: 5px;
+    direction: ltr;
+}
+#inp-name::first-letter {
+    color: #509590;
+    font-size: 20px;
+}
+.mineu {
+    font-size: 20px;
+    margin: 0 auto 0 12px;
+    transition: 0.5s;
+    font-weight: bold;
+    cursor: pointer;
+    transform: rotate(90deg);
+    outline: none;
+}
+.mineu:hover {
+    transform: rotate(0deg);
+    color: #509590;
+}
+.message-container {
+    display: flex;
+    flex-direction: column;
+    background-color: none;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+::-webkit-scrollbar {
+    display: none;
+}
+.message-container::-webkit-scrollbar {
+    width: 8px;
+    display: block;
+}
+.message-container::-webkit-scrollbar-track {
+    background: none;
+
+}
+.message-container::-webkit-scrollbar-thumb {
+    background: #ffffff;
+    box-shadow: inset 0 0 20px #03175c;
+    border-radius: 20px;
+}
+.message-left,
+.message-right {
+    list-style: none;
+    padding: 6px 10px;
+    margin: 4px 7px;
+    max-width: 85%;
+    min-width: 90px;
+    font-size: 14px;
+    word-wrap: break-word;
+}
+pre{
+    white-space: pre-wrap;
+}
+.message-left {
+    text-align: left;
+    border-radius: 20px 20px 20px 0px;
+    align-self: flex-start;
+    background-color: rgba(119, 60, 158, 0.836);
+}
+.message-right {
+    text-align: right;
+    border-radius: 20px 20px 0px 20px;
+    align-self: flex-end;
+    background: #353F42;
+    color: #f6f6f6;
+}
+.message-left>span,
+.message-right>span {
+    display: block;
+    font-style: italic;
+    font-size: 9px;
+    margin-top: 4px;
+    font-weight: 0;
+    color: #a7a5a5;
+}
+.message-right>span {
+    text-align: right;
+}
+.img-icon {
+    font-size: 35px;
+    text-shadow: 0 0 10px #999;
+}
+#message-form {
+    background: red;
+    width: 100%;
+    height: 55px;
+    max-height: 170px;
+    display: flex;
+    position: fixed;
+    bottom: 0px;
+    z-index: 9999;
+    box-shadow: 0 0 18px rgb(18, 31, 37);
+}
+.bac2 {
+    height: 55px;
+    width: 100%;
+    background: none;
+    position: relative;
+    z-index: -10;
+}
+#message_input {
+    width: 77%;
+    height: 100%;
+    background: rgb(37, 45, 58);
+    border: none;
+    padding: 0px 5px;
+    outline: none;
+    text-align: right;
+    font-size: 14px;
+    flex-grow: 1;
+    direction: rtl;
+    padding: 20px 8px 8px 15px;
+}
+#message_input::placeholder {
+    font-size: 14px;
+    font-weight: 400;
+    color: #C9C9C9;
+}
+.send-button {
+    width: 50px;
+    background: rgb(37, 45, 58);
+    border: none;
+    font-size: 30px;
+    transition: 0.2s;
+    cursor: pointer;
+    color: #fff;
+}
+.send-button:active {
+    color: #0b94e9;
+}
+#inp_file {
+    display: none;
+}
+#chench {
+    font-size: 20px;
+    width: 50px;
+    background: rgb(37, 45, 58);
+    border: none;
+}
+textarea {
+    resize: none;
+    max-height: 170px;
+}
