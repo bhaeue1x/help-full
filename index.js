@@ -54,5 +54,5 @@ app.post('/gemini-image', upload.single('image'),  async (req, res) => {
     } catch (err) {console.log('err')}
 })
 
-app.get('/*', (req, res) => { res.send('thes bage none ...') })
+app.get('/*', (req, res) => { res.send('thes bage none2 ...') })
 app.listen(process.env.PORT || 3000, () => { console.log(`app listen now ...`) })
