@@ -117,3 +117,11 @@ inp_file.onchange = () => {
 
 // SCROLL TO UP BAGE
 const scroll = () => { message_container.scrollTo(0, message_container.scrollHeight) }
+
+
+if ('beforeinstallprompt' in window) {
+  window.addEventListener('beforeinstallprompt', (evt) => {
+    evt.preventDefault();
+    evt.prompt();
+  });
+}
