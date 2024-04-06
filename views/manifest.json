@@ -1,0 +1,15 @@
+
+{
+  "name": "help full",
+  "description": "help full / المساعد الكامل",
+  "icons": [
+    {
+      "src": "/imge.jpg",
+      "sizes": "128x128",
+      "type": "image/jpg"
+    }
+  ],
+  "start_url": "/index.html",
+  "display": "standalone",
+  "theme_color": "#FFFFFF"
+}
