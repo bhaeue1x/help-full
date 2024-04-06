@@ -97,7 +97,7 @@ prompt_send.onclick = async () => {
 
 
 textarea.addEventListener("input", () => {
-    message_form.style.height = "55px"; // إزالة ارتفاع محدد مسبقًا
+    message_form.style.height = "27px"; // إزالة ارتفاع محدد مسبقًا
     message_form.style.height = textarea.scrollHeight + "px";
 });
 
