@@ -3,52 +3,438 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="apple-touch-icon" href="imge.jpg" />
+    <meta name="google" content="notranslate">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>help full</title>
     <meta name="description" content="ما رأيك ببعض المساعدة, انا قاعدر على مساعدتك ">
-    <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
+    <link rel="shortcut icon" href="imge.jpg" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="imge.jpg" />
     <style>
+        * {
+            padding: 0;
+            margin: 0;
+            color: #111;
+            font-family: Arial;
+            box-sizing: border-box;
+        }
 
+        body {
+            width: 100%;
+            max-height: 100%;
+            background-color: aliceblue;
+            direction: rtl;
+            background: radial-gradient(#76B8B0, #64B29B), repeat;
+            background-size: 30px 32px;
+        }
 
+        ::-webkit-scrollbar {
+            display: none;
+        }
 
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        ::selection {
+            outline-color: blue;
+            background: rgb(95, 130, 182, 0.5);
+        }
+
+        .bac {
+            width: 100%;
+            min-height: 100vh;
+            background: linear-gradient(45deg, rgb(0, 130, 0, 0.3), rgb(95, 130, 182, 0.7), rgb(0, 130, 0, 0.3));
+        }
+
+        #prompt {
+            position: fixed;
+            background: none;
+            width: 330px;
+            height: 430px;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+            flex-direction: column;
+            border-radius: 15px;
+            overflow: hidden;
+            z-index: 99999;
+        }
+
+        #prompt-close {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            font-size: 35px;
+            color: #FF3500;
+            text-shadow: 0 0 10px #000;
+            font-weight: bold;
+        }
+
+        #prompt-image {
+            object-fit: cover;
+            max-height: 350px;
+        }
+
+        .prompt-div {
+            display: flex;
+            direction: ltr;
+        }
+
+        #prompt-input {
+            height: 50px;
+            outline: none;
+            flex-grow: 1;
+            border: none;
+            background: #ebebeb;
+            direction: rtl;
+            text-align: right;
+            padding: 0px 5px;
+            border-bottom-left-radius: 15px;
+        }
+
+        #prompt-send {
+            width: 50px;
+            background: #ebebeb;
+            font-size: 30px;
+            border: none;
+            border-bottom-right-radius: 15px;
+            color: #fff;
+        }
+
+        header {
+            background-color: rgb(0, 0, 0, 0.2);
+            width: 100%;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            border-radius: 0 0 15px 15px;
+            position: fixed;
+            backdrop-filter: blur(8px);
+            border-bottom: solid 1px #F1F1F1;
+            user-select: none;
+        }
+
+        header>img {
+            width: 43px;
+            margin: 0 9px;
+            border-radius: 59%;
+            border: #007DD5 2px solid;
+            border-left: none;
+            box-shadow: 0 0 10px #21f106;
+            animation: infinite 7s identifier;
+        }
+
+        @keyframes identifier {
+            0% {
+                border-color: #00E2FF;
+                box-shadow: 0 0 30px #00E2FF;
+            }
+
+            50% {
+                border-color: #00FF5F;
+                box-shadow: 0 0 30px #21f106;
+            }
+
+            100% {
+                border-color: #00E2FF;
+                box-shadow: 0 0 30px #00E2FF;
+            }
+        }
+
+        header>h4 {
+            font-size: 16px;
+            color: #f0f0f0;
+            direction: ltr;
+        }
+
+        ul {
+            flex-grow: 1;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 60px;
+        }
+
+        .blok {
+            width: 100%;
+            height: 58px;
+        }
+
+        .alirt {
+            font-size: 11px;
+            text-align: center;
+            color: #F1F1F1;
+            font-style: italic;
+            font-weight: 100;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+
+        .message-left,
+        .message-right {
+            background-color: #21f106;
+            list-style: none;
+            padding: 6px 10px;
+            margin: 5px 8px;
+            max-width: 85%;
+            min-width: 90px;
+            font-size: 15px;
+            word-wrap: break-word;
+        }
+
+        pre {
+            white-space: pre-wrap;
+        }
+
+        .message-left {
+            text-align: right;
+            border-radius: 20px 20px 0px 20px;
+            align-self: flex-start;
+            background-color: rgb(168, 224, 131);
+
+        }
+
+        .message-right {
+            text-align: left;
+            border-radius: 20px 20px 20px 0px;
+            align-self: flex-end;
+            background: #EEEEEE;
+            color: #f6f6f6;
+        }
+
+        .message-left>span,
+        .message-right>span {
+            display: block;
+            font-style: italic;
+            font-size: 9px;
+            margin-top: 4px;
+            font-weight: 0;
+            color: #272727;
+        }
+
+        .message-left>span {
+            text-align: right;
+        }
+
+        .img-icon {
+            max-height: 200px;
+            max-width: 95%;
+            border-radius: 20px;
+            object-fit: cover;
+        }
+
+        #form_message {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 50px;
+            max-height: 130px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        #button_msg,
+        #button_img {
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 50%;
+            margin: 0 5px;
+            background: #ebebeb;
+        }
+
+        line,
+        polygon {
+            color: #007CBA;
+            rotate: 6deg;
+        }
+
+        #button_img {
+            border-radius: 3px 40px 40px 3px;
+        }
+
+        #input_msg {
+            flex-grow: 1;
+            margin: 0 0 0 5px;
+            height: 100%;
+            border: none;
+            border-radius: 40px 3px 3px 40px;
+            outline-color: #007CBA;
+            background: #ebebeb;
+            padding: 13px 8px 5px 8px;
+            resize: none;
+            font-size: 15px;
+        }
+
+        #input_msg::placeholder {
+            font-size: 15px;
+        }
     </style>
 </head>
 
 <body>
+    <div id="body" class="bac">
+        <div id="prompt">
+            <input style="display: none;" type="file" accept="image/*" name="" id="prompt_file">
+            <button id="prompt-close">×</button>
+            <img id="prompt-image" src="" alt="" />
+            <div class="prompt-div">
+                <input type="text" name="" id="prompt-input" placeholder="اكتب..." />
+                <button type="submit" id="prompt-send"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="feather feather-send">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg></button>
+            </div>
+        </div>
+        <header>
+            <img src="imge.jpg" alt="icon">
+            <h4>help full / المساعد الكامل</h4>
+        </header>
+
+        <ul id="message_container">
+            <div class="blok"></div>
+            <p class="alirt">this chat save one match</p>
 
 
-    <div id="prompt">
-        <button id="prompt-close">×</button>
-        <img id="prompt-image" src="imge.jpg" alt="" />
-        <div class="prompt-div">
-            <input type="text" name="" id="prompt-input" placeholder="اكتب..." />
-            <button type="submit" id="prompt-send">➜</button>
+        </ul>
+        <div id="form_message">
+            <button id="button_msg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-send">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg></button>
+            <button onclick="prompt_file.click()" id="button_img"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                    height="24" viewBox="0 0 24 24">
+                    <path
+                        d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
+                </svg></button>
+            <!-- <input type="text" id="input_msg"> -->
+            <textarea placeholder="typing..." id="input_msg"></textarea>
         </div>
     </div>
-
-    <div class="bac"></div>
-    <header>
-        <img id="img-file" class="img-file" src="./imge.jpg" alt="photo">
-        <h4 id="inp-name">Help full \ المساعد الكامل</h4>
-        <span class="mineu">|||</span>
-    </header>
-
-    <ul class="message-container" id="message-container">
-
-        
-
-    </ul>
-    <div class="bac2"></div>
-    <form id="message-form">
-        <textarea placeholder="اكتب..." id="message_input"></textarea>
-        <input type="file" accept="image/*" name="" id="inp_file">
-        <button onclick="inp_file.click()" id="chench">📂</button>
-        <button type="submit" class="send-button">➜</button>
-    </form>
-
 </body>
-<script src="test.js"></script>
+<script>
+    const body = document.getElementById("body")
+    const message_container = document.getElementById("message_container")
+    const form_message = document.getElementById("form_message")
+    const input_msg = document.getElementById("input_msg")
+    const prompt_file = document.getElementById("prompt_file")
+    const prompt = document.getElementById("prompt")
+    const prompt_close = document.getElementById("prompt-close")
+    const prompt_send = document.getElementById("prompt-send")
+    const prompt_image = document.getElementById("prompt-image")
+    const prompt_input = document.getElementById("prompt-input")
+    const button_msg = document.getElementById("button_msg")
+    const audio = new Audio('audio.mp3')
+    const timer = new Date();
+    let hours = timer.getHours()
+    if (hours > 12) {
+        const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,];
+        hours = arr[hours - 1]
+    }
+    const time = `${hours}: ${timer.getMinutes()}`
+
+    button_msg.onclick = async () => {
+        if (input_msg.value == '') {
+            return input_msg.focus()
+        }
+        message_container.innerHTML += `
+        <li class="message-left">
+            <p>
+                <pre>${input_msg.value}</pre>
+            </p>
+            <span>أنــت ● ${time}</span>
+        </li>`
+        audio.play(); input_msg.focus(); scroll()
+
+        let jss = await JSON.stringify({message_cont: input_msg.value})
+        input_msg.value = ""
+        const res = await fetch('./gemini-text', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: jss
+        })
+        const data = await res.json()
+        message_container.innerHTML += `
+        <li class="message-right">
+        <p>
+        <pre>${data.message_cont}</pre>
+        </p>
+        <span>المساعد ● ${time}</span>
+        </li>`
+
+        scroll()
+    }
+
+    prompt_send.onclick = async () => {
+        if (prompt_input.value == '') {
+            return prompt_input.focus()
+        }
+        message_container.innerHTML += `
+        <li class="message-left">
+            <img src="${URL.createObjectURL(prompt_file.files[0])}" alt="image..." class="img-icon">
+            <p>
+                ${prompt_input.value}
+            </p>
+            <span>أنـت ● ${time}</span>
+        </li>`
+
+        audio.play()
+        prompt.style.display = "none"
+        form_message.style.display = "flex"
+        scroll()
+        prompt_image.src = ''
+        const formData = new FormData();
+        formData.append('image', prompt_file.files[0]);
+        formData.append('prompt', prompt_input.value);
+        prompt_input.value = ""
+
+        const res = await fetch('./gemini-image', {
+            method: 'POST',
+            body: formData
+        })
+        const data = await res.json()
+        message_container.innerHTML += `
+        <li class="message-right">
+        <p>
+        <pre >${data.message_cont}</pre>
+        </p>
+        <span>المساعد ● ${time}</span>
+        </li>`
+        scroll()
+    }
+
+    input_msg.addEventListener("input", () => {
+        form_message.style.height = "50px";
+        form_message.style.height = input_msg.scrollHeight + "px";
+    });
+
+    prompt_close.onclick = () => {
+        prompt.style.display = "none"
+        form_message.style.display = "flex"
+        prompt_image.src = ''
+    }
+    prompt_file.onchange = () => {
+        prompt.style.display = "flex"
+        form_message.style.display = "none"
+        prompt_image.src = URL.createObjectURL(prompt_file.files[0])
+    }
+
+    // SCROLL TO UP BAGE
+    const scroll = () => {
+        window.scrollBy({
+            top: document.body.scrollHeight - window.innerHeight,
+            behavior: "smooth"
+        });
+    }
+    navigator.languages = ['en-US'];
+</script>
 
 </html>
