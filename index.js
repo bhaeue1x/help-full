@@ -62,5 +62,16 @@ app.post('/gemini-image', upload.single('image'), async (req, res) => {
     } catch (err) { console.log('err') }
 })
 
-app.get('/*', (req, res) => { res.send('thes bage none2 ...') })
+app.get('/run', (req, res) => { res.json({run: 'server on line1'}) })
+// PING BOT ----
+setInterval(async () => {
+    try {
+        const res = await fetch('https://gemini-wjs-b.onrender.com/run')
+        const data1 = await res.json()
+    } catch (err) {console.log('err')}
+}, 100 * 1000)
+
+
+
+
 app.listen(process.env.PORT || 3000, () => { console.log(`app listen now ...`) })
