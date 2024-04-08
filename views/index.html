@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="google" content="notranslate">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>help full</title>
     <meta name="description" content="ما رأيك ببعض المساعدة, انا قاعدر على مساعدتك ">
     <link rel="manifest" href="manifest.json">
-    <link rel="icon" type="image/jpg" href="imge.jpg">
     <link rel="apple-touch-icon" href="imge.jpg" />
+    <link rel="icon" type="image/jpg" href="imge.jpg">
+    <title>help full</title>
     <style>
         * {
             padding: 0;
@@ -160,9 +160,9 @@
 
         .alirt {
             user-select: none;
-            font-size: 10px;
+            font-size: 9px;
             text-align: center;
-            color: #F1F1F1;
+            color: #eeeeee;
             font-style: italic;
             font-weight: 100;
             font-family: serif;
@@ -268,11 +268,44 @@
         #input_msg::placeholder {
             font-size: 15px;
         }
+        #follow_insta{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: 99999;
+            background-color: #000000af;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .follow_div{
+            background: linear-gradient(30deg, #e0043baf 20%, #3b508a , #d1c304);
+            padding: 70px;
+            border-radius: 10px;
+            max-width: 90%;
+        }
+        .follow_div>p{
+            font-size: 20px;
+            font-weight: bold;
+            color: #FFF;
+        }
+        .follow_div>button{
+            padding: 15px 10px;
+            margin: 7px 0;
+            border-radius: 5px;
+            border: rgb(42, 117, 167) 2px solid;
+        }
     </style>
 </head>
 
 <body>
     <div id="body" class="bac">
+        <div id="follow_insta">
+            <div class="follow_div">
+                <p>يحق لك 5أجابات في الجوله الواحدة, قم بمتابعتي للحصول على حساب غير مقيد</p>
+                <button id="follow_button">FOLLOW</button>
+            </div>
+        </div>
         <div id="prompt">
             <input style="display: none;" type="file" accept="image/*" name="" id="prompt_file">
             <button id="prompt-close">×</button>
@@ -327,7 +360,10 @@
     const prompt_image = document.getElementById("prompt-image")
     const prompt_input = document.getElementById("prompt-input")
     const button_msg = document.getElementById("button_msg")
+    const follow_insta = document.getElementById("follow_insta")
+    const follow_button = document.getElementById("follow_button")
     const audio = new Audio('audio.mp3')
+    var numDon = 0;
     const timer = new Date();
     let hours = timer.getHours()
     if (hours > 12) {
@@ -365,8 +401,11 @@
         </p>
         <span>المساعد - ${time}</span>
         </li>`
-
         scroll()
+        if(!localStorage.getItem('keyFollow')){
+            numDon++
+            if(numDon == 5) {follow_insta.style.display = 'flex'}
+        } 
     }
 
     prompt_send.onclick = async () => {
@@ -405,6 +444,10 @@
         <span>المساعد - ${time}</span>
         </li>`
         scroll()
+        if(!localStorage.getItem('keyFollow')){
+            numDon++
+            if(numDon == 5) {follow_insta.style.display = 'flex'}
+        } 
     }
 
     input_msg.addEventListener("input", () => {
@@ -422,6 +465,13 @@
         form_message.style.display = "none"
         prompt_image.src = URL.createObjectURL(prompt_file.files[0])
     }
+   
+    
+    follow_button.onclick = () => {
+        window.localStorage.setItem('keyFollow', 'userFollow')
+        location = 'https://instagram.com/bashar1_x'
+    }
+
 
     // SCROLL TO UP BAGE
     const scroll = () => {
@@ -431,7 +481,6 @@
         });
     }
     navigator.languages = ['en-US'];
-
     if ('beforeinstallprompt' in window) {
         window.addEventListener('beforeinstallprompt', (evt) => {
             evt.preventDefault();
