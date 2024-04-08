@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="google" content="notranslate">
@@ -30,6 +31,7 @@
         ::-webkit-scrollbar {
             display: none;
         }
+
         ::selection {
             outline-color: blue;
             background: rgb(95, 130, 182, 0.5);
@@ -215,7 +217,7 @@
         }
 
         .img-icon {
-            max-height: 250px;
+            max-height: 340px;
             max-width: 100%;
             border-radius: 20px;
             object-fit: cover;
@@ -268,7 +270,8 @@
         #input_msg::placeholder {
             font-size: 15px;
         }
-        #follow_insta{
+
+        #follow_insta {
             width: 100%;
             min-height: 100%;
             position: fixed;
@@ -278,18 +281,21 @@
             justify-content: center;
             align-items: center;
         }
-        .follow_div{
-            background: linear-gradient(30deg, #e0043baf 20%, #3b508a , #d1c304);
+
+        .follow_div {
+            background: linear-gradient(30deg, #e0043baf 20%, #3b508a, #d1c304);
             padding: 70px;
             border-radius: 10px;
             max-width: 90%;
         }
-        .follow_div>p{
+
+        .follow_div>p {
             font-size: 20px;
             font-weight: bold;
             color: #FFF;
         }
-        .follow_div>button{
+
+        .follow_div>button {
             padding: 15px 10px;
             margin: 7px 0;
             border-radius: 5px;
@@ -298,18 +304,18 @@
     </style>
 </head>
 
-<body>
-    <div id="body" class="bac">
-        <div id="follow_insta">
-            <div class="follow_div">
-                <p>يحق لك 5أجابات في الجوله الواحدة, قم بمتابعتي للحصول على حساب غير مقيد</p>
-                <button id="follow_button">FOLLOW</button>
-            </div>
+<body id="body">
+    <div id="follow_insta">
+        <div class="follow_div">
+            <p>يحق لك 5أجابات في الجوله الواحدة, قم بمتابعتي للحصول على حساب غير مقيد</p>
+            <button id="follow_button">FOLLOW</button>
         </div>
+    </div>
+    <div id="body" class="bac">
         <div id="prompt">
             <input style="display: none;" type="file" accept="image/*" name="" id="prompt_file">
             <button id="prompt-close">×</button>
-            <img id="prompt-image" src="" alt="" />
+            <img id="prompt-image" src="imge.jpg" alt="none" />
             <div class="prompt-div">
                 <input type="text" name="" id="prompt-input" placeholder="اكتب..." />
                 <button type="submit" id="prompt-send"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -372,6 +378,24 @@
     }
     const time = `${timer.getMinutes()}: ${hours}`
 
+    function resMsg(data)  {
+        message_container.innerHTML += `
+        <li class="message-right">
+        <p>
+        <pre>${data}</pre>
+        </p>
+        <span>المساعد - ${time}</span>
+        </li>`
+            scroll()
+            if (!localStorage.getItem('keyFollow')) {
+                numDon++
+                if (numDon == 5) {
+                    follow_insta.style.display = 'flex'
+                }
+            }
+        }
+
+
     button_msg.onclick = async () => {
         if (input_msg.value == '') {
             return input_msg.focus()
@@ -388,24 +412,17 @@
         let jss = await JSON.stringify({ message_cont: input_msg.value })
         input_msg.value = ""
         form_message.style.height = "50px";
-        const res = await fetch('./gemini-text', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: jss
-        })
-        const data = await res.json()
-        message_container.innerHTML += `
-        <li class="message-right">
-        <p>
-        <pre>${data.message_cont}</pre>
-        </p>
-        <span>المساعد - ${time}</span>
-        </li>`
-        scroll()
-        if(!localStorage.getItem('keyFollow')){
-            numDon++
-            if(numDon == 5) {follow_insta.style.display = 'flex'}
-        } 
+        try {
+            const res = await fetch('./gemini-text', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: jss
+            })
+            const data = await res.json()
+            resMsg(data.message_cont)
+        } catch (err) {
+            resMsg('من فضلك تحقق من الأتصال بالأنترنيت')
+        }
     }
 
     prompt_send.onclick = async () => {
@@ -430,24 +447,16 @@
         formData.append('image', prompt_file.files[0]);
         formData.append('prompt', prompt_input.value);
         prompt_input.value = ""
-
-        const res = await fetch('./gemini-image', {
-            method: 'POST',
-            body: formData
-        })
-        const data = await res.json()
-        message_container.innerHTML += `
-        <li class="message-right">
-        <p>
-        <pre >${data.message_cont}</pre>
-        </p>
-        <span>المساعد - ${time}</span>
-        </li>`
-        scroll()
-        if(!localStorage.getItem('keyFollow')){
-            numDon++
-            if(numDon == 5) {follow_insta.style.display = 'flex'}
-        } 
+        try{
+            const res = await fetch('./gemini-image', {
+                method: 'POST',
+                body: formData
+            })
+            const data = await res.json()
+            resMsg(data.message_cont)
+        } catch (err) {
+            resMsg('من فضلك تحقق من الأتصال بالأنترنيت')
+        }
     }
 
     input_msg.addEventListener("input", () => {
@@ -465,8 +474,8 @@
         form_message.style.display = "none"
         prompt_image.src = URL.createObjectURL(prompt_file.files[0])
     }
-   
-    
+
+
     follow_button.onclick = () => {
         window.localStorage.setItem('keyFollow', 'userFollow')
         location = 'https://instagram.com/bashar1_x'
@@ -488,4 +497,5 @@
         })
     }
 </script>
+
 </html>
