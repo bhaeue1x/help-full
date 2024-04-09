@@ -62,7 +62,7 @@ app.post('/gemini-image', upload.single('image'), async (req, res) => {
     } catch (err) { console.log('err') }
 })
 
-app.get('/run', (req, res) => { res.json({run: 'server on line1'}) })
+app.get('/run', (req, res) => { res.json({run: 'server on line2'}) })
 // PING BOT ----
 setInterval(async () => {
     try {
