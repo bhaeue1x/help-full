@@ -21,11 +21,11 @@
 
         body {
             width: 100%;
-            max-height: 100%;
+            min-height: 100vh;
             background-color: aliceblue;
             direction: rtl;
-            background: radial-gradient(#67a19b, #4f8f7c), repeat;
-            background-size: 30px 32px;
+            background-repeat: no-repeat;
+            background: linear-gradient(45deg, rgb(0, 130, 0, 0.5), rgba(89, 125, 180, 0.9), rgb(0, 130, 0, 0.5));
         }
 
         ::-webkit-scrollbar {
@@ -35,12 +35,6 @@
         ::selection {
             outline-color: blue;
             background: rgb(95, 130, 182, 0.5);
-        }
-
-        .bac {
-            width: 100%;
-            min-height: 100vh;
-            background: linear-gradient(45deg, rgb(0, 130, 0, 0.3), rgb(95, 130, 182, 0.7), rgb(0, 130, 0, 0.3));
         }
 
         #prompt {
@@ -124,8 +118,11 @@
             box-shadow: 0 0 10px #21f106;
             animation: infinite 7s identifier;
         }
-        header>div>span{
-            color: cyan;
+        header>div>div{
+            background-color: #00e961;
+            border-radius: 50%;
+            height: 6px;
+            width: 6px;
             
         }
         @keyframes identifier {
@@ -315,7 +312,7 @@
             <button id="follow_button">FOLLOW</button>
         </div>
     </div>
-    <div id="body" class="bac">
+    <!-- <div id="body" class="bac"> -->
         <div id="prompt">
             <input style="display: none;" type="file" accept="image/*" name="" id="prompt_file">
             <button id="prompt-close">×</button>
@@ -332,11 +329,12 @@
         </div>
         <header>
             <img src="imge.jpg" alt="icon">
-            <div>
+            <div style="margin-top: 5px;">
                 <h4>help full / المساعد الكامل</h4>
-                <span>●</span>
+                <div id="online"></div>
             </div>
         </header>
+
         <ul id="message_container">
             <div class="blok"></div>
             <p class="alirt">this chat save one match</p>
@@ -358,10 +356,10 @@
             <!-- <input type="text" id="input_msg"> -->
             <textarea placeholder="typing..." id="input_msg"></textarea>
         </div>
-    </div>
+    <!-- </div> -->
 </body>
 <script>
-    const body = document.getElementById("body")
+    const online = document.getElementById("online")
     const message_container = document.getElementById("message_container")
     const form_message = document.getElementById("form_message")
     const input_msg = document.getElementById("input_msg")
@@ -384,6 +382,7 @@ let timeOfDay = "AM";
 if (now.getHours() >= 12) { timeOfDay = "PM"; }
 const time = `${hours12}:${now.getMinutes().toString().padStart(2, "0")} ${timeOfDay}`
 
+const arrErr = ['يبدو انك غير متصل بلأنترنيت', 'تحقق من الشبكة الخاصة بك', 'من فضلك تحقق من الأتصال بالأنترنيت']
 
     function resMsg(data)  {
         message_container.innerHTML += `
@@ -414,7 +413,7 @@ const time = `${hours12}:${now.getMinutes().toString().padStart(2, "0")} ${timeO
             </p>
             <span>أنــت - ${time}</span>
         </li>`
-        audio.play(); input_msg.focus(); scroll()
+        audio.play(); input_msg.focus(); scroll(); onLine()
 
         let jss = await JSON.stringify({ message_cont: input_msg.value })
         input_msg.value = ""
@@ -428,7 +427,7 @@ const time = `${hours12}:${now.getMinutes().toString().padStart(2, "0")} ${timeO
             const data = await res.json()
             resMsg(data.message_cont)
         } catch (err) {
-            resMsg('من فضلك تحقق من الأتصال بالأنترنيت')
+            resMsg(arrErr[Math.floor(Math.random() * arrErr.length - 1) + 1])
         }
     }
 
@@ -462,7 +461,7 @@ const time = `${hours12}:${now.getMinutes().toString().padStart(2, "0")} ${timeO
             const data = await res.json()
             resMsg(data.message_cont)
         } catch (err) {
-            resMsg('من فضلك تحقق من الأتصال بالأنترنيت')
+            resMsg(arrErr[Math.floor(Math.random() * arrErr.length - 1) + 1])
         }
     }
 
@@ -489,6 +488,7 @@ const time = `${hours12}:${now.getMinutes().toString().padStart(2, "0")} ${timeO
     }
 
 
+
     // SCROLL TO UP BAGE
     const scroll = () => {
         window.scrollBy({
@@ -496,7 +496,12 @@ const time = `${hours12}:${now.getMinutes().toString().padStart(2, "0")} ${timeO
             behavior: "smooth"
         });
     }
-
+    const onLine = () => {
+        if(!navigator.onLine) {
+            online.style.background = '#FF3500'
+        }
+    }
+    onLine()
     navigator.languages = ['en-US'];
     if ('beforeinstallprompt' in window) {
         window.addEventListener('beforeinstallprompt', (evt) => {
@@ -505,5 +510,4 @@ const time = `${hours12}:${now.getMinutes().toString().padStart(2, "0")} ${timeO
         })
     }
 </script>
-
 </html>
