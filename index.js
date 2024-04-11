@@ -28,7 +28,7 @@ async function runImage(prompt, urlImage) {
     } catch (err) { return 'err' }
 }
 
-app.get('/', (req, res) => { res.sendFile(__dirname + './views/index.html') })
+app.get('/', (req, res) => { res.sendFile(__dirname + '/views/index.html') })
 
 const arr_what = ['من مطورك', 'من طورك', 'من صنعك', 'من برمجك', 'من اخترعك', 'منو سواك', 'منو اخترعك', 'منو صنعك', 'منو برمجك', 'منو طورك', 'من بشار']
 const arr_dev = ['بشار مرشد الحيوي', 'قام بتطويري بشار حيوي', 'بشار مرشد الحيوي القاطن في الرقة مزرعة ربيعة', 'مطوري بشار مرشد الحيوي', 'قام بإنشائي بشار وبمساعدة من  امجد الخلف']
@@ -62,7 +62,8 @@ app.post('/gemini-image', upload.single('image'), async (req, res) => {
     } catch (err) { console.log('err') }
 })
 
-app.get('/run', (req, res) => { res.json({run: 'server on line2'}) })
+app.get('/run', (req, res) => { res.json({run: 'server on line1'}) })
+app.get('/download', (req, res) => { res.sendFile(__dirname + '/views/download.html') })
 // PING BOT ----
 setInterval(async () => {
     try {
@@ -70,7 +71,6 @@ setInterval(async () => {
         const data1 = await res.json()
     } catch (err) {console.log('err')}
 }, 100 * 1000)
-
 
 
 
