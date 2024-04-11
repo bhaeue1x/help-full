@@ -25,7 +25,7 @@
             background-color: aliceblue;
             direction: rtl;
             background-repeat: no-repeat;
-            background: linear-gradient(45deg, rgba(0, 130, 91, 0.8), rgba(83, 118, 170, 0.9), rgba(0, 130, 91, 0.8));
+            background: linear-gradient(45deg, rgba(0, 130, 91, 0.8), rgba(83, 118, 170, 0.9), rgba(0, 130, 91, 0.8));            /* background: #3f6d69; */
         }
 
         ::-webkit-scrollbar {
@@ -327,9 +327,9 @@
             height: 98%;
             border-radius: 0 0 10px 0;
             position: absolute;
-            left: -100%;
+            left: 0;
             z-index: 9999;
-            transition: 1s;
+            display: none;
         }
         h1{
             background-image: url(imge.jpg);
@@ -377,7 +377,7 @@
     </div>
 
     <menu id="menu">
-        <button onclick="menu.style.left = '-100%'" class="menu-button">×</button>
+        <button onclick="menu.style.display = 'none'" class="menu-button">×</button>
         <h1>HELP FULL</h1>
         <div class="follow">
             <a style="color: #ba005d;" href="https://instagram.com/bashar1_x">instagram</a>
@@ -407,7 +407,7 @@
             <h4>help full / المساعد الكامل</h4>
             <div id="online"></div>
         </div>
-        <span  onclick="menu.style.left = '0%'" id="menu_button">|||</span>
+        <span  onclick="menu.style.display = 'block'" id="menu_button">|||</span>
     </header>
 
     <ul id="message_container">
