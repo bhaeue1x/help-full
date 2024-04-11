@@ -25,7 +25,7 @@
             background-color: aliceblue;
             direction: rtl;
             background-repeat: no-repeat;
-            background: linear-gradient(45deg, rgb(0, 130, 0, 0.5), rgba(89, 125, 180, 0.9), rgb(0, 130, 0, 0.5));
+            background: linear-gradient(45deg, rgba(0, 130, 91, 0.8), rgba(83, 118, 170, 0.9), rgba(0, 130, 91, 0.8));            /* background: #3f6d69; */
         }
 
         ::-webkit-scrollbar {
@@ -59,7 +59,7 @@
             background: none;
             border: none;
             font-size: 35px;
-            color: #FF3500;
+            color: #ba005d;
             text-shadow: 0 0 10px #000;
             font-weight: bold;
         }
@@ -118,13 +118,15 @@
             box-shadow: 0 0 10px #21f106;
             animation: infinite 7s identifier;
         }
-        header>div>div{
+
+        header>div>div {
             background-color: #00e961;
             border-radius: 50%;
             height: 6px;
             width: 6px;
-            
+
         }
+
         @keyframes identifier {
             0% {
                 border-color: #00E2FF;
@@ -148,6 +150,21 @@
             direction: ltr;
         }
 
+        #menu_button {
+            color: #fff;
+            font-size: 20px;
+            margin: 0 auto 0 15px;
+            transition: 0.5s;
+            font-weight: bold;
+            cursor: pointer;
+            transform: rotate(90deg);
+            outline: none;
+        }
+        #menu_button:hover {
+            transform: rotate(0deg);
+            color: #509590;
+        }
+
         ul {
             flex-grow: 1;
             width: 100%;
@@ -163,7 +180,7 @@
 
         .alirt {
             user-select: none;
-            font-size: 9px;
+            font-size: 7px;
             text-align: center;
             color: #eeeeee;
             font-style: italic;
@@ -173,7 +190,7 @@
 
         .message-left,
         .message-right {
-            background-color: #21f106;
+            background-color: #07e45c;
             list-style: none;
             padding: 6px 10px;
             margin: 5px 8px;
@@ -211,6 +228,7 @@
             margin-top: 4px;
             font-weight: 0;
             color: #272727;
+            user-select: none;
         }
 
         .message-left>span {
@@ -302,6 +320,51 @@
             border-radius: 5px;
             border: rgb(42, 117, 167) 2px solid;
         }
+        menu{
+            user-select: none;
+            background-color: #002b38;
+            width: 88%;
+            height: 98%;
+            border-radius: 0 0 10px 0;
+            position: absolute;
+            left: -100%;
+            z-index: 9999;
+            transition: 1s;
+        }
+        h1{
+            background-image: url(imge.jpg);
+            background-size: cover;
+            background-position: 0 -110px;
+            text-align: center;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            font-size: 60px;
+            margin-top: 30px;
+        }
+        .menu-button{
+            padding: 10px 15px;
+            background: none;
+            border: none;
+            font-size: 30px;
+            font-weight: bold;
+            color: #FF3500;
+        }
+        .follow{
+            display: flex;
+            margin-top: 20px;
+        }
+        .follow a{
+            text-decoration: none;
+            color: rgb(0, 162, 255);
+            margin: 0 auto;
+        }
+        menu>p{
+            text-align: left;
+            color: #666;
+            margin: 30px;
+            font-size: 10px;
+        }
     </style>
 </head>
 
@@ -312,54 +375,67 @@
             <button id="follow_button">FOLLOW</button>
         </div>
     </div>
-    <!-- <div id="body" class="bac"> -->
-        <div id="prompt">
-            <input style="display: none;" type="file" accept="image/*" name="" id="prompt_file">
-            <button id="prompt-close">×</button>
-            <img id="prompt-image" src="imge.jpg" alt="none" />
-            <div class="prompt-div">
-                <input type="text" name="" id="prompt-input" placeholder="اكتب..." />
-                <button type="submit" id="prompt-send"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" class="feather feather-send">
-                        <line x1="22" y1="2" x2="11" y2="13"></line>
-                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                    </svg></button>
-            </div>
+
+    <menu id="menu">
+        <button onclick="menu.style.left = '-100%'" class="menu-button">×</button>
+        <h1>HELP FULL</h1>
+        <div class="follow">
+            <a style="color: #ba005d;" href="https://instagram.com/bashar1_x">instagram</a>
+            <a style="color: #00b938;" href="https://wa.me/0985780023">whatsapp</a>
+            <a style="color: #007CBA;" href="https://facebook.com/bashar1.x">facebook</a>
         </div>
-        <header>
-            <img src="imge.jpg" alt="icon">
-            <div style="margin-top: 5px;">
-                <h4>help full / المساعد الكامل</h4>
-                <div id="online"></div>
-            </div>
-        </header>
+        <p>author: bashar & amjad</p>
+    </menu>
 
-        <ul id="message_container">
-            <div class="blok"></div>
-            <p class="alirt">this chat save one match</p>
-
-
-        </ul>
-        <div id="form_message">
-            <button id="button_msg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="feather feather-send">
+    <div id="prompt">
+        <input style="display: none;" type="file" accept="image/*" name="" id="prompt_file">
+        <button id="prompt-close">×</button>
+        <img id="prompt-image" src="imge.jpg" alt="none" />
+        <div class="prompt-div">
+            <input type="text" name="" id="prompt-input" placeholder="اكتب..." />
+            <button type="submit" id="prompt-send"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" class="feather feather-send">
                     <line x1="22" y1="2" x2="11" y2="13"></line>
                     <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                 </svg></button>
-            <button onclick="prompt_file.click()" id="button_img"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                    height="24" viewBox="0 0 24 24">
-                    <path
-                        d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
-                </svg></button>
-            <!-- <input type="text" id="input_msg"> -->
-            <textarea placeholder="typing..." id="input_msg"></textarea>
         </div>
-    <!-- </div> -->
+    </div>
+    <header>
+        <img src="imge.jpg" alt="icon">
+        <div style="margin-top: 5px;">
+            <h4>help full / المساعد الكامل</h4>
+            <div id="online"></div>
+        </div>
+        <span  onclick="menu.style.left = '0%'" id="menu_button">|||</span>
+    </header>
+
+    <ul id="message_container">
+        <div class="blok"></div>
+        <p class="alirt">this chat save one match</p>
+
+
+    </ul>
+    <div id="form_message">
+        <button id="button_msg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-send">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg></button>
+        <button onclick="prompt_file.click()" id="button_img"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                height="24" viewBox="0 0 24 24">
+                <path
+                    d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
+            </svg></button>
+        
+        <textarea placeholder="typing..." id="input_msg"></textarea>
+    </div>
+    
 </body>
 <script>
     const online = document.getElementById("online")
+    const menu = document.getElementById("menu")
     const message_container = document.getElementById("message_container")
     const form_message = document.getElementById("form_message")
     const input_msg = document.getElementById("input_msg")
@@ -374,17 +450,17 @@
     const follow_button = document.getElementById("follow_button")
     const audio = new Audio('audio.mp3')
     var numDon = 0;
-    
+
     const now = new Date();
-let hours12 = now.getHours() % 12;
-if (hours12 === 0) { hours12 = 12 }
-let timeOfDay = "AM";
-if (now.getHours() >= 12) { timeOfDay = "PM"; }
-const time = `${hours12}:${now.getMinutes().toString().padStart(2, "0")} ${timeOfDay}`
+    let hours12 = now.getHours() % 12;
+    if (hours12 === 0) { hours12 = 12 }
+    let timeOfDay = "AM";
+    if (now.getHours() >= 12) { timeOfDay = "PM"; }
+    const time = `${hours12}:${now.getMinutes().toString().padStart(2, "0")} ${timeOfDay}`
 
-const arrErr = ['يبدو انك غير متصل بلأنترنيت', 'تحقق من الشبكة الخاصة بك', 'من فضلك تحقق من الأتصال بالأنترنيت']
+    const arrErr = ['يبدو انك غير متصل بالأنترنت', 'تحقق من الشبكة الخاصة بك', 'من فضلك تحقق من الأتصال بالأنترنت']
 
-    function resMsg(data)  {
+    function resMsg(data) {
         message_container.innerHTML += `
         <li class="message-right">
         <p>
@@ -392,14 +468,14 @@ const arrErr = ['يبدو انك غير متصل بلأنترنيت', 'تحقق 
         </p>
         <span>المساعد - ${time}</span>
         </li>`
-            scroll()
-            if (!localStorage.getItem('keyFollow')) {
-                numDon++
-                if (numDon == 5) {
-                    follow_insta.style.display = 'flex'
-                }
+        scroll()
+        if (!localStorage.getItem('keyFollow')) {
+            numDon++
+            if (numDon == 5) {
+                follow_insta.style.display = 'flex'
             }
         }
+    }
 
 
     button_msg.onclick = async () => {
@@ -411,7 +487,7 @@ const arrErr = ['يبدو انك غير متصل بلأنترنيت', 'تحقق 
             <p>
                 <pre>${input_msg.value}</pre>
             </p>
-            <span>أنــت - ${time}</span>
+            <span>انــت - ${time}</span>
         </li>`
         audio.play(); input_msg.focus(); scroll(); onLine()
 
@@ -441,19 +517,19 @@ const arrErr = ['يبدو انك غير متصل بلأنترنيت', 'تحقق 
             <p>
                 ${prompt_input.value}
             </p>
-            <span>أنـت - ${time}</span>
+            <span>انـت - ${time}</span>
         </li>`
 
         audio.play()
         prompt.style.display = "none"
         form_message.style.display = "flex"
         scroll()
-        prompt_image.src = ''
+        prompt_image.src = './imge.jpg'
         const formData = new FormData();
         formData.append('image', prompt_file.files[0]);
         formData.append('prompt', prompt_input.value);
         prompt_input.value = ""
-        try{
+        try {
             const res = await fetch('./gemini-image', {
                 method: 'POST',
                 body: formData
@@ -496,9 +572,13 @@ const arrErr = ['يبدو انك غير متصل بلأنترنيت', 'تحقق 
             behavior: "smooth"
         });
     }
+
+
     const onLine = () => {
-        if(!navigator.onLine) {
-            online.style.background = '#FF3500'
+        if (navigator.onLine) {
+            online.style.background = '#00e961'
+        } else {
+            online.style.background = '#ba005d'
         }
     }
     onLine()
@@ -510,4 +590,5 @@ const arrErr = ['يبدو انك غير متصل بلأنترنيت', 'تحقق 
         })
     }
 </script>
+
 </html>
