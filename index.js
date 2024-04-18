@@ -3,6 +3,8 @@ import express from 'express'
 import multer from 'multer';
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai"
 import cors from 'cors'
+import { marked } from "marked"
+
 const genAI = new GoogleGenerativeAI('AIzaSyDpNB7IQ4qLwNU_-4g3ye8pSwHjzaKXloY');
 const app = express()
 const upload = multer();
@@ -15,7 +17,8 @@ async function runText(prompt) {
         const chat = model.startChat({ generationConfig })
         const result = await chat.sendMessage(prompt)
         const response = await result.response.text()
-        return response
+        const parserTo = await marked.parse(response)
+        return parserTo
     } catch (err) { return 'err' }
 }
 async function runImage(prompt, urlImage) {
@@ -24,11 +27,12 @@ async function runImage(prompt, urlImage) {
         const imagePars = { inlineData: { data: urlImage, mimeType: "image/png", } };
         const result = await model.generateContent([prompt, imagePars]);
         const response = await result.response.text()
-        return response
+        const parserTo = await marked.parse(response)
+        return parserTo
     } catch (err) { return 'err' }
 }
 
-app.get('/', (req, res) => { res.sendFile(__dirname + '/views/index.html') })
+app.get('/', (req, res) => { res.sendFile(__dirname + '/views/new.html') })
 
 const arr_what = ['من مطورك', 'من طورك', 'من صنعك', 'من برمجك', 'من اخترعك', 'منو سواك', 'منو اخترعك', 'منو صنعك', 'منو برمجك', 'منو طورك', 'من بشار']
 const arr_dev = ['بشار مرشد الحيوي', 'قام بتطويري بشار حيوي', 'بشار مرشد الحيوي القاطن في الرقة مزرعة ربيعة', 'مطوري بشار مرشد الحيوي', 'قام بإنشائي بشار وبمساعدة من  امجد الخلف']
