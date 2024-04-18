@@ -38,11 +38,13 @@
             border-radius: 20px;
             padding: 3px;
         }
-
         code {
-            direction: ltr;
+            font-family: monospace;
             padding: 3px;
-            color: #005064;
+            background-image: linear-gradient(30deg, #0c234e, #63cc00, #000141,  #ff5100);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
         }
 
         body {
@@ -152,6 +154,7 @@
 
         pre {
             white-space: pre-wrap;
+            direction: rtl;
         }
 
         .message-left {
@@ -160,6 +163,7 @@
             align-self: flex-start;
             background-color: rgb(168, 224, 131);
             backdrop-filter: blur(10px);
+            direction: ltr;
         }
 
         .message-right {
@@ -168,6 +172,7 @@
             align-self: flex-end;
             background: #EEEEEE;
             color: #f6f6f6;
+            direction: ltr;
         }
 
         .message-left>span,
@@ -402,7 +407,8 @@
             <p>يحق لك 5أجابات في الجوله الواحدة, قم بمتابعتي للحصول على حساب غير مقيد</p>
             <button id="follow_button">FOLLOW</button>
         </div>
-    </div <!--PROMPT IMAGE ...-->
+    </div 
+    <!--PROMPT IMAGE ...-->
     <div id="prompt">
         <input style="display: none;" type="file" accept="image/*" name="" id="prompt_file">
         <button id="prompt-close">×</button>
@@ -434,7 +440,6 @@
             this chat save one match
         </p>
 
-        
 
     </ul>
 
