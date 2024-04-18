@@ -27,6 +27,25 @@
             font-family: Arial;
             color: #000;
         }
+        li {
+            list-style: none;
+            border-radius: 20px;
+            margin: 0;
+        }
+
+        ul {
+            background-color: #c4c4c446;
+            border-radius: 20px;
+            padding: 3px;
+        }
+
+        code {
+            direction: rtl;
+            background-color: #47727033;
+            border-radius: 20px;
+            padding: 3px;
+            color: #0a263d;
+        }
 
         body {
             height: 100vh;
@@ -102,7 +121,7 @@
             transform: rotate(90deg);
         }
 
-        ul {
+        #message_container {
             background: rgba(0, 0, 0, 0.1);
             height: 100%;
             width: 100%;
@@ -323,7 +342,7 @@
             display: none;
         }
 
-        h1 {
+        .menu-nsme {
             background-image: linear-gradient(30deg, #006FD7, #00FFAD);
             text-align: center;
             background-clip: text;
@@ -370,7 +389,7 @@
     <!--MENU DIV-->
     <menu id="menu">
         <button onclick="menu.style.display = 'none'" class="menu-button">×</button>
-        <h1>HELP FULL</h1>
+        <h1 class="menu-nsme">HELP FULL</h1>
         <div class="follow">
             <a style="color: #ba005d;" href="https://instagram.com/bashar1_x">instagram</a>
             <a style="color: #00b938;" href="https://wa.me/0985780023">whatsapp</a>
@@ -417,6 +436,7 @@
             this chat save one match
         </p>
 
+        
 
     </ul>
 
