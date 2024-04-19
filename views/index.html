@@ -57,7 +57,18 @@
         a {
             color: #105596;
         }
-
+        th{
+            padding: 4px;
+            background-color: rgba(16, 99, 194, 0.5);
+            text-align: center;
+            border-radius: 4px;
+        }
+        td{
+            background-color: rgba(16, 99, 194, 0.2);
+            text-align: center;
+            border-radius: 2px;
+            padding: 4px;
+        }
         body {
             height: 100vh;
             max-height: 100vh;
@@ -145,7 +156,6 @@
             border-radius: 20px 20px 0px 20px;
             align-self: flex-start;
             background-color: rgb(168, 224, 131);
-            backdrop-filter: blur(10px);
             direction: ltr;
         }
 
@@ -382,6 +392,7 @@
             border: none;
             color: #d1d1d1;
         }
+        
     </style>
 </head>
 
@@ -434,7 +445,7 @@
 
     <!-- CONTAINER ... -->
     <ul id="message_container">
-    
+
     </ul>
 
     <!--FORM MESSAGE -->
@@ -498,7 +509,7 @@
         }
         saveChats(message_container.innerHTML)
     }
-    message_container.innerHTML = localStorage.getItem('chats')
+    // message_container.innerHTML = localStorage.getItem('chats')
     //SEND MESSAGE IMAGE
     prompt_send.onclick = async () => {
         if (prompt_input.value == '') { return prompt_input.focus() }
