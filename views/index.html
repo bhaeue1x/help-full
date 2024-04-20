@@ -511,7 +511,7 @@
         }
         saveChats(message_container.innerHTML)
     }
-    // message_container.innerHTML = localStorage.getItem('chats')
+     message_container.innerHTML = localStorage.getItem('chats')
     //SEND MESSAGE IMAGE
     prompt_send.onclick = async () => {
         if (prompt_input.value == '') { return prompt_input.focus() }
