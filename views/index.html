@@ -43,7 +43,7 @@
         code {
             font-family: monospace;
             padding: 3px;
-            background-image: linear-gradient(30deg, #073158, #ff5100);
+            background-image: linear-gradient(30deg, #6f00ff 50%, #00f5cc);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
@@ -51,7 +51,7 @@
 
         h1 {
             font-size: 20px;
-            color: #1b1b1b;
+            color: #242424;
         }
 
         a {
@@ -140,7 +140,7 @@
             list-style: none;
             padding: 6px 10px;
             margin: 5px 8px;
-            max-width: 85%;
+            max-width: 90%;
             min-width: 90px;
             font-size: 15px;
             word-wrap: break-word;
@@ -446,6 +446,8 @@
     <!-- CONTAINER ... -->
     <ul id="message_container">
 
+
+
     </ul>
 
     <!--FORM MESSAGE -->
@@ -461,7 +463,7 @@
                 <path
                     d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
             </svg></button>
-        <textarea placeholder="typing..." id="input_msg"></textarea>
+        <textarea placeholder=". . ." id="input_msg"></textarea>
     </div>
 </body>
 <script>
@@ -487,7 +489,7 @@
     if (hours12 === 0) { hours12 = 12 }
     let timeOfDay = "AM";
     if (now.getHours() >= 12) { timeOfDay = "PM"; }
-    const time = `${hours12}:${now.getMinutes().toString().padStart(2, "0")} ${timeOfDay}`
+    const time = `${timeOfDay} ${hours12}:${now.getMinutes().toString().padStart(2, "0")} `
 
     //HELP FULL RESULTE
     const arrErr = ['يبدو انك غير متصل بالأنترنت', 'تحقق من الشبكة الخاصة بك', 'من فضلك تحقق من الأتصال بالأنترنت', 'لست متصل بالأنترنت تحقق من ذالك']
@@ -509,7 +511,7 @@
         }
         saveChats(message_container.innerHTML)
     }
-     message_container.innerHTML = localStorage.getItem('chats')
+    // message_container.innerHTML = localStorage.getItem('chats')
     //SEND MESSAGE IMAGE
     prompt_send.onclick = async () => {
         if (prompt_input.value == '') { return prompt_input.focus() }
