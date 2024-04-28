@@ -22,7 +22,7 @@ async function runChat(text, media, mimeType) {
    const result = await chat.sendMessage([text, parssMedia])
    const response = result.response.text()
    const parserTo = await marked.parse(response)
-   console.log(response)
+   
    return parserTo
  } catch(err) {return 'err'}
 }
@@ -53,7 +53,7 @@ app.post('/gemini-text', async (req, res) => {
 
 // GEMINI MEDIA ..
 app.post('/gemini-media', upload.single('media'), async (req, res) => {
-  console.log(req.file)
+  
   const buffer = req.file.buffer.toString('base64')
   try {
     const result = await runChat(req.body.prompt, buffer, req.file.mimetype)
