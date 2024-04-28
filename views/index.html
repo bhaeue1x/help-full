@@ -445,6 +445,8 @@ menu {
 .menu-content p{
  color: #fff;
  font-size: 14px;
+ padding: 10px;
+ text-align: center;
 }
 .menu-content a {
     padding: 10px;
@@ -473,7 +475,7 @@ menu {
     font-size: 20px;
     overflow: hidden;
     background: #1dab61;
-    text-shadow: 0 0 3px #fff;
+    
 }
 
 .more_action button:active {
@@ -719,7 +721,7 @@ menu {
             <span>انــت - ${time}</span>
         </li>`
         button_audio.style.left = '0'
-        audio.play(); input_msg.focus(); scroll(); //onLine()
+        audio.play(); input_msg.focus(); scroll(); onLine()
 
         const parssToJson = await JSON.stringify({ text: input_msg.value })
         input_msg.value = ""; form_message.style.height = "50px";
@@ -768,7 +770,7 @@ menu {
         </li>`
 
         promptU.style.display = "none"
-        audio.play(); scroll()
+        audio.play(); scroll(); onLine()
         
         const formData = new FormData();
         formData.append('media', whatMedia);
@@ -824,13 +826,14 @@ menu {
     
 
     //ONLINE OR NO
-    const onLine = () => {
+    function onLine() {
         if (navigator.onLine) {
             online.style.background = '#1eb85e'
         } else {
             online.style.background = '#ba005d'
         }
-    }; onLine()
+    }; 
+    onLine()
 
 
 
@@ -900,7 +903,7 @@ menu {
                     <audio class="audio2" controls src="${blobUrl}"></audio>
                     <span>انـت - ${time}</span>
                 </li>`
-                scroll(); audio.play()
+                scroll(); audio.play(); onLine()
                 const formData = new FormData()
                 formData.append('media', e.data, 'audio.webm')
                 formData.append('prompt', '?')
