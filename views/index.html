@@ -11,381 +11,517 @@
     <link rel="icon" type="image/jpg" href="imge.jpg">
     <title>help full</title>
     <style>
-        ::-webkit-scrollbar {
-            display: none;
-        }
+::-webkit-scrollbar {
+    display: none;
+}
 
-        ::selection {
-            outline-color: blue;
-            background: rgb(95, 130, 182, 0.5);
-        }
+::selection {
+    outline-color: blue;
+    background: rgb(95, 130, 182, 0.5);
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial;
-            color: #000;
-        }
 
-        li {
-            list-style: none;
-            border-radius: 20px;
-            margin: 0;
-        }
+audio::-webkit-media-controls-panel {
+    background-color: #333;
+}
 
-        ul {
-            background-color: #80b4c946;
-            border-radius: 20px;
-            padding: 3px;
-        }
+.audio2::-webkit-media-controls-panel {
+    background-color: rgb(215, 236, 189);
+}
 
-        code {
-            font-family: monospace;
-            padding: 3px;
-            background-image: linear-gradient(30deg, #5d00d6 50%, #009c82);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-        }
+audio::-webkit-media-controls-play-button {
+    background-color: lightblue;
+    border-radius: 50%;
+}
 
-        h1 {
-            font-size: 20px;
-            color: #242424;
-        }
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display {
+    color: #c2c2c2;
+    font-size: 11px;
+}
 
-        a {
-            color: #105596;
-        }
-        th{
-            padding: 4px;
-            background-color: rgba(16, 99, 194, 0.5);
-            text-align: center;
-            border-radius: 4px;
-        }
-        td{
-            background-color: rgba(16, 99, 194, 0.2);
-            text-align: center;
-            border-radius: 2px;
-            padding: 4px;
-        }
-        body {
-            height: 100vh;
-            max-height: 100vh;
-            width: 100%;
-            direction: rtl;
-            background: rgb(239,230,221);
-        }
+audio::-webkit-media-controls-timeline {
+    border-radius: 40px;
+    background-color: lightblue;
+    margin: 0 5px;
+    padding: 10px;
+}
 
-        header {
-            background-color: rgb(255, 255, 255);
-            width: 100%;
-            height: 55px;
-            display: flex;
-            align-items: center;
-            border-radius: 0 0 5px 5px;
-            position: fixed;
-            z-index: 999999;
-            user-select: none;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial;
+    color: #000;
+}
 
-        header>img {
-            width: 43px;
-            margin: 0 10px;
-            border-radius: 50%;
-        }
+li {
+    list-style: none;
+    border-radius: 20px;
+    margin: 0;
+}
 
-        header>div>div {
-            background-color: #1eb85e;
-            border-radius: 50%;
-            height: 6px;
-            width: 6px;
-        }
+ul {
+    background-color: #80b4c946;
+    border-radius: 20px;
+    padding: 3px;
+}
 
-        header>div>h4 {
-            font-size: 16px;
-            color: #000000;
-            direction: ltr;
-        }
+code {
+    font-family: monospace;
+    padding: 3px;
+    background-image: linear-gradient(30deg, #5d00d6 50%, #009c82);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
 
-        #menu_button {
-            color: #050505;
-            font-size: 20px;
-            margin: 0 auto 0 15px;
-            font-weight: bold;
-            cursor: pointer;
-            transform: rotate(90deg);
-        }
+h1, h2 {
+    font-size: 20px;
+    color: #1f2d2e;
+}
 
-        #message_container {
-            background: none;
-            height: 100%;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            padding: 60px 0 60px 0;
-            border-radius: 0;
-            overflow-y: scroll;
-            overflow-x: hidden;
-        }
+a {
+    color: #105596;
+}
 
-        .message-left,
-        .message-right {
-            list-style: none;
-            padding: 6px 10px;
-            margin: 5px 8px;
-            max-width: 90%;
-            min-width: 90px;
-            font-size: 15px;
-            word-wrap: break-word;
-        }
+th {
+    padding: 4px;
+    background-color: rgba(16, 99, 194, 0.5);
+    text-align: center;
+    border-radius: 4px;
+}
 
-        pre {
-            white-space: pre-wrap;
-            direction: rtl;
-        }
+td {
+    background-color: rgba(16, 99, 194, 0.2);
+    text-align: center;
+    border-radius: 2px;
+    padding: 4px;
+}
 
-        .message-left {
-            text-align: right;
-            border-radius: 20px 20px 0px 20px;
-            align-self: flex-start;
-            background-color: rgb(231, 255, 219);
-            direction: ltr;
-        }
+body {
+    height: 100vh;
+    max-height: 100vh;
+    width: 100%;
+    direction: rtl;
+    background: rgb(239, 230, 221);
+}
 
-        .message-right {
-            text-align: left;
-            border-radius: 20px 20px 20px 0px;
-            align-self: flex-end;
-            background: #fff;
-            direction: ltr;
-        }
+header {
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    border-radius: 0 0 5px 5px;
+    position: fixed;
+    z-index: 999999;
+    user-select: none;
+}
 
-        .message-left>span,
-        .message-right>span {
-            display: block;
-            font-style: italic;
-            font-size: 9px;
-            margin-top: 4px;
-            font-weight: 0;
-            color: #272727;
-            user-select: none;
-        }
+header>img {
+    width: 43px;
+    margin: 0 10px;
+    border-radius: 50%;
+}
 
-        .message-left>span {
-            text-align: right;
-        }
+header>div>div {
+    background-color: #1eb85e;
+    border-radius: 50%;
+    height: 6px;
+    width: 6px;
+}
 
-        .img-icon {
-            max-height: 340px;
-            max-width: 100%;
-            border-radius: 20px;
-            object-fit: cover;
-        }
-        
-        #form_message {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            height: 50px;
-            max-height: 130px;
-            display: flex;
-            align-items: center;
-            margin-bottom: 6px;
-        }
+header>div>h4 {
+    font-size: 16px;
+    color: #000000;
+    direction: ltr;
+}
 
-        #button_msg {
-            width: 50px;
-            height: 50px;
-            border: none;
-            border-radius: 50%;
-            margin: 0 5px;
-            background: rgb(29, 171, 97);
-        }
-        #button_img {
-            width: 50px;
-            height: 50px;
-            border: none;
-            border-radius: 50%;
-            margin: 0 5px;
-            background: #fff;
-            border-radius: 3px 40px 40px 3px;
-        }
+#menu_button {
+    color: #050505;
+    font-size: 20px;
+    margin: 0 auto 0 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transform: rotate(90deg);
+}
 
-        line,
-        polygon {
-            color: #fff;
-            rotate: 6deg;
-        }
+#message_container {
+    background: none;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 60px 0 60px 0;
+    border-radius: 0;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
 
-        #input_msg {
-            flex-grow: 1;
-            margin: 0 0 0 5px;
-            height: 100%;
-            border: none;
-            border-radius: 40px 3px 3px 40px;
-            outline: none;
-            background: #fff;
-            padding: 13px 8px 5px 8px;
-            resize: none;
-            font-size: 15px;
-        }
+.message-left,
+.message-right {
+    list-style: none;
+    padding: 6px 10px;
+    margin: 5px 8px;
+    max-width: 90%;
+    min-width: 90px;
+    font-size: 15px;
+    word-wrap: break-word;
+}
 
-        #input_msg::placeholder {
-            font-size: 15px;
-        }
+pre {
+    white-space: pre-wrap;
+    direction: rtl;
+}
 
-        #prompt {
-            position: fixed;
-            background: none;
-            width: 330px;
-            height: 430px;
-            top: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            display: none;
-            flex-direction: column;
-            border-radius: 15px;
-            overflow: hidden;
-            z-index: 9999999;
-        }
+.message-left {
+    text-align: right;
+    border-radius: 20px 20px 0px 20px;
+    align-self: flex-start;
+    background-color: rgb(215, 236, 189);
+    direction: ltr;
+}
 
-        #prompt-close {
-            position: absolute;
-            width: 40px;
-            background: none;
-            border: none;
-            font-size: 35px;
-            color: #ba005d;
-            font-weight: bold;
-        }
+.message-right {
+    text-align: left;
+    border-radius: 20px 20px 20px 0px;
+    align-self: flex-end;
+    background: #fff;
+    direction: ltr;
+}
 
-        #prompt-image {
-            object-fit: cover;
-            max-height: 350px;
-        }
+.message-left>span,
+.message-right>span {
+    display: block;
+    font-style: italic;
+    font-size: 9px;
+    margin-top: 4px;
+    font-weight: 0;
+    color: #272727;
+    user-select: none;
+}
 
-        .prompt-div {
-            display: flex;
-            direction: ltr;
-        }
+.message-left>span {
+    text-align: right;
+}
 
-        #prompt-input {
-            height: 50px;
-            outline: none;
-            flex-grow: 1;
-            border: none;
-            background: #f5f5f5;
-            direction: rtl;
-            text-align: right;
-            padding: 0px 5px;
-            border-bottom-left-radius: 15px;
-        }
+.img-icon {
+    max-height: 380px;
+    max-width: 100%;
+    border-radius: 20px;
+    object-fit: cover;
+}
 
-        #prompt-send {
-            width: 50px;
-            background:  rgb(29, 171, 97);
-            border: none;
-            border-bottom-right-radius: 15px;
-        }
+#form_message {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    max-height: 130px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+}
 
-        #follow_insta {
-            position: absolute;
-            width: 100%;
-            min-height: 100%;
-            z-index: 9999999;
-            background-color: #000000af;
-            display: none;
-            justify-content: center;
-            align-items: center;
-        }
+.buttons-w,
+.div-more {
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    margin: 0 5px;
+    background: #1dab61;
+}
 
-        .follow_div {
-            background: linear-gradient(30deg, #e0043baf 20%, #3b508a, #d1c304);
-            padding: 70px;
-            border-radius: 10px;
-            max-width: 90%;
-        }
+.buttons-w>.b2 {
+    border: solid 3px #1dab61;
+    width: 33px;
+    height: 33px;
+    background: #fff;
+    clip-path: polygon(50% 0, 90% 100%, 50% 74%, 10% 100%);
+    margin: auto;
+    rotate: 45deg;
+}
+.buttons-w>.b1{
+    border: solid 3px #fff;
+    width: 20px;
+    height: 30px;
+    border-radius: 20px;
+    margin: auto;
+}
+.buttons-w>.b1:after{
+    content: "";
+    padding: 7px;
+    position: relative;
+    top: 7px;
+    border-bottom: solid 4px #fff;
+    border-radius: 20px;
+}
 
-        .follow_div>p {
-            font-size: 20px;
-            font-weight: bold;
-            color: #FFF;
-        }
+.div-more {
+    background: #fff;
+    border-radius: 3px 40px 40px 3px;
 
-        .follow_div>button {
-            padding: 15px 10px;
-            margin: 7px 0;
-            border-radius: 5px;
-            border: rgb(42, 117, 167) 2px solid;
-        }
+}
 
-        menu {
-            user-select: none;
-            background-color: #3a3a3a;
-            width: 88%;
-            min-height: 100%;
-            position: absolute;
-            left: 0;
-            z-index: 99999999;
-            display: none;
-        }
+#input_msg {
+    flex-grow: 1;
+    margin: 0 0 0 5px;
+    height: 100%;
+    border: none;
+    border-radius: 40px 3px 3px 40px;
+    outline: none;
+    background: #fff;
+    padding: 13px 8px 5px 8px;
+    resize: none;
+    font-size: 15px;
+}
 
-        .menu-nsme {
-            background-image: linear-gradient(30deg, #006FD7, #00FFAD);
-            text-align: center;
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            font-size: 60px;
-            margin-top: 30px;
-        }
+#input_msg::placeholder {
+    font-size: 15px;
+}
 
-        .menu-button {
-            padding: 10px 15px;
-            background: none;
-            border: none;
-            font-size: 30px;
-            font-weight: bold;
-            color: #FF3500;
-        }
+#prompt {
+    background: #222;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 99999999;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
-        .follow {
-            display: flex;
-            margin-top: 20px;
-        }
+#prompt-close {
+    padding: 5px;
+    margin: 0 10px;
+    background: none;
+    border: none;
+    font-size: 40px;
+    color: #ba005d;
+    font-weight: bold;
+}
 
-        .follow a {
-            text-decoration: none;
-            color: rgb(0, 162, 255);
-            margin: 0 auto;
-            border: solid 0.5px #E3E3E3;
-            border-radius: 8px;
-            padding: 5px;
-        }
+.prompt-div-close {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
 
-        menu>footer {
-            direction: ltr;
-            text-align: left;
-            color: #a8a8a8;
-            margin: 30px;
-            font-size: 10px;
-            position: absolute;
-            bottom: 0;
-        }
-        .menu-remove{
-            padding: 10px 20px;
-            background-color: #d83301;
-            border-radius: 6px;
-            float: left;
-            margin: 20px;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            border: none;
-            color: #d1d1d1;
-        }
-        
+.prompt-div {
+    display: flex;
+    direction: ltr;
+    width: 95%;
+    margin: 7px 0;
+    gap: 5px;
+}
+
+#prompt-input {
+    height: 50px;
+    outline: none;
+    flex-grow: 1;
+    border: none;
+    background: #f5f5f5;
+    direction: rtl;
+    text-align: right;
+    padding: 0px 8px;
+    border-radius: 40px;
+}
+
+#prompt-send {
+    width: 50px;
+    background: rgb(29, 171, 97);
+    border: none;
+    border-radius: 40px;
+    color: #fff;
+}
+
+#follow_insta {
+    position: absolute;
+    width: 100%;
+    min-height: 100%;
+    z-index: 9999999;
+    background-color: #000000af;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.follow_div {
+    background: linear-gradient(30deg, #e0043baf 20%, #3b508a, #d1c304);
+    padding: 70px;
+    border-radius: 10px;
+    max-width: 90%;
+}
+
+.follow_div>p {
+    font-size: 20px;
+    font-weight: bold;
+    color: #FFF;
+}
+
+.follow_div>button {
+    padding: 15px 10px;
+    margin: 7px 0;
+    border-radius: 5px;
+    border: rgb(42, 117, 167) 2px solid;
+}
+
+menu {
+    user-select: none;
+    background-color: #3a3a3a;
+    width: 88%;
+    min-height: 100%;
+    position: absolute;
+    left: 0;
+    z-index: 99999999;
+    display: none;
+}
+
+.menu-nsme {
+    background-image: linear-gradient(30deg, #006FD7, #00FFAD);
+    text-align: center;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-size: 60px;
+    margin-top: 30px;
+}
+
+.menu-button {
+    padding: 10px 15px;
+    background: none;
+    border: none;
+    font-size: 30px;
+    font-weight: bold;
+    color: #FF3500;
+}
+
+.follow {
+    display: flex;
+    margin-top: 20px;
+}
+
+.follow a {
+    text-decoration: none;
+    color: rgb(0, 162, 255);
+    margin: 0 auto;
+    border: solid 0.5px #E3E3E3;
+    border-radius: 8px;
+    padding: 5px;
+}
+
+menu>footer {
+    direction: ltr;
+    text-align: left;
+    color: #a8a8a8;
+    margin: 30px;
+    font-size: 10px;
+    position: absolute;
+    bottom: 0;
+}
+
+.menu-remove {
+    padding: 10px 20px;
+    background-color: #d83301;
+    border-radius: 6px;
+    float: left;
+    margin: 20px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border: none;
+    color: #d1d1d1;
+}
+
+.more_action {
+    position: relative;
+    bottom: 290px;
+    /* background: #006FD7; */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: hidden;
+    transition: 0.4s;
+    margin: 50px;
+}
+
+.more_action button {
+    height: 50px;
+    padding: 0 7px;
+    border-radius: 50%;
+    border: none;
+    font-size: 20px;
+    overflow: hidden;
+    background: #1dab61;
+}
+
+.more_action button:active {
+    background: #fff;
+}
+
+.toggle-more {
+    margin: 0;
+}
+
+.constent {
+    height: 85%;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+#prompt_video,
+#prompt_img,
+#prompt_file,
+#prompt_audio {
+    display: none;
+}
+
+#prompt_audio {
+    padding: 10px 0;
+}
+
+#prompt_video {
+    max-height: 100%;
+    max-width: 100%;
+    border-radius: 15px;
+}
+
+#prompt_img {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.buttons-msg{
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    position: relative;
+    bottom: 31px;
+}
+.audio-inm{
+    animation: audioInm 2s infinite;
+}
+@keyframes audioInm {
+    0%{
+        background: rgb(255, 72, 0);
+    }
+}
+#button_audio{
+    position: relative;
+    transition: 0.4s;
+}
+
+.docoment{
+    font-size: 20px;
+    font-weight: bold;
+    background: #af7f48;
+    border-radius: 10px;
+    padding: 5px;
+}
     </style>
 </head>
 
@@ -399,8 +535,9 @@
             <a style="color: #00b938;" href="https://wa.me/0985780023">whatsapp</a>
             <a style="color: #007CBA;" href="https://facebook.com/bashar1.x">facebook</a>
         </div>
-        <button onclick="localStorage.removeItem('chats'), message_container.innerHTML = ''" class="menu-remove">مسح الدردشة</button><br><br>
-        
+        <button onclick="localStorage.removeItem('chats'), message_container.innerHTML = ''" class="menu-remove">مسح
+            الدردشة</button>
+
         <footer>author: بشار مرشد الحيوي</footer>
     </menu>
 
@@ -410,19 +547,25 @@
             <p>يحق لك 5أجابات في الجوله الواحدة, قم بمتابعتي للحصول على حساب غير مقيد</p>
             <button id="follow_button">FOLLOW</button>
         </div>
-    </div <!--PROMPT IMAGE ...-->
+    </div>
+
+    <!-- PROMPT  ... -->
     <div id="prompt">
-        <input style="display: none;" type="file" accept="image/*" name="" id="prompt_file">
-        <button id="prompt-close">×</button>
-        <img id="prompt-image" src="imge.jpg" alt="none" />
+        <div class="prompt-div-close">
+            <button id="prompt-close">×</button>
+            <p style="font-size: 16px; color: #fff;">help full / المساعد الكامل</p>
+        </div>
+
+        <div class="constent">
+            <video id="prompt_video" src="" controls></video>
+            <img id="prompt_img" src="" alt="no">
+            <audio id="prompt_audio" src="" controls></audio>
+            <p style="color: #fff;" id="prompt_file"></p>
+        </div>
+
         <div class="prompt-div">
-            <input type="text" name="" id="prompt-input" placeholder="اكتب..." />
-            <button type="submit" id="prompt-send"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" class="feather feather-send">
-                    <line x1="22" y1="2" x2="11" y2="13"></line>
-                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                </svg></button>
+            <input placeholder=". . ." type="text" id="prompt-input">
+            <button id="prompt-send">أرسل</button>
         </div>
     </div>
 
@@ -439,145 +582,197 @@
     <!-- CONTAINER ... -->
     <ul id="message_container">
 
+        
 
     </ul>
 
     <!--FORM MESSAGE -->
     <div id="form_message">
-        <button id="button_msg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="feather feather-send">
-                <line x1="22" y1="2" x2="11" y2="13"></line>
-                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-            </svg></button>
-        <button onclick="prompt_file.click()" id="button_img"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                height="24" viewBox="0 0 24 24">
-                <path
-                    d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
-            </svg></button>
+        <div class="buttons-msg">
+            <button class="buttons-w" id="button_audio">
+                <div class="b1"></div>
+            </button>
+            <button class="buttons-w" id="button_msg">
+                <div class="b2"></div>
+            </button>
+        </div>
+
+        <div class="div-more">
+            <button id="but_setMore"
+                style="color: #1dab61; font-size: 30px; font-weight: bold; width: 100%; height: 100%; background: none; border: none;">+</button>
+            <div class="more_action" id="more_action">
+                <button onclick="cheng_audio.click()">🎶</button>
+                <button style="background: #555;" >🎞</button>
+                <button onclick="cheng_image.click()">🖼</button>
+                <button style="background: #555;">🗂</button>
+            </div>
+
+        </div>
+
         <textarea placeholder=". . ." id="input_msg"></textarea>
+    </div>
+
+    <div style="display: none;" class="cheng-head">
+        <input id="cheng_image" accept="image/*" type="file">
+        <input id="cheng_video" accept="video/*" type="file">
+        <input id="cheng_audio" accept="audio/*" type="file">
+        <input id="cheng_file" accept="application/*" type="file">
     </div>
 </body>
 <script>
     //CONSTENT AND VAREBUL
-    const online = document.getElementById("online")
-    const menu = document.getElementById("menu")
-    const message_container = document.getElementById("message_container")
-    const form_message = document.getElementById("form_message")
-    const input_msg = document.getElementById("input_msg")
-    const prompt_file = document.getElementById("prompt_file")
-    const prompt = document.getElementById("prompt")
-    const prompt_close = document.getElementById("prompt-close")
-    const prompt_send = document.getElementById("prompt-send")
-    const prompt_image = document.getElementById("prompt-image")
-    const prompt_input = document.getElementById("prompt-input")
-    const button_msg = document.getElementById("button_msg")
-    const follow_insta = document.getElementById("follow_insta")
-    const follow_button = document.getElementById("follow_button")
-    const audio = new Audio('audio.mp3')
-    let numDon = 0;
-    const now = new Date();
-    let hours12 = now.getHours() % 12;
-    if (hours12 === 0) { hours12 = 12 }
-    let timeOfDay = "AM";
-    if (now.getHours() >= 12) { timeOfDay = "PM"; }
-    const time = `${timeOfDay} ${hours12}:${now.getMinutes().toString().padStart(2, "0")} `
+    const but_setMore = document.getElementById("but_setMore"),
+        cheng_image = document.getElementById("cheng_image"),
+        cheng_video = document.getElementById("cheng_video"),
+        cheng_audio = document.getElementById("cheng_audio"),
+        cheng_file = document.getElementById("cheng_file"),
 
-    //HELP FULL RESULTE
+
+        prompt_audio = document.getElementById("prompt_audio"),
+        prompt_img = document.getElementById("prompt_img"),
+        prompt_video = document.getElementById("prompt_video"),
+        prompt_file = document.getElementById("prompt_file"),
+
+
+
+        button_audio = document.getElementById("button_audio"),
+        button_msg = document.getElementById("button_msg"),
+
+
+
+        more_action = document.getElementById("more_action"),
+        online = document.getElementById("online"),
+        menu = document.getElementById("menu"),
+        message_container = document.getElementById("message_container"),
+        form_message = document.getElementById("form_message"),
+        input_msg = document.getElementById("input_msg"),
+        promptU = document.getElementById("prompt"),
+        prompt_close = document.getElementById("prompt-close"),
+
+        prompt_send = document.getElementById("prompt-send"),
+        prompt_input = document.getElementById("prompt-input"),
+
+        follow_insta = document.getElementById("follow_insta"),
+        follow_button = document.getElementById("follow_button")
+
+
+    const audio = new Audio('audio.mp3')
+
+    const now = new Date(); let hours12 = now.getHours() % 12; if (hours12 === 0) { hours12 = 12 }; let timeOfDay = "AM"; if (now.getHours() >= 12) { timeOfDay = "PM"; };
+    const time = `${timeOfDay} ${hours12}:${now.getMinutes().toString().padStart(2, "0")}`
+
+    // HELP FULL RESULTE
     const arrErr = ['يبدو انك غير متصل بالأنترنت', 'تحقق من الشبكة الخاصة بك', 'من فضلك تحقق من الأتصال بالأنترنت', 'لست متصل بالأنترنت تحقق من ذالك']
-    function resMsg(data) {
+
+    let numDon = 0;
+    function handlingMessage(data) {
         message_container.innerHTML += `
         <li class="message-right">
-        <p>
-        ${data}
-        </p>
+        <p> ${data} </p>
         <span>المساعد - ${time}</span>
         </li>`
-
         scroll()
         if (!localStorage.getItem('keyFollow')) {
             numDon++
-            if (numDon == 5) {
-                follow_insta.style.display = 'flex'
-            }
+            if (numDon == 5) { follow_insta.style.display = 'flex' }
         }
         saveChats(message_container.innerHTML)
     }
-     message_container.innerHTML = localStorage.getItem('chats')
-    //SEND MESSAGE IMAGE
-    prompt_send.onclick = async () => {
-        if (prompt_input.value == '') { return prompt_input.focus() }
 
-        message_container.innerHTML += `
-        <li class="message-left">
-            <img src="${URL.createObjectURL(prompt_file.files[0])}" alt="لا يمكن حفظ الصور🧩" class="img-icon">
-            <p>
-                ${prompt_input.value}
-            </p>
-            <span>انـت - ${time}</span>
-        </li>`
-
-        audio.play()
-        prompt.style.display = "none"
-        form_message.style.display = "flex"
-        scroll()
-        const formData = new FormData();
-        formData.append('image', prompt_file.files[0]);
-        formData.append('prompt', prompt_input.value);
-        prompt_input.value = ""
-        try {
-            const res = await fetch('./gemini-image', {
-                method: 'POST',
-                body: formData
-            })
-            const data = await res.json()
-            resMsg(data.message_cont)
-        } catch (err) {
-            setTimeout(() => {
-                resMsg(arrErr[Math.floor(Math.random() * arrErr.length - 1) + 1])
-            }, 1500)
-        }
+    // GET CHATS IN DATA BS
+    if(localStorage.getItem('chats')) {
+        message_container.innerHTML = localStorage.getItem('chats')
     }
 
-    //SENT MESSAGE TEXT
+    
+
+    // //SENT MESSAGE TEXT
     button_msg.onclick = async () => {
         if (input_msg.value == '') { return input_msg.focus() }
+
         message_container.innerHTML += `
         <li class="message-left">
-            <p>
-                <pre>${input_msg.value}</pre>
-            </p>
+            <p> <pre>${input_msg.value}</pre> </p>
             <span>انــت - ${time}</span>
         </li>`
+        button_audio.style.left = '0'
+        audio.play(); input_msg.focus(); scroll(); //onLine()
 
-        audio.play(); input_msg.focus(); scroll();
-        onLine()
-
-        let jsonParser = await JSON.stringify({ message_cont: input_msg.value })
-        input_msg.value = ""
-        form_message.style.height = "50px";
+        const parssToJson = await JSON.stringify({ text: input_msg.value })
+        input_msg.value = ""; form_message.style.height = "50px";
         try {
             const res = await fetch('./gemini-text', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: jsonParser
+                body: parssToJson
             })
             const data = await res.json()
-            resMsg(data.message_cont)
+            handlingMessage(data.message)
         } catch (err) {
-            setTimeout(() => {
-                resMsg(arrErr[Math.floor(Math.random() * arrErr.length - 1) + 1])
-            }, 1500)
+            setTimeout(() => { handlingMessage(arrErr[Math.floor(Math.random() * arrErr.length - 1) + 1]) }, 1500)
         }
     }
 
+    //SEND MESSAGE IMAGE
+    let typeSend;
+    prompt_send.onclick = async () => {
+        if (prompt_input.value == '') { return prompt_input.focus() }
+        let varebulMedia;
+        let whatMedia;
+        if(typeSend == 'image') {
+            varebulMedia = `<img src="${URL.createObjectURL(cheng_image.files[0])}" alt="لا يمكن حفظ الصور🧩" class="img-icon">`
+            whatMedia = cheng_image.files[0];
+            
+        } else if(typeSend == 'audio') {
+            varebulMedia = `<audio class="audio2" controls src="${URL.createObjectURL(cheng_audio.files[0])}"></audio>`
+            whatMedia = cheng_audio.files[0];
+            
+        } else if(typeSend == 'video'){
+            console.log(cheng_video.files[0])
+            varebulMedia = `<video controls class="img-icon" src="${URL.createObjectURL(cheng_video.files[0])}"></video>`
+            whatMedia = cheng_video.files[0];
+            
+        } else if(typeSend == 'file'){
+            varebulMedia = `<p class="docoment">${cheng_file.files[0].name}</p>`
+            whatMedia = cheng_file.files[0];
+        }
+
+        message_container.innerHTML += `
+        <li class="message-left">
+            ${varebulMedia}
+            <p> ${prompt_input.value} </p>
+            <span>انـت - ${time}</span>
+        </li>`
+
+        promptU.style.display = "none"
+        audio.play(); //scroll()
+        
+        const formData = new FormData();
+        formData.append('media', whatMedia);
+        formData.append('prompt', prompt_input.value);
+
+        prompt_input.value = ""
+        try {
+            const res = await fetch('./gemini-media', {
+                method: 'POST',
+                body: formData
+            })
+            const data = await res.json()
+            handlingMessage(data.message)
+        } catch (err) {
+            setTimeout(() => { handlingMessage(arrErr[Math.floor(Math.random() * arrErr.length - 1) + 1]) }, 1500)
+        }
+    }
+
+    
     //SCROLL DON BAGE
-    const scroll = () => {
+    function scroll() {
         message_container.scrollBy({
             top: message_container.scrollHeight,
             behavior: "smooth"
         });
     }
+    scroll()
 
     follow_button.onclick = () => {
         window.localStorage.setItem('keyFollow', 'userFollow')
@@ -597,33 +792,121 @@
 
     //PROMPT IMAGE CHOSE
     prompt_close.onclick = () => {
-        prompt.style.display = "none"
-        form_message.style.display = "flex"
-        prompt_image.src = ''
+        promptU.style.display = "none"
+        prompt_audio.style.display = 'none'
+        prompt_img.style.display = 'none'
+        prompt_video.style.display = 'none'
+        prompt_file.style.display = 'none'
     }
-    prompt_file.onchange = () => {
-        prompt.style.display = "flex"
-        form_message.style.display = "none"
-        prompt_image.src = URL.createObjectURL(prompt_file.files[0])
-    }
+    // prompt_file.onchange = () => {
+    //     prompt.style.display = "flex"
+    //     form_message.style.display = "none"
+    //     prompt_image.src = URL.createObjectURL(prompt_file.files[0])
+    // }
 
     //ONLINE OR NO
-    const onLine = () => {
-        if (navigator.onLine) {
-            online.style.background = '#1eb85e'
-        } else {
-            online.style.background = '#ba005d'
-        }
-    }; onLine()
+    // const onLine = () => {
+    //     if (navigator.onLine) {
+    //         online.style.background = '#1eb85e'
+    //     } else {
+    //         online.style.background = '#ba005d'
+    //     }
+    // }; onLine()
 
 
 
 
     // REMOVE LOCALE
-        if (localStorage.length * localStorage.key(0).length > 5000) {
-            localStorage.removeItem('chats')
-        }
+    // if (localStorage.length * localStorage.key(0).length > 5000) {
+    //     localStorage.removeItem('chats')
+    // }
 
+
+    cheng_audio.onchange = () => {
+        promptU.style.display = "flex"
+        prompt_audio.style.display = "block"
+        prompt_audio.src = URL.createObjectURL(cheng_audio.files[0])
+        typeSend = 'audio'
+    }
+    cheng_image.onchange = () => {
+        promptU.style.display = "flex"
+        prompt_img.style.display = "block"
+        prompt_img.src = URL.createObjectURL(cheng_image.files[0])
+        typeSend = 'image'
+    }
+    cheng_video.onchange = () => {
+        promptU.style.display = "flex"
+        prompt_video.style.display = "block"
+        prompt_video.src = URL.createObjectURL(cheng_video.files[0])
+        typeSend = 'video'
+    }
+    cheng_file.onchange = () => {
+        promptU.style.display = "flex"
+        prompt_file.style.display = "block"
+        prompt_file.innerHTML = cheng_file.files[0].name
+        typeSend = 'file'
+        console.log(cheng_file.files[0])
+    }
+
+    but_setMore.onclick = () => { more_action.classList.toggle('toggle-more') }
+
+
+
+    let b = true; let recorder;
+    button_audio.onmousedown = async () => {
+        if (b == true) {
+            console.log('t')
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(async (stream) => {
+                    recorder = await new MediaRecorder(stream);
+                    recorder.start();
+                    button_audio.classList.add('audio-inm')
+                    b = false
+                })
+        } else {
+            console.log('f')
+
+            await recorder.stop()
+            recorder.ondataavailable = async function (e) {
+                const blobUrl = URL.createObjectURL(e.data);
+                console.log(e.data)
+                button_audio.classList.remove('audio-inm')
+                b = true
+
+                message_container.innerHTML += `
+                <li class="message-left">
+                    <audio class="audio2" controls src="${blobUrl}"></audio>
+                    <span>انـت - ${time}</span>
+                </li>`
+
+                const formData = new FormData()
+                formData.append('media', e.data, 'audio.webm')
+                formData.append('prompt', '?')
+                try{
+                    const res = await fetch('./gemini-media', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    const data = await res.json()
+                    handlingMessage(data.message)
+                } catch (err) {
+                    setTimeout(() => { handlingMessage(arrErr[Math.floor(Math.random() * arrErr.length - 1) + 1]) }, 1500)
+                }
+            }
+        }
+    }
+
+    input_msg.onkeyup = async () => {
+        if (input_msg.value == '') {
+            button_audio.style.left = '0'
+        } else {
+            button_audio.style.left = '70px'
+            if (button_audio.classList.contains('audio-inm')) {
+                await recorder.stop()
+                button_audio.classList.remove('audio-inm')
+            }
+        }
+    }
 </script>
 
 </html>
