@@ -1,70 +1,76 @@
 import { fileURLToPath } from 'url'; import path, { dirname } from 'path'; const __filename = fileURLToPath(import.meta.url); const __dirname = path.dirname(__filename);
-import express from 'express'
-import multer from 'multer';
-import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai"
-import cors from 'cors'
-import { marked } from "marked"
+import express from "express";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import multer from "multer";
+import { marked } from "marked";
 
-const genAI = new GoogleGenerativeAI('AIzaSyDpNB7IQ4qLwNU_-4g3ye8pSwHjzaKXloY');
-const app = express()
 const upload = multer();
-app.use(cors()); app.use(express.json()); app.use(express.static('views')); app.use(express.urlencoded())
 
-async function runText(prompt) {
-    try {
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-        const generationConfig = { temperature: 0.9, topK: 1, topP: 1, maxOutputTokens: 1000, };
-        const chat = model.startChat({ generationConfig })
-        const result = await chat.sendMessage(prompt)
-        const response = await result.response.text()
-        const parserTo = await marked.parse(response)
-        return parserTo
-    } catch (err) { return 'err' }
-}
-async function runImage(prompt, urlImage) {
-    try {
-        const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
-        const imagePars = { inlineData: { data: urlImage, mimeType: "image/png", } };
-        const result = await model.generateContent([prompt, imagePars]);
-        const response = await result.response.text()
-        const parserTo = await marked.parse(response)
-        return parserTo
-    } catch (err) { return 'err' }
+const app = express()
+app.use(express.static('views'))
+app.use(express.urlencoded())
+app.use(express.json())
+
+const genAI = new GoogleGenerativeAI("AIzaSyDpNB7IQ4qLwNU_-4g3ye8pSwHjzaKXloY")
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest" })
+
+async function runChat(text, media, mimeType) {
+ try {
+   const parssMedia = { inlineData: { data: media, mimeType } };
+   const generationConfig = { temperature: 1, topK: 0, topP: 0.95, maxOutputTokens: 3500 };
+   const chat = model.startChat({ generationConfig })
+   const result = await chat.sendMessage([text, parssMedia])
+   const response = result.response.text()
+   const parserTo = await marked.parse(response)
+   console.log(response)
+   return parserTo
+ } catch(err) {return 'err'}
 }
 
-app.get('/', (req, res) => { res.sendFile(__dirname + '/views/new.html') })
-
-const arr_what = ['من مطورك', 'من طورك', 'من صنعك', 'من برمجك', 'من اخترعك', 'منو سواك', 'منو اخترعك', 'منو صنعك', 'منو برمجك', 'منو طورك', 'من بشار']
-const arr_dev = ['بشار مرشد الحيوي', 'قام بتطويري بشار حيوي', 'بشار مرشد الحيوي القاطن في الرقة مزرعة ربيعة', 'مطوري بشار مرشد الحيوي', 'قام بإنشائي بشار وبمساعدة من  امجد الخلف']
-const arr_bad = ['مرحبا بك كيف حالك اليوم هل انت بحاجة الى مساعدة انا ذكاء اصطناعي قادر على مساعدتك', 'مرحبا انا نموذج ذكاء اصطناعي تم تطويري بواسطة بشار الحيوي', 'انا ذكاء اصطناعي تم تدريبي بواسطة بشار مرشد الحيوي']
+// runChat('hi')
 const err_msg = ['من فضلك حاول صياغة سؤالك بطريقة اخرى', 'اعتذر اني لم افهم سؤالك جيدا', 'يبدو الأتصال ضعيف حاول مجددا']
+const arr_bad = ['مرحبا بك كيف حالك اليوم هل انت بحاجة الى مساعدة انا ذكاء اصطناعي قادر على مساعدتك', 'مرحبا انا نموذج ذكاء اصطناعي تم تطويري بواسطة بشار الحيوي', 'انا ذكاء اصطناعي تم تدريبي بواسطة بشار مرشد الحيوي']
+
+// HANDLING ROTER ...
+app.get('/', (req, res) => { res.sendFile(__dirname + '/views/index.html') })
+
+// GEMINI TEXT ..
 app.post('/gemini-text', async (req, res) => {
-    try {
-        const result = await runText(req.body.message_cont)
-        if (!arr_what.includes(req.body.message_cont)) {
-            if (result == 'err') {
-                res.json({ message_cont: err_msg[Math.floor(Math.random() * err_msg.length - 1) + 1] })
-            } else {
-                if (result.includes("نموذج") && result.includes("لغوي") && result.includes("جوجل")) {
-                    res.json({message_cont: arr_bad[Math.floor(Math.random() * arr_bad.length - 1) + 1]})
-                } else {res.json({ message_cont: result })}
-            }
-        } else { res.json({ message_cont: arr_dev[Math.floor(Math.random() * arr_dev.length - 1) + 1] }) }
-
-    } catch (err) { console.log('err') }
+  try {
+    const result = await runChat(req.body.text)
+    if (result == 'err') {
+      res.json({ message: err_msg[Math.floor(Math.random() * err_msg.length - 1) + 1] })
+    } else {
+      if (result.includes("نموذج") && result.includes("أنا") && result.includes("جوجل")) {
+        res.json({ message: arr_bad[Math.floor(Math.random() * arr_bad.length - 1) + 1] })
+      } else {
+        res.json({ message: result })
+      }
+    }
+  } catch (err) { console.log('err') }
 })
 
-app.post('/gemini-image', upload.single('image'), async (req, res) => {
-    const buffer = await req.file.buffer.toString('base64')
-    try {
-        const result = await runImage(req.body.prompt, buffer)
-        if (result == 'err') {
-            res.json({ message_cont: err_msg[Math.floor(Math.random() * err_msg.length - 1) + 1] })
-        } else {
-            res.json({ message_cont: result })
-        }
-    } catch (err) { console.log('err') }
+
+// GEMINI MEDIA ..
+app.post('/gemini-media', upload.single('media'), async (req, res) => {
+  console.log(req.file)
+  const buffer = req.file.buffer.toString('base64')
+  try {
+    const result = await runChat(req.body.prompt, buffer, req.file.mimetype)
+    if (result == 'err') {
+      res.json({ message: err_msg[Math.floor(Math.random() * err_msg.length - 1) + 1] })
+    } else {
+      if (result.includes("نموذج") && result.includes("أنا") && result.includes("جوجل")) {
+        res.json({ message: arr_bad[Math.floor(Math.random() * arr_bad.length - 1) + 1] })
+      } else {
+        res.json({ message: result })
+      }
+    }
+  } catch (err) { console.log('err') }
 })
+
+
+
 
 app.get('/run', (req, res) => { res.json({run: 'server on line1'}) })
 app.get('/download', (req, res) => { res.sendFile(__dirname + '/views/download.html') })
