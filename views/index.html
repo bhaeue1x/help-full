@@ -838,14 +838,6 @@ menu {
 
 
 
-    // REMOVE LOCALE
-    if(localStorage.getItem('chats')) {
-        if (window.localStorage.length * localStorage.getItem('chats').length > 5000) {
-            localStorage.removeItem('chats')
-        }
-    }
-
-
     cheng_audio.onchange = () => {
         promptU.style.display = "flex"
         prompt_audio.style.display = "block"
