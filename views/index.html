@@ -737,6 +737,9 @@
             const EL = document.getElementById('r'+rendom).innerText
             setHistory('model', EL)
         }
+        if(type == 'err'){
+            historyData = []
+        }
         if (!localStorage.getItem('keyFollow')) {
             numDon++
             if (numDon == 5) { follow_insta.style.display = 'flex' }
@@ -780,7 +783,7 @@
             handlingMessage(data.message, 'chatText')
         } catch (err) {
             setTimeout(() => {
-                 handlingMessage(arrErr[Math.floor(Math.random() * arrErr.length - 1) + 1], 'chatText') 
+                 handlingMessage(arrErr[Math.floor(Math.random() * arrErr.length - 1) + 1], 'err') 
                  form_message.style.bottom = '0'
                  input_msg.focus();
                  disabled = true
@@ -844,7 +847,7 @@
             handlingMessage(data.message, 'chatMedio')
         } catch (err) {
             setTimeout(() => {
-                 handlingMessage(arrErr[Math.floor(Math.random() * arrErr.length - 1) + 1], 'chatMedio') 
+                 handlingMessage(arrErr[Math.floor(Math.random() * arrErr.length - 1) + 1], 'err') 
                  form_message.style.bottom = '0'
                  more_action.style.margin = '50px'
                  disabled = true
@@ -964,7 +967,7 @@
                     const data = await res.json()
                     handlingMessage(data.message, 'chatAudio')
                 } catch (err) {
-                    setTimeout(() => { handlingMessage(arrErr[Math.floor(Math.random() * arrErr.length - 1) + 1], 'chatAudio') }, 1500)
+                    setTimeout(() => { handlingMessage(arrErr[Math.floor(Math.random() * arrErr.length - 1) + 1], 'err') }, 1500)
                 }
             }
         }
