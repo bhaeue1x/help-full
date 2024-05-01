@@ -95,7 +95,7 @@
         [class^="language"]{
             margin: 5px 0;
             font-family: monospace;
-            background: #e4e0e7d8;
+            background: #ebe7eeef;
             border: #6a0ca0c2 0.4px solid;
             border-radius: 20px;
             display: block;
@@ -776,7 +776,6 @@
             })
             const data = await res.json()
             form_message.style.bottom = '0'
-            input_msg.focus();
             disabled = true
             handlingMessage(data.message, 'chatText')
         } catch (err) {
