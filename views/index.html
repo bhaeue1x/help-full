@@ -10,8 +10,6 @@
     <link rel="apple-touch-icon" href="imge.jpg" />
     <link rel="icon" type="image/jpg" href="imge.jpg">
     <title>help full</title>
-    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
     <style>
         ::-webkit-scrollbar {
             display: none;
@@ -95,27 +93,22 @@
         }
         
         [class^="language"]{
-            background: #272727 !important;
-            border-radius: 8px;
+            margin: 5px 0;
+            font-family: monospace;
+            background: #444;
+            border-radius: 20px;
+            display: block;
+            padding: 5px;
             user-select: all;
-            font-size: 14px !important;
-            padding: 4px !important;
-            text-shadow: none !important;
+            color: #407d55;
         }
         [class^="language"]::after{
             content: "copy";
-            background: rgb(67, 154, 165);
-            padding: 5px 15px;
-            border-radius: 8px;
+            background: #4283a8;
+            padding: 6px 16px;
+            border-radius: 20px;
             float: right;
             color: #FFF;  
-        }
-        code{
-            border: none !important;
-        }
-        
-        code::after{
-            display: none !important;
         }
         body {
             height: 100vh;
@@ -123,7 +116,6 @@
             width: 100%;
             direction: rtl;
             background: rgb(239, 230, 221);
-            /* background: rgb(37, 37, 37); */
         }
 
         header {
@@ -634,8 +626,7 @@
     <!-- CONTAINER ... -->
     <ul id="message_container">
 
-
-
+      
 
     </ul>
 
@@ -728,6 +719,7 @@
         if(historyData.length > 5){
             historyData.splice(0, 2)
         }
+        console.log(historyData)
     }
 
     let numDon = 0;
