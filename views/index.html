@@ -10,6 +10,8 @@
     <link rel="apple-touch-icon" href="imge.jpg" />
     <link rel="icon" type="image/jpg" href="imge.jpg">
     <title>help full</title>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
     <style>
         ::-webkit-scrollbar {
             display: none;
@@ -93,23 +95,27 @@
         }
         
         [class^="language"]{
-            margin: 5px 0;
-            font-family: monospace;
-            background: #ebe7eeef;
-            border: #6a0ca0c2 0.4px solid;
-            border-radius: 20px;
-            display: block;
-            padding: 5px;
+            background: #272727 !important;
+            border-radius: 8px;
             user-select: all;
-            color: #0067c7;
+            font-size: 14px !important;
+            padding: 4px !important;
+            text-shadow: none !important;
         }
         [class^="language"]::after{
             content: "copy";
-            background: rgb(116, 67, 165);
-            padding: 6px 16px;
-            border-radius: 20px;
+            background: rgb(67, 154, 165);
+            padding: 5px 15px;
+            border-radius: 8px;
             float: right;
             color: #FFF;  
+        }
+        code{
+            border: none !important;
+        }
+        
+        code::after{
+            display: none !important;
         }
         body {
             height: 100vh;
@@ -117,6 +123,7 @@
             width: 100%;
             direction: rtl;
             background: rgb(239, 230, 221);
+            /* background: rgb(37, 37, 37); */
         }
 
         header {
@@ -232,7 +239,6 @@
             display: flex;
             align-items: center;
             margin-bottom: 6px;
-            transition: 1s;
         }
 
         .buttons-w,
@@ -629,6 +635,8 @@
     <ul id="message_container">
 
 
+
+
     </ul>
 
     <!--FORM MESSAGE -->
@@ -737,9 +745,8 @@
             const EL = document.getElementById('r'+rendom).innerText
             setHistory('model', EL)
         }
-        if(type == 'err'){
-            historyData = []
-        }
+        if(type == 'err'){ historyData = [] }
+
         if (!localStorage.getItem('keyFollow')) {
             numDon++
             if (numDon == 5) { follow_insta.style.display = 'flex' }
