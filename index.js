@@ -9,8 +9,8 @@ app.use(express.static('views')); app.use(express.urlencoded()); app.use(express
 
 const genAI = new GoogleGenerativeAI("AIzaSyDpNB7IQ4qLwNU_-4g3ye8pSwHjzaKXloY")
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest" })
-
-const generationConfig = { temperature: 1, topK: 0, topP: 0.95, maxOutputTokens: 8192, };
+// 8192
+const generationConfig = { temperature: 1, topK: 0, topP: 0.95, maxOutputTokens: 5000, };
 const safetySettings = [
   { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE, },
   { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE, },
@@ -73,7 +73,7 @@ async function runChatAudio(data, mimeType) {
 
 
 // runChat('hi')
-const err_msg = ['حاول مجددا', 'يبدو الأتصال ضعيف حاول مجددا']
+const err_msg = ['حاول مجددا', 'هنالك مشكلة حدثت لتو, من فضلك ابلغ مطوري ليقوم بحلها, شكرا لك على تعاونك \n <a style="color: #ba005d;" href="https://instagram.com/bashar1_x">انستغرام</a> & <a style="color: #00b938;" href="https://wa.me/0985780023">واتساب</a>']
 const arr_bad = ['مرحبا بك كيف حالك اليوم هل انت بحاجة الى مساعدة انا ذكاء اصطناعي قادر على مساعدتك', 'مرحبا انا نموذج ذكاء اصطناعي تم تطويري بواسطة بشار الحيوي', 'انا ذكاء اصطناعي تم تدريبي بواسطة بشار مرشد الحيوي']
 
 // HANDLING RAOTER ...
@@ -142,7 +142,7 @@ setInterval(async () => {
   try {
     const res = await fetch('https://gemini-wjs-b.onrender.com/run')
     const data1 = await res.json()
-  } catch (err) { console.log('err') }
+  } catch (err) { console.log('errRun') }
 }, 100 * 1000)
 
 app.listen(process.env.PORT || 3000, () => { console.log(`app listen now ...`) })
