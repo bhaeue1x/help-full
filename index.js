@@ -80,7 +80,7 @@ const err_msg = ['حاول مجددا', 'هنالك مشكلة حدثت لتو, 
 const arr_bad = ['مرحبا بك كيف حالك اليوم هل انت بحاجة الى مساعدة انا ذكاء اصطناعي قادر على مساعدتك', 'مرحبا انا نموذج ذكاء اصطناعي تم تطويري بواسطة بشار الحيوي', 'انا ذكاء اصطناعي تم تدريبي بواسطة بشار مرشد الحيوي']
 
 // HANDLING RAOTER ...
-app.get('/app-1.5', (req, res) => { res.sendFile(__dirname + '/views/index.html') })
+app.get('/app-1.5', (req, res) => { res.sendFile(__dirname + '/views/index2.html') })
 
 
 // GEMINI TEXT ..
