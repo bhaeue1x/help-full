@@ -9,7 +9,7 @@
       "type": "image/jpg"
     }
   ],
-  "start_url": "/index.html",
+  "start_url": "/index2.html",
   "display": "standalone",
   "theme_color": "#FFFFFF"
 }
