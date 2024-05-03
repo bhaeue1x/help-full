@@ -5,7 +5,9 @@ import multer from "multer";
 import { marked } from "marked"; const upload = multer();
 
 const app = express()
-app.use(express.static('views')); app.use(express.urlencoded()); app.use(express.json());
+app.use(express.static('views')); 
+app.use(express.urlencoded()); 
+app.use(express.json());
 
 const genAI = new GoogleGenerativeAI("AIzaSyDpNB7IQ4qLwNU_-4g3ye8pSwHjzaKXloY")
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest" })
@@ -31,6 +33,7 @@ async function runChatText(history, text) {
     const parserTo = await marked.parse(response)
     return parserTo
   } catch (err) {
+
     return 'err'
   }
 }
@@ -77,7 +80,7 @@ const err_msg = ['حاول مجددا', 'هنالك مشكلة حدثت لتو, 
 const arr_bad = ['مرحبا بك كيف حالك اليوم هل انت بحاجة الى مساعدة انا ذكاء اصطناعي قادر على مساعدتك', 'مرحبا انا نموذج ذكاء اصطناعي تم تطويري بواسطة بشار الحيوي', 'انا ذكاء اصطناعي تم تدريبي بواسطة بشار مرشد الحيوي']
 
 // HANDLING RAOTER ...
-app.get('/', (req, res) => { res.sendFile(__dirname + '/views/index.html') })
+app.get('/app-1.5', (req, res) => { res.sendFile(__dirname + '/views/index.html') })
 
 
 // GEMINI TEXT ..
@@ -136,7 +139,12 @@ app.post('/gemini-audio',upload.single('audio'), async (req, res) => {
 
 
 app.get('/run', (req, res) => { res.json({ run: 'server on line1' }) })
+
+// DOWNLOAD APP
 app.get('/download', (req, res) => { res.sendFile(__dirname + '/views/download.html') })
+app.get('/', (req, res) => { res.sendFile(__dirname + '/views/download.html') })
+
+
 // PING BOT ----
 setInterval(async () => {
   try {
