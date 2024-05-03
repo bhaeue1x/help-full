@@ -49,7 +49,7 @@ li {
 }
 
 ul {
-    background-color: #80b4c946;
+    background-color: #85b7ca3b;
     border-radius: 20px;
     padding: 3px;
 }
@@ -85,12 +85,12 @@ code{
 
 [class^="language"]{
     margin: 5px 0;
-    background: #e0e0e0;
+    background: #ececec;
     border-radius: 20px;
     display: block;
     padding: 10px;
     user-select: all;
-    color: #152927;
+    color: #152e2b;
 }
 [class^="language"]::after{
     content: "copy";
@@ -120,7 +120,7 @@ header {
 }
 
 header>img {
-    width: 43px;
+    width: 40px;
     margin: 0 10px;
     border-radius: 50%;
 }
@@ -352,7 +352,7 @@ pre {
 
 menu {
     user-select: none;
-    background-color: #555;
+    background-color: #e4e4e4;
     width: 88%;
     min-height: 100%;
     position: absolute;
@@ -391,7 +391,7 @@ menu {
     text-decoration: none;
     color: rgb(0, 162, 255);
     margin: 0 auto;
-    border: solid 0.5px #E3E3E3;
+    border: solid 0.5px #333;
     border-radius: 8px;
     padding: 5px;
 }
@@ -429,7 +429,7 @@ menu {
 }
 
 .menu-content p {
-    color: #fff;
+    color: #333;
     font-size: 12px;
     padding: 10px;
     text-align: center;
