@@ -33,7 +33,10 @@ const but_setMore = document.getElementById("but_setMore"),
 
     follow_insta = document.getElementById("follow_insta"),
     follow_button = document.getElementById("follow_button"),
-    imr = document.querySelector(".i-m-r")
+    imr = document.querySelector(".i-m-r"),
+    header_image = document.getElementById("header_image"),
+
+    loginName = document.getElementById("loginName")
 
 const audio = new Audio('audio.mp3')
 
@@ -41,6 +44,7 @@ const now = new Date(); let hours12 = now.getHours() % 12; if (hours12 === 0) { 
 const time = `${timeOfDay} ${hours12}:${now.getMinutes().toString().padStart(2, "0")}`
 const srcImr = new Image()
 const setSrcImr = srcImr.src = "./image.jpg"
+header_image.src = setSrcImr
 // HELP FULL RESULTE
 const arrErr = ['يبدو انك غير متصل بالأنترنت', 'تحقق من الشبكة الخاصة بك', 'من فضلك تحقق من الأتصال بالأنترنت', 'لست متصل بالأنترنت تحقق من ذالك']
 let historyData = [];
@@ -84,6 +88,9 @@ function handlingMessage(data, type) {
 
 // GET CHATS IN DATA BS
 if (localStorage.getItem('chats')) { message_container.innerHTML = localStorage.getItem('chats') }
+
+
+
 
 let disabled = true;
 // //SENT MESSAGE TEXT
@@ -321,4 +328,12 @@ input_msg.onkeyup = async () => {
             button_audio.classList.remove('audio-inm')
         }
     }
+}
+
+if(!localStorage.getItem('login')){
+    window.location = 'login.html'
+}
+
+if(localStorage.getItem('name')){
+    loginName.innerHTML = localStorage.getItem('name')
 }
