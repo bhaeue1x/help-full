@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>help full login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial;
+            color: #000;
+        }
+
+        body {
+            height: 100vh;
+            max-height: 100vh;
+            width: 100%;
+            direction: rtl;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            width: 100%;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            user-select: none;
+        }
+
+        header>img {
+            width: 40px;
+            margin: 0 10px;
+            border-radius: 50%;
+        }
+
+        header>div>div {
+            border-radius: 50%;
+            height: 6px;
+            width: 6px;
+        }
+
+        header>div>h4 {
+            font-size: 16px;
+            color: #333;
+            direction: ltr;
+        }
+
+        span {
+            color: #333;
+            font-size: 20px;
+            margin: 0 auto 0 13px;
+        }
+
+        form {
+            /* background: rebeccapurple; */
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        form input {
+            padding: 5px;
+            width: 320px;
+            height: 40px;
+            border-radius: 5px;
+            border: solid 1px #638e96;
+            outline-color: #638e96;
+
+        }
+
+        input:invalid {
+            border-color: #888;
+        }
+
+        form>button {
+            padding: 15px 40px;
+            background: #638e96;
+            border: none;
+            color: #fff;
+            border-radius: 4px;
+        }
+
+        form>button:active {
+            background: #42666d;
+            transform: scale(0.98);
+        }
+    
+    </style>
+</head>
+
+<body>
+    <header>
+        <img id="header_image" src="image.jpg" alt="icon">
+        <div style="margin-top: 5px;">
+            <h4>1.5 help full</h4>
+            <div id="online"></div>
+        </div>
+        <span>تسجيل</span>
+    </header>
+
+    <form id="form" action="" method="post">
+        <p style="text-align: center;" id="error"></p>
+        <input id="inp_name" required type="text" placeholder="الأسم الكامل">
+        <input id="inp_user" required type="text" title="مسموح بلأرقام والأحرف الأنكليزية" pattern="[a-z0-9]*"
+            placeholder="اسم المستخدم">
+        <input id="inp_number" required type="number" placeholder="رقم الهاتف">
+        <button type="submit">SEND</button>
+        
+    </form>
+</body>
+<script>
+    const form = document.getElementById('form'),
+    inp_name = document.getElementById('inp_name'),
+    inp_user = document.getElementById('inp_user'),
+    inp_number = document.getElementById('inp_number'),
+    error = document.getElementById('error')
+    form.onsubmit = async (e) => {
+        e.preventDefault();
+        error.innerHTML = 'جاري التحميل'
+        const ip = await ipFun()
+        const parssToJson = await JSON.stringify({
+            name: inp_name.value,
+            user: inp_user.value,
+            number: inp_number.value,
+            ip
+        })
+
+        const res = await fetch('./login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: parssToJson
+        })
+        const data = await res.json()
+        console.log(data)
+        if(data.message == true) {
+            localStorage.setItem('login', inp_user.value+ip)
+            localStorage.setItem('name', inp_name.value)
+            window.location = 'index2.html'
+        } else{
+            const c = `<a style="color: #ba005d;" href="https://instagram.com/bashar1_x">instagram</a>
+            <a style="color: #00b938;" href="https://wa.me/0985780023">whatsapp</a>`
+            error.innerHTML = `حدث حطأ حاول مجددا, في حال استمر الخطأ راجع مزود الخدمة \n ${c}`
+        }
+    }
+
+    if(localStorage.getItem('login')){
+        form.style.display = 'none'
+         window.location = 'index2.html'
+        }
+
+    async function ipFun() {
+        const res = await fetch('https://api.ipify.org/?format=json')
+        const data = await res.json()
+        return data.ip
+    }
+
+</script>
+
+</html>
