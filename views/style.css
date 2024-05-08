@@ -456,7 +456,11 @@ menu {
     transition: 0.4s;
     margin: 50px;
 }
-
+menu> span{
+    color: #333;
+    float: left;
+    margin: 25px;
+}
 .more_action button {
     height: 50px;
     padding: 0 7px;
