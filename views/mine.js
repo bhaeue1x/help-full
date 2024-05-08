@@ -58,7 +58,7 @@ function setHistory(UorM, text) {
     if (historyData.length > 5) {
         historyData.splice(0, 2)
     }
-    console.log(historyData)
+    
 }
 
 let numDon = 0;
