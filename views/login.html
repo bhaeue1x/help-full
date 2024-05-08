@@ -52,7 +52,7 @@
 
         span {
             color: #333;
-            font-size: 20px;
+            font-size: 17px;
             margin: 0 auto 0 13px;
         }
 
@@ -62,7 +62,7 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            gap: 20px;
+            gap: 25px;
         }
 
         form input {
@@ -70,7 +70,7 @@
             width: 320px;
             height: 40px;
             border-radius: 5px;
-            border: solid 1px #336a83;
+            border: solid 1px #319658;
             outline-color: #638e96;
 
         }
@@ -129,7 +129,7 @@
                 name: inp_name.value,
                 user: inp_user.value,
                 number: inp_number.value,
-                rendom
+                ip: rendom
             })
 
             const res = await fetch('./login', {
@@ -139,8 +139,8 @@
             })
             const data = await res.json()
             if (data.message == true) {
-
-                localStorage.setItem('login', inp_user.value + rendom)
+                
+                localStorage.setItem('login', inp_user.value+rendom)
                 localStorage.setItem('name', inp_name.value)
                 window.location = 'index2.html'
             } else {
@@ -160,5 +160,4 @@
     }
 
 </script>
-
 </html>
