@@ -45,24 +45,11 @@
     </style>
 </head>
 <body>
-    <img onclick="runSpeech()" src="image.jpg" alt="no" />
+    <img src="image.jpg" alt="no" />
     <h1>help full</h1>
     <p>يجب عليك تحميل التحديث</p>
     <a download href="help_full.apk"><button>↓5MB</button></a><br>
     <a style="color: #0092DB;" href="https://www.facebook.com/share/p/yVeWNnZ6shUvFFGj/?mibextid=oFDknk">او حمل من فيسبوك</a>
 </body>
-<script>
-    function runSpeech(e) {
-        if ('speechSynthesis' in window) {
-            let text = "welcome to syria مرحبا بك"
-            const synth = window.speechSynthesis;
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.rate = 1.1; // كلام أبطأ
-            utterance.pitch = 1.3; // طبقة صوت أعلى 
-            synth.speak(utterance);
-        } else {
-            console.log("عذرًا، متصفحك لا يدعم Web Speech API.");
-        }
-    }
-</script>
+
 </html>
