@@ -19,11 +19,11 @@
             max-height: 100vh;
             width: 100%;
             direction: rtl;
-            background: #333;
+            background: #fff;
         }
 
         #call {
-            background: #333;
+            background: #fff;
             height: 100vh;
             width: 100%;
             display: flex;
@@ -43,7 +43,7 @@
             width: 200px;
             height: 200px;
             position: absolute;
-            border: 1px solid #fff;
+            border: 1px solid #333;
             transition: 0.5s;
             filter: drop-shadow(0 0 6px #00f7a4d7);
         }
@@ -97,14 +97,47 @@
 
         #call>#call_but {
             font-size: 20px;
-            padding: 10px 80px;
+            padding: 5px 80px;
             margin-bottom: 25px;
-            background: #e4e1e7;
-            border: none;
+            background: none;
+            border: 1px #333 solid;
             border-radius: 15px;
             position: relative;
             transition: 0.5s;
         }
+        
+.cont{
+    height: 40px;
+    width: 40px;
+    display: flex;
+    gap: 3px;
+    align-items: center;
+    justify-content: center;
+    
+}
+.cont div, .cont i{
+    width: 5px;
+    height: 20px;
+    background: #333;
+    border-radius: 4px;
+}
+.cont i{
+    height: 32px;
+}
+.cont div:after {
+    content: "";
+    position: relative;
+    left: 24px;
+    top: 5px;
+    display: block;
+    width: 5px;
+    height: 10px;
+    background: #333;
+    border-radius: 4px;
+}
+.cont .d1:after{
+    left: -24px;
+}
     </style>
 </head>
 
@@ -117,7 +150,13 @@
             <i id="it"></i>
             <i></i>
         </div>
-        <button id="call_but">✨</button>
+        <button id="call_but">
+            <div id="header_call" class="cont">
+                <div class="d1"></div>
+                <i></i>
+                <div class="d3"></div>
+            </div>
+        </button>
     </div>
 
 </body>
