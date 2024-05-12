@@ -36,7 +36,9 @@ const but_setMore = document.getElementById("but_setMore"),
     imr = document.querySelector(".i-m-r"),
     header_image = document.getElementById("header_image"),
 
-    loginName = document.getElementById("loginName")
+    loginName = document.getElementById("loginName"),
+
+    header_call = document.getElementById("header_call")
 
 const audio = new Audio('audio.mp3')
 
@@ -336,4 +338,8 @@ if(!localStorage.getItem('login')){
 
 if(localStorage.getItem('name')){
     loginName.innerHTML = localStorage.getItem('name')
+}
+
+header_call.onclick = async () => {
+    window.location = 'call.html'
 }
