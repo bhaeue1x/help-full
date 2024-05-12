@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="google" content="notranslate">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>Document</title>
+    <script src="setSund.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            max-height: 100vh;
+            width: 100%;
+            direction: rtl;
+            background: #333;
+        }
+
+        #call {
+            background: #333;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: column;
+
+        }
+
+        .container {
+            width: 210px;
+            height: 210px;
+            margin-top: 150px;
+        }
+
+        .container i {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            border: 1px solid #fff;
+            transition: 0.5s;
+            filter: drop-shadow(0 0 6px #00f7a4d7);
+        }
+
+        .container i:nth-child(1) {
+            border-radius: 43% 57% 74% 44% / 44% 36% 85% 56%;
+            animation: identifier1 3s linear infinite;
+        }
+
+        .container i:nth-child(2) {
+            border-radius: 62% 38% 42% 58% / 52% 38% 88% 48%;
+            animation: identifier2 4s linear infinite;
+            border-color: aqua;
+            filter: drop-shadow(0 0 6px aqua);
+        }
+
+        .container i:nth-child(3) {
+            border-radius: 44% 56% 42% 84% / 37% 65% 35% 63%;
+            animation: identifier3 5s linear infinite;
+        }
+
+        @keyframes identifier1 {
+            0% {
+                rotate: 0deg;
+            }
+
+            100% {
+                rotate: 360deg;
+            }
+        }
+
+        @keyframes identifier2 {
+            0% {
+                rotate: 0deg;
+            }
+
+            100% {
+                rotate: 360deg;
+            }
+        }
+
+        @keyframes identifier3 {
+            0% {
+                rotate: 0deg;
+            }
+
+            100% {
+                rotate: 360deg;
+            }
+        }
+
+        #call>#call_but {
+            font-size: 20px;
+            padding: 10px 80px;
+            margin-bottom: 25px;
+            background: #e4e1e7;
+            border: none;
+            border-radius: 15px;
+            position: relative;
+            transition: 0.5s;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="call">
+
+        <div class="container">
+            <i></i>
+            <i id="it"></i>
+            <i></i>
+        </div>
+        <button id="call_but">✨</button>
+    </div>
+
+</body>
+<script>
+    const call_but = document.getElementById('call_but')
+    const it = document.getElementById('it')
+
+    let b2 = true; let recorder2; let blobUrl;
+    async function saveAudio() {
+        if (b2 == true) {
+            it.style.borderColor = '#6e0cee'
+            it.style.filter = 'drop-shadow(0 0 6px #6e0cee)'
+            
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(async (stream) => {
+                    recorder2 = new MediaRecorder(stream);
+                    recorder2.start();
+                    b2 = false
+                })
+                .catch((err) => { console.log(err) })
+        } else {
+            it.style.borderColor = 'aqua'
+            it.style.filter = 'drop-shadow(0 0 6px aqua)'
+            await recorder2.stop()
+            call_but.style.top = '70px'
+            recorder2.ondataavailable = function (e) {
+                blobUrl = e.data;
+                b2 = true;
+            }
+        }
+    }
+
+    call_but.onclick = () => {
+        if (b2 == true) {
+            saveAudio()
+        } else {
+            saveAudio()
+            setTimeout(async () => {
+                const formData = new FormData()
+                formData.append('audio', blobUrl, 'audio.webm')
+                try {
+                    const res = await fetch('./gemini-call', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    const data = await res.json()
+                    console.log(data.message)
+                    responsiveVoice.speak(data.message, "Arabic Female", {
+                        rate: 1.1, // أبطأ
+                        pitch: 1.1, // أعلى
+                        volume: 1.1 // أكثر هدوءًا
+                    });
+                } catch (err) {
+                    responsiveVoice.speak("من فضلك تحقق من الشبكة الخاصة بك", "Arabic Female", {
+                        rate: 1.1, // أبطأ
+                        pitch: 1.1, // أعلى
+                        volume: 1.1 // أكثر هدوءًا
+                    });
+                }
+            }, 0)
+        }
+    }
+</script>
+
+</html>
