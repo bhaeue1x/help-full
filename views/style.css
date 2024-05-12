@@ -140,10 +140,15 @@ header>div>h4 {
 #menu_button {
     color: #333;
     font-size: 22px;
-    margin: 0 auto 0 13px;
     font-weight: bold;
     cursor: pointer;
     transform: rotate(200deg);
+}
+.header-cont{
+    margin: 0 auto 0 13px;
+    display: flex;
+    align-items: center;
+    gap: 35px;
 }
 
 #message_container {
@@ -569,4 +574,39 @@ menu> span{
     border-radius: 4px 4px 1px 1px;
     top: 12px;
     left: -2.5px;
+}
+
+
+
+.cont{
+    height: 50px;
+    width: 50px;
+    display: flex;
+    gap: 3px;
+    align-items: center;
+    justify-content: center;
+    
+}
+.cont div, .cont i{
+    width: 4px;
+    height: 18px;
+    background: #333;
+    border-radius: 4px;
+}
+.cont i{
+    height: 27px;
+}
+.cont div:after {
+    content: "";
+    position: relative;
+    left: 20px;
+    top: 5px;
+    display: block;
+    width: 4px;
+    height: 8px;
+    background: #333;
+    border-radius: 4px;
+}
+.cont .d1:after{
+    left: -20px;
 }
