@@ -51,10 +51,25 @@ async function runChatAudio(data, mimeType) {
       generationConfig,
       safetySettings
     })
-    const result = await chat.sendMessage(['?', parssMedia])
+    const result = await chat.sendMessage([' ', parssMedia])
     const response = result.response.text()
     const parserTo = await marked.parse(response)
     return parserTo
+  } catch (err) {
+    return 'err'
+  }
+}
+// RUN CHAT CALL
+async function runChatCall(data, mimeType) {
+  try {
+    const parssMedia = { inlineData: { data, mimeType } };
+    const chat = model.startChat({
+      generationConfig,
+      safetySettings
+    })
+    const result = await chat.sendMessage([' ', parssMedia])
+    const response = result.response.text()
+    return response
   } catch (err) {
     return 'err'
   }
@@ -112,6 +127,23 @@ app.post('/gemini-audio', upload.single('audio'), async (req, res) => {
   const buffer = req.file.buffer.toString('base64')
   try {
     const result = await runChatAudio(buffer, req.file.mimetype)
+    if (result == 'err') {
+      res.json({ message: err_msg[Math.floor(Math.random() * err_msg.length - 1) + 1] })
+    } else {
+      if (result.includes("نموذج") && result.includes("أنا") && result.includes("جوجل")) {
+        res.json({ message: arr_bad[Math.floor(Math.random() * arr_bad.length - 1) + 1] })
+      } else {
+        res.json({ message: result })
+      }
+    }
+  } catch (err) { console.log('err') }
+})
+
+// GEMINI CALL ..
+app.post('/gemini-call', upload.single('audio'), async (req, res) => {
+  const buffer = req.file.buffer.toString('base64')
+  try {
+    const result = await runChatCall(buffer, req.file.mimetype)
     if (result == 'err') {
       res.json({ message: err_msg[Math.floor(Math.random() * err_msg.length - 1) + 1] })
     } else {
