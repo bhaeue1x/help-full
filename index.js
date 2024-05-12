@@ -51,7 +51,7 @@ async function runChatAudio(data, mimeType) {
       generationConfig,
       safetySettings
     })
-    const result = await chat.sendMessage([' ', parssMedia])
+    const result = await chat.sendMessage(['?', parssMedia])
     const response = result.response.text()
     const parserTo = await marked.parse(response)
     return parserTo
@@ -67,7 +67,7 @@ async function runChatCall(data, mimeType) {
       generationConfig,
       safetySettings
     })
-    const result = await chat.sendMessage([' ', parssMedia])
+    const result = await chat.sendMessage(['?', parssMedia])
     const response = result.response.text()
     return response
   } catch (err) {
