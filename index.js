@@ -27,6 +27,18 @@ async function runChatText(history, text) {
     return parserTo
   } catch (err) { return 'err' }
 }
+
+// RUN CHAT CALL
+async function runChatCall(history, text) {
+  try {
+    const chat = model.startChat({
+      generationConfig, safetySettings, history: history
+    })
+    const result = await chat.sendMessage(text)
+    const response = result.response.text()
+    return response
+  } catch (err) { return 'err' }
+}
 // RUN CHAT MEDIA
 async function runChatMedia(history, prompt, data, mimeType) {
   try {
@@ -51,7 +63,7 @@ async function runChatAudio(data, mimeType) {
       generationConfig,
       safetySettings
     })
-    const result = await chat.sendMessage(['?', parssMedia])
+    const result = await chat.sendMessage([' ', parssMedia])
     const response = result.response.text()
     const parserTo = await marked.parse(response)
     return parserTo
@@ -59,21 +71,7 @@ async function runChatAudio(data, mimeType) {
     return 'err'
   }
 }
-// RUN CHAT CALL
-async function runChatCall(data, mimeType) {
-  try {
-    const parssMedia = { inlineData: { data, mimeType } };
-    const chat = model.startChat({
-      generationConfig,
-      safetySettings
-    })
-    const result = await chat.sendMessage(['?', parssMedia])
-    const response = result.response.text()
-    return response
-  } catch (err) {
-    return 'err'
-  }
-}
+
 
 
 
@@ -89,6 +87,22 @@ app.get('/app-1.5', (req, res) => { res.sendFile(__dirname + '/views/index2.html
 app.post('/gemini-text', async (req, res) => {
   try {
     const result = await runChatText(req.body.historyData, req.body.text)
+    if (result == 'err') {
+      res.json({ message: err_msg[Math.floor(Math.random() * err_msg.length - 1) + 1] })
+    } else {
+      if (result.includes("نموذج") && result.includes("أنا") && result.includes("جوجل")) {
+        res.json({ message: arr_bad[Math.floor(Math.random() * arr_bad.length - 1) + 1] })
+      } else {
+        res.json({ message: result })
+      }
+    }
+  } catch (err) { console.log('err') }
+})
+
+// GEMINI CALL ..
+app.post('/gemini-call', async (req, res) => {
+  try {
+    const result = await runChatCall(req.body.historyData, req.body.text)
     if (result == 'err') {
       res.json({ message: err_msg[Math.floor(Math.random() * err_msg.length - 1) + 1] })
     } else {
@@ -127,23 +141,6 @@ app.post('/gemini-audio', upload.single('audio'), async (req, res) => {
   const buffer = req.file.buffer.toString('base64')
   try {
     const result = await runChatAudio(buffer, req.file.mimetype)
-    if (result == 'err') {
-      res.json({ message: err_msg[Math.floor(Math.random() * err_msg.length - 1) + 1] })
-    } else {
-      if (result.includes("نموذج") && result.includes("أنا") && result.includes("جوجل")) {
-        res.json({ message: arr_bad[Math.floor(Math.random() * arr_bad.length - 1) + 1] })
-      } else {
-        res.json({ message: result })
-      }
-    }
-  } catch (err) { console.log('err') }
-})
-
-// GEMINI CALL ..
-app.post('/gemini-call', upload.single('audio'), async (req, res) => {
-  const buffer = req.file.buffer.toString('base64')
-  try {
-    const result = await runChatCall(buffer, req.file.mimetype)
     if (result == 'err') {
       res.json({ message: err_msg[Math.floor(Math.random() * err_msg.length - 1) + 1] })
     } else {
