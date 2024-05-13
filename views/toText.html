@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="google" content="notranslate">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>تحويل الصوت إلى نص</title>
+</head>
+<body>
+  <h1>تحويل الصوت إلى نص</h1>
+  <button onclick="startSpeechRecognition()">ابدأ التسجيل</button>
+  <p id="transcript"></p>
+
+  <script>
+    function startSpeechRecognition() {
+      // التحقق من توافق المتصفح مع Web Speech API
+      if ('webkitSpeechRecognition' in window) {
+        const recognition = new webkitSpeechRecognition();
+
+        // إعدادات التعرف
+        recognition.continuous = true; // الاستمرار في التسجيل حتى إيقافه يدويًا
+        recognition.interimResults = true; // عرض نتائج مؤقتة أثناء التسجيل
+        recognition.lang = 'ar-SA'; // تعيين اللغة إلى العربية السعودية (يمكن تغييره حسب الحاجة)
+
+        // معالجة أحداث التعرف
+        recognition.onstart = () => {
+          console.log('بدأ التسجيل');
+          document.getElementById('transcript').textContent = 'جارٍ التسجيل...';
+        };
+
+        recognition.onresult = (event) => {
+          let transcript = '';
+          for (let i = event.resultIndex; i < event.results.length; i++) {
+            if (event.results[i].isFinal) {
+              transcript += event.results[i][0].transcript;
+            } else {
+              transcript += event.results[i][0].transcript + ' ';
+            }
+          }
+          document.getElementById('transcript').textContent = transcript;
+        };
+
+        recognition.onerror = (event) => {
+          console.error('حدث خطأ:', event.error);
+          document.getElementById('transcript').textContent = 'حدث خطأ أثناء التسجيل.';
+        };
+
+        recognition.onend = () => {
+          console.log('انتهى التسجيل');
+        };
+
+        // بدء التسجيل
+        recognition.start();
+      } else {
+        console.error('متصفحك لا يدعم Web Speech API.');
+      }
+    }
+  </script>
+</body>
+</html>
