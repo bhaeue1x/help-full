@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="google" content="notranslate">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>Document</title>
+    <title>full call</title>
     <script src="setSund.js"></script>
     <style>
         * {
@@ -36,7 +36,7 @@
         .container {
             width: 210px;
             height: 210px;
-            margin-top: 150px;
+            margin-top: 190px;
         }
 
         .container i {
@@ -45,7 +45,6 @@
             position: absolute;
             border: 1px solid #333;
             transition: 0.5s;
-            filter: drop-shadow(0 0 6px #00f7a4d7);
         }
 
         .container i:nth-child(1) {
@@ -56,8 +55,8 @@
         .container i:nth-child(2) {
             border-radius: 62% 38% 42% 58% / 52% 38% 88% 48%;
             animation: identifier2 4s linear infinite;
-            border-color: aqua;
-            filter: drop-shadow(0 0 6px aqua);
+            border-color: #2bff00;
+            filter: drop-shadow(0 0 10px #2bff00);
         }
 
         .container i:nth-child(3) {
@@ -105,44 +104,35 @@
             position: relative;
             transition: 0.5s;
         }
-        
-.cont{
-    height: 40px;
-    width: 40px;
-    display: flex;
-    gap: 3px;
-    align-items: center;
-    justify-content: center;
-    
-}
-.cont div, .cont i{
-    width: 5px;
-    height: 20px;
-    background: #333;
-    border-radius: 4px;
-}
-.cont i{
-    height: 32px;
-}
-.cont div:after {
-    content: "";
-    position: relative;
-    left: 24px;
-    top: 5px;
-    display: block;
-    width: 5px;
-    height: 10px;
-    background: #333;
-    border-radius: 4px;
-}
-.cont .d1:after{
-    left: -24px;
-}
+
+        .cont {
+            height: 40px;
+            width: 40px;
+            display: flex;
+            gap: 3px;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        .cont i {
+            width: 5px;
+            background: #333;
+            border-radius: 4px;
+        }
+        #err{
+            text-align: center;
+            position: relative;
+            top: 40px;
+            color: #444;
+            opacity: 0;
+            transition: 0.5s;
+        }
     </style>
 </head>
 
-<body>
-
+<body onload="">
+    <p id="err">err</p>
     <div id="call">
 
         <div class="container">
@@ -150,78 +140,128 @@
             <i id="it"></i>
             <i></i>
         </div>
-        <button id="call_but">
+        <button onclick="startSpeechRecognition()" id="call_but">
             <div id="header_call" class="cont">
-                <div class="d1"></div>
-                <i></i>
-                <div class="d3"></div>
+                <i style="height: 8px;"></i>
+                <i style="height: 20px;"></i>
+                <i style="height: 30px;"></i>
+                <i style="height: 20px;"></i>
+                <i style="height: 8px;"></i>
             </div>
         </button>
     </div>
 
 </body>
 <script>
+
     const call_but = document.getElementById('call_but')
     const it = document.getElementById('it')
+    const err = document.getElementById('err')
 
-    let b2 = true; let recorder2; let blobUrl;
-    async function saveAudio() {
-        if (b2 == true) {
-            it.style.borderColor = '#6e0cee'
-            it.style.filter = 'drop-shadow(0 0 6px #6e0cee)'
-            
-            navigator.mediaDevices.getUserMedia({ audio: true })
-                .then(async (stream) => {
-                    recorder2 = new MediaRecorder(stream);
-                    recorder2.start();
-                    b2 = false
-                })
-                .catch((err) => { console.log(err) })
-        } else {
-            it.style.borderColor = 'aqua'
-            it.style.filter = 'drop-shadow(0 0 6px aqua)'
-            await recorder2.stop()
-            call_but.style.top = '80px'
-            recorder2.ondataavailable = function (e) {
-                blobUrl = e.data;
-                b2 = true;
-            }
-        }
-    }
+    function startSpeechRecognition() {
+        
+        call_but.style.top = '90px'
+        if ('webkitSpeechRecognition' in window) {
+            const recognition = new webkitSpeechRecognition();
 
-    call_but.onclick = () => {
-        if (b2 == true) {
-            saveAudio()
-        } else {
-            saveAudio()
-            setTimeout(async () => {
-                const formData = new FormData()
-                formData.append('audio', blobUrl, 'audio.webm')
-                try {
-                    const res = await fetch('./gemini-call', {
-                        method: 'POST',
-                        body: formData
-                    })
-                    const data = await res.json()
-                    // console.log(data.message)
-                    responsiveVoice.speak(data.message, "Arabic Female", {
-                        rate: 1.1, // أبطأ
-                        pitch: 1.1, // أعلى
-                        volume: 1.1 // أكثر هدوءًا
-                    });
-                } catch (err) {
-                    responsiveVoice.speak("من فضلك تحقق من الشبكة الخاصة بك", "Arabic Female", {
-                        rate: 1.1, // أبطأ
-                        pitch: 1.1, // أعلى
-                        volume: 1.1 // أكثر هدوءًا
-                    });
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.lang = 'ar-SA';
+
+            recognition.onstart = () => {
+                console.log('بدأ التسجيل');
+                it.style.borderColor = '#2bff00'
+                it.style.filter = 'drop-shadow(0 0 6px #2bff00)'
+
+            };
+            let finfhTyping;
+            recognition.onresult = (event) => {
+                let transcript = '';
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    if (event.results[i].isFinal) {
+                        transcript += event.results[i][0].transcript;
+                    } else {
+                        transcript += event.results[i][0].transcript + ' ';
+                    }
                 }
-            }, 0)
+                finfhTyping = transcript
+                console.log('1111',finfhTyping)
+            };
+
+            recognition.onerror = (event) => {
+                console.error('حدث خطأ:', event.error);
+                funErr('تحقق من الشيكة؟')
+            };
+
+            recognition.onend = () => {
+                console.log('انتهى التسجيل');
+                console.log(finfhTyping)
+                if(finfhTyping == ""){
+                    speech('هل تحتاج الى مساعدة')
+                } else{
+                    postBack(finfhTyping)
+                }
+                it.style.borderColor = '#6e0cee'
+                it.style.filter = 'drop-shadow(0 0 6px #6e0cee)'
+            };
+
+
+            recognition.start();
+        } else {
+            funErr('جهازك لا يدعم الخاصية')
+        }
+    }
+    // startSpeechRecognition()
+    let historyData = [];
+    function setHistory(UorM, text) {
+        let x =
+        {
+            role: UorM, parts: [{ text: text }]
+        }
+        historyData.push(x)
+
+        if (historyData.length > 5) {
+            historyData.splice(0, 2)
+        }
+    }
+    const postBack = async (e) => {
+        await setHistory('user', e)
+        const parssToJson = await JSON.stringify({ text: e, historyData })
+        try {
+            const res = await fetch('./gemini-call', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: parssToJson
+            })
+            const data = await res.json()
+            speech(data.message)
+        } catch (err) {
+            speech('من فضلك تحقق من الشبكة الخاصة بك')
+            funErr('تحقق من الشبكة')
         }
     }
 
-    it.onclick = () => {
-        window.location = 'toText.html'
+    const speech = (e) => {
+        setHistory('model', e)
+        responsiveVoice.speak(e, "Arabic Female", {
+            rate: 1.1, // أبطأ
+            pitch: 1.1, // أعلى
+            volume: 1.1 // أكثر هدوءًا
+        });
+        it.style.borderColor = 'aqua'
+        it.style.filter = 'drop-shadow(0 0 6px aqua)'
+    }
+
+    const restart = () => {
+        startSpeechRecognition()
+    }
+
+    const funErr = (e) => {
+        err.style.opacity = '1'
+        err.innerText = e
+        setTimeout(() => {
+            err.style.opacity = '0'
+        }, 3000)
     }
 </script>
 
