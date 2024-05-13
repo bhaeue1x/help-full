@@ -30,7 +30,7 @@
             justify-content: space-between;
             align-items: center;
             flex-direction: column;
-
+            overflow: hidden;
         }
 
         .container {
@@ -181,7 +181,7 @@
             it.style.borderColor = 'aqua'
             it.style.filter = 'drop-shadow(0 0 6px aqua)'
             await recorder2.stop()
-            call_but.style.top = '70px'
+            call_but.style.top = '80px'
             recorder2.ondataavailable = function (e) {
                 blobUrl = e.data;
                 b2 = true;
@@ -203,7 +203,7 @@
                         body: formData
                     })
                     const data = await res.json()
-                    console.log(data.message)
+                    // console.log(data.message)
                     responsiveVoice.speak(data.message, "Arabic Female", {
                         rate: 1.1, // أبطأ
                         pitch: 1.1, // أعلى
@@ -218,6 +218,10 @@
                 }
             }, 0)
         }
+    }
+
+    it.onclick = () => {
+        window.location = 'toText.html'
     }
 </script>
 
