@@ -196,7 +196,7 @@
             recognition.onend = () => {
                 console.log('انتهى التسجيل');
                 console.log(finfhTyping)
-                if(finfhTyping == ""){
+                if(finfhTyping == "" || finfhTyping == " "){
                     speech('هل تحتاج الى مساعدة')
                 } else{
                     postBack(finfhTyping)
@@ -211,22 +211,21 @@
             funErr('جهازك لا يدعم الخاصية')
         }
     }
-    // startSpeechRecognition()
-    let historyData = [];
-    function setHistory(UorM, text) {
-        let x =
-        {
-            role: UorM, parts: [{ text: text }]
-        }
-        historyData.push(x)
+    
+    // let historyData = [];
+    // function setHistory(UorM, text) {
+    //     let x =
+    //     {
+    //         role: UorM, parts: [{ text: text }]
+    //     }
+    //     historyData.push(x)
 
-        if (historyData.length > 5) {
-            historyData.splice(0, 2)
-        }
-    }
+    //     if (historyData.length > 5) {
+    //         historyData.splice(0, 2)
+    //     }
+    // }
     const postBack = async (e) => {
-        await setHistory('user', e)
-        const parssToJson = await JSON.stringify({ text: e, historyData })
+        const parssToJson = await JSON.stringify({ text: e })
         try {
             const res = await fetch('./gemini-call', {
                 method: 'POST',
@@ -242,7 +241,6 @@
     }
 
     const speech = (e) => {
-        setHistory('model', e)
         responsiveVoice.speak(e, "Arabic Female", {
             rate: 1.1, // أبطأ
             pitch: 1.1, // أعلى
