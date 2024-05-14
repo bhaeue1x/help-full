@@ -29,10 +29,10 @@ async function runChatText(history, text) {
 }
 
 // RUN CHAT CALL
-async function runChatCall(history, text) {
+async function runChatCall(text) {
   try {
     const chat = model.startChat({
-      generationConfig, safetySettings, history: history
+      generationConfig, safetySettings
     })
     const result = await chat.sendMessage(text)
     const response = result.response.text()
@@ -76,7 +76,7 @@ async function runChatAudio(data, mimeType) {
 
 
 // runChat('hi')
-const err_msg = ['حاول مجددا', 'هنالك مشكلة حدثت لتو, من فضلك ابلغ مطوري ليقوم بحلها, شكرا لك على تعاونك \n <a style="color: #ba005d;" href="https://instagram.com/bashar1_x">انستغرام</a> & <a style="color: #00b938;" href="https://wa.me/0985780023">واتساب</a>']
+const err_msg = ['حاول مجددا', 'هنالك مشكلة حدثت للتو, من فضلك ابلغ مطوري ليقوم بحلها, شكرا لك على تعاونك روابط التواصل في القائمة الجانبية']
 const arr_bad = ['مرحبا بك كيف حالك اليوم هل انت بحاجة الى مساعدة انا ذكاء اصطناعي قادر على مساعدتك', 'مرحبا انا نموذج ذكاء اصطناعي تم تطويري بواسطة بشار الحيوي', 'انا ذكاء اصطناعي تم تدريبي بواسطة بشار مرشد الحيوي']
 
 // HANDLING RAOTER ...
@@ -102,7 +102,7 @@ app.post('/gemini-text', async (req, res) => {
 // GEMINI CALL ..
 app.post('/gemini-call', async (req, res) => {
   try {
-    const result = await runChatCall(req.body.historyData, req.body.text)
+    const result = await runChatCall(req.body.text)
     if (result == 'err') {
       res.json({ message: err_msg[Math.floor(Math.random() * err_msg.length - 1) + 1] })
     } else {
