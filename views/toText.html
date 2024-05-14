@@ -1,60 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="google" content="notranslate">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <title>تحويل الصوت إلى نص</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحويل النص إلى صوت</title>
 </head>
 <body>
-  <h1>تحويل الصوت إلى نص</h1>
-  <button onclick="startSpeechRecognition()">ابدأ التسجيل</button>
-  <p id="transcript"></p>
 
-  <script>
-    function startSpeechRecognition() {
-      // التحقق من توافق المتصفح مع Web Speech API
-      if ('webkitSpeechRecognition' in window) {
-        const recognition = new webkitSpeechRecognition();
+<textarea id="text-input" placeholder="أدخل النص هنا"></textarea>
+<button id="speak-button">انطق النص</button>
+<p id="support-message"></p>
 
-        // إعدادات التعرف
-        recognition.continuous = true; // الاستمرار في التسجيل حتى إيقافه يدويًا
-        recognition.interimResults = true; // عرض نتائج مؤقتة أثناء التسجيل
-        recognition.lang = 'ar-SA'; // تعيين اللغة إلى العربية السعودية (يمكن تغييره حسب الحاجة)
+<script>
+    const textInput = document.getElementById('text-input');
+    const speakButton = document.getElementById('speak-button');
+    const supportMessage = document.getElementById('support-message');
 
-        // معالجة أحداث التعرف
-        recognition.onstart = () => {
-          console.log('بدأ التسجيل');
-          document.getElementById('transcript').textContent = 'جارٍ التسجيل...';
-        };
+    //  التحقق من دعم المتصفح 
+    if ('speechSynthesis' in window) {
+        supportMessage.textContent = 'متصفحك يدعم تحويل النص إلى صوت!';
+        speakButton.addEventListener('click', () => {
+            const text = textInput.value;
+            if (text.trim() !== '') {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'ar-SA';
 
-        recognition.onresult = (event) => {
-          let transcript = '';
-          for (let i = event.resultIndex; i < event.results.length; i++) {
-            if (event.results[i].isFinal) {
-              transcript += event.results[i][0].transcript;
-            } else {
-              transcript += event.results[i][0].transcript + ' ';
+                //  تشغيل الدالة عند الانتهاء 
+                utterance.onend = () => {
+                    console.log('انتهى التكلم!');
+                    //  يمكنك إضافة أي كود هنا لتنفيذه عند انتهاء التكلم 
+                };
+
+                window.speechSynthesis.speak(utterance);
             }
-          }
-          document.getElementById('transcript').textContent = transcript;
-        };
-
-        recognition.onerror = (event) => {
-          console.error('حدث خطأ:', event.error);
-          document.getElementById('transcript').textContent = 'حدث خطأ أثناء التسجيل.';
-        };
-
-        recognition.onend = () => {
-          console.log('انتهى التسجيل');
-        };
-
-        // بدء التسجيل
-        recognition.start();
-      } else {
-        console.error('متصفحك لا يدعم Web Speech API.');
-      }
+        });
+    } else {
+        supportMessage.textContent = 'متصفحك لا يدعم تحويل النص إلى صوت.';
+        speakButton.disabled = true;
     }
-  </script>
+</script>
 </body>
 </html>
