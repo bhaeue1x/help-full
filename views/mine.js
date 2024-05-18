@@ -1,48 +1,55 @@
 //CONSTENT AND VAREBUL
 const but_setMore = document.getElementById("but_setMore"),
-    cheng_image = document.getElementById("cheng_image"),
-    cheng_video = document.getElementById("cheng_video"),
-    cheng_audio = document.getElementById("cheng_audio"),
-    cheng_file = document.getElementById("cheng_file"),
+cheng_image = document.getElementById("cheng_image"),
+cheng_video = document.getElementById("cheng_video"),
+cheng_audio = document.getElementById("cheng_audio"),
+cheng_file = document.getElementById("cheng_file"),
 
 
-    prompt_audio = document.getElementById("prompt_audio"),
-    prompt_img = document.getElementById("prompt_img"),
-    prompt_video = document.getElementById("prompt_video"),
-    prompt_file = document.getElementById("prompt_file"),
-
-
-
-    button_audio = document.getElementById("button_audio"),
-    button_msg = document.getElementById("button_msg"),
+prompt_audio = document.getElementById("prompt_audio"),
+prompt_img = document.getElementById("prompt_img"),
+prompt_video = document.getElementById("prompt_video"),
+prompt_file = document.getElementById("prompt_file"),
 
 
 
-    more_action = document.getElementById("more_action"),
-    online = document.getElementById("online"),
-    menu = document.getElementById("menu"),
-    menu_button = document.getElementById("menu_button"),
+button_audio = document.getElementById("button_audio"),
+button_msg = document.getElementById("button_msg"),
 
-    message_container = document.getElementById("message_container"),
-    form_message = document.getElementById("form_message"),
-    input_msg = document.getElementById("input_msg"),
-    promptU = document.getElementById("prompt"),
 
-    prompt_send = document.getElementById("prompt-send"),
-    prompt_input = document.getElementById("prompt-input"),
 
-    follow_insta = document.getElementById("follow_insta"),
-    follow_button = document.getElementById("follow_button"),
-    imr = document.querySelector(".i-m-r"),
-    header_image = document.getElementById("header_image"),
+more_action = document.getElementById("more_action"),
+online = document.getElementById("online"),
+menu = document.getElementById("menu"),
+menu_button = document.getElementById("menu_button"),
 
-    loginName = document.getElementById("loginName"),
+message_container = document.getElementById("message_container"),
+form_message = document.getElementById("form_message"),
+input_msg = document.getElementById("input_msg"),
+promptU = document.getElementById("prompt"),
 
-    header_call = document.getElementById("header_call")
+prompt_send = document.getElementById("prompt-send"),
+prompt_input = document.getElementById("prompt-input"),
+
+follow_insta = document.getElementById("follow_insta"),
+follow_button = document.getElementById("follow_button"),
+imr = document.querySelector(".i-m-r"),
+header_image = document.getElementById("header_image"),
+
+loginName = document.getElementById("loginName"),
+
+header_call = document.getElementById("header_call"),
+
+header_genr = document.getElementById("header-genr"),
+for_image = document.getElementById("for_image")
 
 const audio = new Audio('audio.mp3')
 
-const now = new Date(); let hours12 = now.getHours() % 12; if (hours12 === 0) { hours12 = 12 }; let timeOfDay = "AM"; if (now.getHours() >= 12) { timeOfDay = "PM"; };
+const now = new Date(); let hours12 = now.getHours() % 12; if (hours12 === 0) {
+    hours12 = 12
+}; let timeOfDay = "AM"; if (now.getHours() >= 12) {
+    timeOfDay = "PM";
+};
 const time = `${timeOfDay} ${hours12}:${now.getMinutes().toString().padStart(2, "0")}`
 const srcImr = new Image()
 const setSrcImr = srcImr.src = "./image.jpg"
@@ -53,43 +60,68 @@ let historyData = [];
 function setHistory(UorM, text) {
     let x =
     {
-        role: UorM, parts: [{ text: text }]
+        role: UorM,
+        parts: [{
+            text: text
+        }]
     }
     historyData.push(x)
 
     if (historyData.length > 5) {
         historyData.splice(0, 2)
     }
-    
+
 }
 
 let numDon = 0;
-function handlingMessage(data, type) {
+function handlingMessage(data, type, image) {
+    if(image){
+        var x = `
+        <div class="for-image">
+        <img onclick="saveImage(this.src)" src="${image[0]}" alt="no" />
+        <img onclick="saveImage(this.src)" src="${image[1]}" alt="no" />
+        <img onclick="saveImage(this.src)" src="${image[2]}" alt="no" />
+        <img onclick="saveImage(this.src)" src="${image[3]}" alt="no" />
+        </div>
+        `
+    } else{
+        x = ''
+    }
     const rendom = Math.floor(Math.random() * 9999999999) + 1
     message_container.innerHTML += `
-<li class="message-right">
+    <li class="message-right">
     <img class="i-m-r" src="${setSrcImr}">
-<div id="r${rendom}">
-     ${data} 
-</div>
-<span>المساعد - ${time}</span>
-</li>`
+    <div id="r${rendom}">
+    ${data}
+    ${x}
+    
+
+    </div>
+    <span>المساعد - ${time}</span>
+    </li>`
+
     scroll()
     if (type == 'chatText') {
         const EL = document.getElementById('r' + rendom).innerText
         setHistory('model', EL)
     }
-    if (type == 'err') { historyData = [] }
+    if (type == 'err') {
+        historyData = []
+    }
 
     if (!localStorage.getItem('keyFollow')) {
         numDon++
-        if (numDon == 5) { follow_insta.style.display = 'flex' }
+        if (numDon == 5) {
+            follow_insta.style.display = 'flex'
+        }
     }
     saveChats(message_container.innerHTML)
 }
 
 // GET CHATS IN DATA BS
-if (localStorage.getItem('chats')) { message_container.innerHTML = localStorage.getItem('chats') }
+if (localStorage.getItem('chats')) {
+    message_container.innerHTML = localStorage.getItem('chats')
+}
 
 
 
@@ -97,35 +129,45 @@ if (localStorage.getItem('chats')) { message_container.innerHTML = localStorage.
 let disabled = true;
 // //SENT MESSAGE TEXT
 button_msg.onclick = async () => {
-    if (input_msg.value == '') { return input_msg.focus() }
+    if (input_msg.value == '') {
+        return input_msg.focus()
+    }
     if (disabled == true) {
         form_message.style.bottom = '-60px'
         disabled = false
     }
 
     message_container.innerHTML += `
-<li class="message-left">
-<div class="i-m-u"><div></div></div>
-    <p> <pre>${input_msg.value}</pre> </p>
-    <span>انــت - ${time}</span>
-</li>`
+    <li class="message-left">
+        <div class="i-m-u">
+        <div></div>
+        </div>
+        <p> <pre>${input_msg.value}</pre> </p>
+        <span>انــت - ${time}</span>
+    </li>`
     setHistory('user', input_msg.value)
 
     button_audio.style.left = '0'
-    audio.play(); input_msg.blur(); onLine()
-    scroll();
-    const parssToJson = await JSON.stringify({ text: input_msg.value, historyData })
+    header_genr.style.left = '0'
+    audio.play(); input_msg.blur(); onLine(); scroll();
+
+    const parssToJson = await JSON.stringify({
+        text: input_msg.value, historyData, varGenr
+    })
     input_msg.value = ""; form_message.style.height = "50px";
     try {
         const res = await fetch('./gemini-text', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: parssToJson
         })
         const data = await res.json()
+        
         form_message.style.bottom = '0'
         disabled = true
-        handlingMessage(data.message, 'chatText')
+        handlingMessage(data.message, 'chatText', data.generativeImage)
     } catch (err) {
         setTimeout(() => {
             handlingMessage(arrErr[Math.floor(Math.random() * arrErr.length - 1) + 1], 'err')
@@ -144,7 +186,9 @@ prompt_send.onclick = async () => {
         more_action.classList.remove('toggle-more')
         disabled = false
     }
-    if (prompt_input.value == '') { return prompt_input.focus() }
+    if (prompt_input.value == '') {
+        return prompt_input.focus()
+    }
     closePrompt()
     let varebulMedia;
     let whatMedia;
@@ -166,12 +210,12 @@ prompt_send.onclick = async () => {
     }
 
     message_container.innerHTML += `
-<li class="message-left">
-<div class="i-m-u"><div></div></div>
+    <li class="message-left">
+    <div class="i-m-u"><div></div></div>
     ${varebulMedia}
     <p> ${prompt_input.value} </p>
     <span>انـت - ${time}</span>
-</li>`
+    </li>`
     promptU.style.display = "none"
     audio.play(); scroll(); onLine()
 
@@ -274,21 +318,27 @@ cheng_file.onchange = () => {
 
 }
 
-but_setMore.onclick = () => { more_action.classList.toggle('toggle-more') }
+but_setMore.onclick = () => {
+    more_action.classList.toggle('toggle-more')
+}
 
 
 
 let b = true; let recorder;
 button_audio.onmousedown = async () => {
     if (b == true) {
-        navigator.mediaDevices.getUserMedia({ audio: true })
-            .then(async (stream) => {
-                recorder = await new MediaRecorder(stream);
-                recorder.start();
-                button_audio.classList.add('audio-inm')
-                b = false
-            })
-            .catch((err) => { menu_button.click() })
+        navigator.mediaDevices.getUserMedia({
+            audio: true
+        })
+        .then(async (stream) => {
+            recorder = await new MediaRecorder(stream);
+            recorder.start();
+            button_audio.classList.add('audio-inm')
+            b = false
+        })
+        .catch((err) => {
+            menu_button.click()
+        })
     } else {
         await recorder.stop()
         recorder.ondataavailable = async function (e) {
@@ -298,11 +348,11 @@ button_audio.onmousedown = async () => {
             b = true
 
             message_container.innerHTML += `
-        <li class="message-left">
-        <div class="i-m-u"><div></div></div>
+            <li class="message-left">
+            <div class="i-m-u"><div></div></div>
             <audio class="audio2" controls src="${blobUrl}"></audio>
             <span>انـت - ${time}</span>
-        </li>`
+            </li>`
             scroll(); audio.play(); onLine()
             const formData = new FormData()
             formData.append('audio', e.data, 'audio.webm')
@@ -314,7 +364,9 @@ button_audio.onmousedown = async () => {
                 const data = await res.json()
                 handlingMessage(data.message, 'chatAudio')
             } catch (err) {
-                setTimeout(() => { handlingMessage(arrErr[Math.floor(Math.random() * arrErr.length - 1) + 1], 'err') }, 1500)
+                setTimeout(() => {
+                    handlingMessage(arrErr[Math.floor(Math.random() * arrErr.length - 1) + 1], 'err')
+                }, 1500)
             }
         }
     }
@@ -323,12 +375,26 @@ button_audio.onmousedown = async () => {
 input_msg.onkeyup = async () => {
     if (input_msg.value == '') {
         button_audio.style.left = '0'
+        header_genr.style.left = "0"
     } else {
+        header_genr.style.left = "-50px"
         button_audio.style.left = '70px'
         if (button_audio.classList.contains('audio-inm')) {
             await recorder.stop()
             button_audio.classList.remove('audio-inm')
         }
+    }
+}
+
+
+var varGenr = false;
+header_genr.onclick = () => {
+    if (varGenr == false) {
+        header_genr.style.borderColor = "#00CEAF"
+        varGenr = true
+    } else {
+        header_genr.style.borderColor = "#333"
+        varGenr = false
     }
 }
 
@@ -342,4 +408,14 @@ if(localStorage.getItem('name')){
 
 header_call.onclick = async () => {
     window.location = 'call.html'
+}
+
+
+const saveImage = (e) => {
+    const link = document.createElement("a");
+    link.href = e;
+    link.download = "image-help-full.jpg";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }
