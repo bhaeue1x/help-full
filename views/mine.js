@@ -414,7 +414,7 @@ header_call.onclick = async () => {
 const saveImage = (e) => {
     const link = document.createElement("a");
     link.href = e;
-    link.download = "image-help-full.jpg";
+    link.download = "image.jpg";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
