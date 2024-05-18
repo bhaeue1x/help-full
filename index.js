@@ -1,5 +1,5 @@
 import { fileURLToPath } from 'url'; import path, { dirname } from 'path'; const __filename = fileURLToPath(import.meta.url); const __dirname = path.dirname(__filename);
-import express from "express";
+import express, { text } from "express";
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
 import multer from "multer";
 import { marked } from "marked"; const upload = multer();
@@ -72,7 +72,49 @@ async function runChatAudio(data, mimeType) {
   }
 }
 
+async function runKeyWord(text) {
+  const getKey = `I want two keywords in the following field. Translate them into English and do not explain anything. Just give me the words and do not put commas between the words. \n '${text}'`
+  try {
+    const chat = model.startChat({
+      generationConfig, safetySettings
+    })
+    const result = await chat.sendMessage(getKey)
+    const response = result.response.text()
+    return response
+  } catch (err) { return 'err' }
+}
 
+// GENERATIVE IMAGE
+async function runGenerativeImage(text) {
+  try{
+    const result = await runKeyWord(text)
+  
+    const getRandomNumbers = () => {
+      let numbers = [];
+      while (numbers.length < 4) {
+        let randomNumber = Math.floor(Math.random() * 20);
+        if (!numbers.includes(randomNumber)) { numbers.push(randomNumber) }
+      }
+      return numbers;
+    }
+  
+    let randomNumbers = getRandomNumbers();
+  
+    const apiKey = "43932533-db73b3b74be307af2e5c8099a";
+  
+    const res = await fetch(`https://pixabay.com/api/?key=${apiKey}&q=${result}&per_page=20`)
+    const data = await res.json()
+    
+  
+    let urlArr = [];
+    randomNumbers.forEach((index) => {
+      const pathUrl = data.hits[index].webformatURL
+      urlArr.push(pathUrl)
+  
+    })
+    return urlArr
+  }catch(err) {console.log('err')}
+}
 
 
 // runChat('hi')
@@ -87,13 +129,17 @@ app.get('/app-1.5', (req, res) => { res.sendFile(__dirname + '/views/index2.html
 app.post('/gemini-text', async (req, res) => {
   try {
     const result = await runChatText(req.body.historyData, req.body.text)
+
+    if (req.body.varGenr == true) {
+      var generativeImage = await runGenerativeImage(req.body.text)
+    }
     if (result == 'err') {
       res.json({ message: err_msg[Math.floor(Math.random() * err_msg.length - 1) + 1] })
     } else {
       if (result.includes("نموذج") && result.includes("أنا") && result.includes("جوجل")) {
-        res.json({ message: arr_bad[Math.floor(Math.random() * arr_bad.length - 1) + 1] })
+        res.json({ message: arr_bad[Math.floor(Math.random() * arr_bad.length - 1) + 1], generativeImage })
       } else {
-        res.json({ message: result })
+        res.json({ message: result, generativeImage })
       }
     }
   } catch (err) { console.log('err') }
@@ -167,7 +213,7 @@ app.post('/login', async (req, res) => {
     })
     const data = await res2.json()
     res.json({ message: data.ok })
-  } catch (err) { 
+  } catch (err) {
     res.json({ message: false })
   }
 })
