@@ -634,11 +634,12 @@ menu> span {
 
 .for-video{
     display: flex;
+    flex-direction: column;
     width: 100%;
     gap: 5px;
 }
 .for-video video{
-    width: 47%;
+    width: 98%;
     border-radius: 10px;
     border: solid 1px #eee;
 }
