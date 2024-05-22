@@ -86,34 +86,43 @@ async function runKeyWord(text) {
 
 // GENERATIVE IMAGE
 async function runGenerativeImage(text) {
-  try{
+  try {
     const result = await runKeyWord(text)
-  
-    const getRandomNumbers = () => {
-      let numbers = [];
-      while (numbers.length < 4) {
-        let randomNumber = Math.floor(Math.random() * 20);
-        if (!numbers.includes(randomNumber)) { numbers.push(randomNumber) }
-      }
-      return numbers;
-    }
-  
-    let randomNumbers = getRandomNumbers();
-  
     const apiKey = "43932533-db73b3b74be307af2e5c8099a";
-  
-    const res = await fetch(`https://pixabay.com/api/?key=${apiKey}&q=${result}&per_page=20`)
-    const data = await res.json()
-    
-  
-    let urlArr = [];
-    randomNumbers.forEach((index) => {
-      const pathUrl = data.hits[index].webformatURL
-      urlArr.push(pathUrl)
-  
-    })
-    return urlArr
-  }catch(err) {console.log('err')}
+
+    const setImage = async () => {
+      const getRandomNumbers = () => {
+        let numbers = [];
+        while (numbers.length < 4) {
+          let randomNumber = Math.floor(Math.random() * 20);
+          if (!numbers.includes(randomNumber)) { numbers.push(randomNumber) }
+        }
+        return numbers;
+      }
+      let randomNumbers = getRandomNumbers();
+      const res = await fetch(`https://pixabay.com/api/?key=${apiKey}&q=${result}&per_page=20`)
+      const data = await res.json()
+      let urlArr = [];
+      randomNumbers.forEach((index) => {
+        const pathUrl = data.hits[index].webformatURL
+        urlArr.push(pathUrl)
+      })
+      return urlArr
+    }
+
+    const setVideo = async () => {
+      const res = await fetch(`https://pixabay.com/api/videos/?key=${apiKey}&q=${result}&per_page=3`)
+      const data = await res.json()
+      const urlArr = [data.hits[0].videos.small.url, data.hits[0].videos.small.url]
+      return  urlArr
+    }
+
+    const result1 = await setImage()
+    const result2 = await setVideo()
+   
+    return {result1, result2}
+
+  } catch (err) { console.log('err') }
 }
 
 
@@ -131,7 +140,7 @@ app.post('/gemini-text', async (req, res) => {
     const result = await runChatText(req.body.historyData, req.body.text)
 
     if (req.body.varGenr == true) {
-      var generativeImage = await runGenerativeImage(req.body.text)
+        var generativeImage = await runGenerativeImage(req.body.text)
     }
     if (result == 'err') {
       res.json({ message: err_msg[Math.floor(Math.random() * err_msg.length - 1) + 1] })
