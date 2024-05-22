@@ -113,7 +113,7 @@ async function runGenerativeImage(text) {
     const setVideo = async () => {
       const res = await fetch(`https://pixabay.com/api/videos/?key=${apiKey}&q=${result}&per_page=3`)
       const data = await res.json()
-      const urlArr = [data.hits[0].videos.small.url, data.hits[0].videos.small.url]
+      const urlArr = [data.hits[0].videos.small.url, data.hits[1].videos.small.url]
       return  urlArr
     }
 
