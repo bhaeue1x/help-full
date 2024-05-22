@@ -74,18 +74,23 @@ function setHistory(UorM, text) {
 }
 
 let numDon = 0;
-function handlingMessage(data, type, image) {
-    if(image){
-        var x = `
+function handlingMessage(data, type, dataGen) {
+    if(dataGen){
+        var im = `
         <div class="for-image">
-        <img onclick="saveImage(this.src)" src="${image[0]}" alt="no" />
-        <img onclick="saveImage(this.src)" src="${image[1]}" alt="no" />
-        <img onclick="saveImage(this.src)" src="${image[2]}" alt="no" />
-        <img onclick="saveImage(this.src)" src="${image[3]}" alt="no" />
+        <img onclick="saveImage(this.src)" src="${dataGen.result1[0]}" alt="end" />
+        <img onclick="saveImage(this.src)" src="${dataGen.result1[1]}" alt="end" />
+        <img onclick="saveImage(this.src)" src="${dataGen.result1[2]}" alt="end" />
+        <img onclick="saveImage(this.src)" src="${dataGen.result1[3]}" alt="end" />
+        </div>
+
+        <div class="for-video">
+        <video controls="" src="${dataGen.result2[0]}"></video>
+        <video controls="" src="${dataGen.result2[1]}"></video>
         </div>
         `
     } else{
-        x = ''
+        im = ''
     }
     const rendom = Math.floor(Math.random() * 9999999999) + 1
     message_container.innerHTML += `
@@ -93,7 +98,7 @@ function handlingMessage(data, type, image) {
     <img class="i-m-r" src="${setSrcImr}">
     <div id="r${rendom}">
     ${data}
-    ${x}
+    ${im}
     
 
     </div>
@@ -164,6 +169,7 @@ button_msg.onclick = async () => {
             body: parssToJson
         })
         const data = await res.json()
+        console.log(data)
         
         form_message.style.bottom = '0'
         disabled = true
