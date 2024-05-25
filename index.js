@@ -24,7 +24,7 @@ async function runChatText(history, text) {
     const result = await chat.sendMessage(text)
     const response = result.response.text()
     const parserTo = await marked.parse(response)
-    return 'parserTo'
+    return parserTo
   } catch (err) { return 'err' }
 }
 
