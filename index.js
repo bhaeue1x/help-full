@@ -8,7 +8,7 @@ app.use(express.static('views')); app.use(express.urlencoded()); app.use(express
 const genAI = new GoogleGenerativeAI("AIzaSyDpNB7IQ4qLwNU_-4g3ye8pSwHjzaKXloY")
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest" })
 // 8192
-const generationConfig = { temperature: 1, topK: 0, topP: 0.95, maxOutputTokens: 5000, };
+const generationConfig = { temperature: 1, topK: 0, topP: 0.95, maxOutputTokens: 7000, };
 const safetySettings = [
   { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE, },
   { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE, },
@@ -24,7 +24,7 @@ async function runChatText(history, text) {
     const result = await chat.sendMessage(text)
     const response = result.response.text()
     const parserTo = await marked.parse(response)
-    return parserTo
+    return 'parserTo'
   } catch (err) { return 'err' }
 }
 
@@ -73,7 +73,7 @@ async function runChatAudio(data, mimeType) {
 }
 
 async function runKeyWord(text) {
-  const getKey = `I want two keywords in the following field. Translate them into English and do not explain anything. Just give me the words and do not put commas between the words. \n '${text}'`
+  const getKey = `Convert the following sentences into keywords of no more than 2 or 3 words, and separate the words with a space only. Do not explain the conversion method. Just give me the words. And in the English language. \n \n ${text}`
   try {
     const chat = model.startChat({
       generationConfig, safetySettings
@@ -88,6 +88,7 @@ async function runKeyWord(text) {
 async function runGenerativeImage(text) {
   try {
     const result = await runKeyWord(text)
+    console.log(result)
     const apiKey = "43932533-db73b3b74be307af2e5c8099a";
 
     const setImage = async () => {
