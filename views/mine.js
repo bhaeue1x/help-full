@@ -398,7 +398,7 @@ input_msg.onkeyup = async () => {
 var varGenr = false;
 header_genr.onclick = () => {
     if (varGenr == false) {
-        header_genr.style.borderColor = "#00CEAF"
+        header_genr.style.borderColor = "#00B3C9"
         varGenr = true
     } else {
         header_genr.style.borderColor = "#333"
