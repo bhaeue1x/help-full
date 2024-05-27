@@ -41,7 +41,9 @@ loginName = document.getElementById("loginName"),
 header_call = document.getElementById("header_call"),
 
 header_genr = document.getElementById("header-genr"),
-for_image = document.getElementById("for_image")
+for_image = document.getElementById("for_image"),
+
+menu_input = document.getElementById("menu_input")
 
 const audio = new Audio('audio.mp3')
 
@@ -424,4 +426,10 @@ const saveImage = (e) => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+}
+
+const sendERR = () => {
+    if(menu_input.value == '') {menu_input.focus(); return}
+    const newText = menu_input.value.replaceAll(' ', '-') 
+    window.location = `https://wa.me/+994402993020?text=${newText}`
 }
