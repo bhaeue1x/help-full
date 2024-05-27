@@ -20,27 +20,39 @@
 <body>
     <!--MENU DIV-->
     <menu id="menu">
-        <button onclick="menu.style.display = 'none'" class="menu-button">メ⁠</button>
-        <span id="loginName">hhh</span>
-        <h1 class="menu-nsme">HELP FULL</h1>
-        <div class="follow">
-            <a style="color: #ba005d;" href="https://instagram.com/bashar1_x">instagram</a>
-            <a style="color: #00b938;" href="https://wa.me/0985780023">whatsapp</a>
-            <a style="color: #007CBA;" href="https://facebook.com/bashar1.x">facebook</a>
+
+        <div class="menu-head">
+            <button onclick="menu.style.display = 'none' ">x</button>
+            <li>help full 1.5</li>
         </div>
-        <div class="menu-content">
-            <p>
-                لتفعيل ميزة التسجيل الصوتي وغيرها من الميزات يجب تحميل اخر اصدار
-            </p>
-            <a href="https://gemini-wjs-b.onrender.com/download">تحميل التحديث</a>
+        <p class="info-menu">This version of the application is still experimental at the moment. If you encounter any problem, do not hesitate to send a report about the problem to be resolved as soon as possible. Thank you for your help.</p>
+        <div class="content-menu">
+            
+            <div class="menu-sendERR">
+                <p>أرسل تقريرك عن التطبيق</p>
+                <input type="text" id="menu_input">
+                <button onclick="sendERR()">send</button>
+            </div>
+
+            <p>:احصل على الأرشادات والتحديثات من خلال</p>
+            <ul>
+                <a href="">whatsapp</a>
+                <a href="">telegarm</a>
+                <a href="">facebook</a>
+            </ul>
+            
         </div>
-        <div class="menu-footer">
-            <button onclick="localStorage.removeItem('chats'), message_container.innerHTML = ''" class="menu-remove">مسح
-                الدردشة</button>
-            <footer>
-                author: بشار مرشد الحيوي
-            </footer>
-        </div>
+        <p class="author-menu">author: bashar haywi</p>
+        <footer>
+            <button onclick="localStorage.removeItem('chats'), message_container.innerHTML = ''" class="menu-remove">مسح الدردشة</button>
+            <div style="display: flex;">
+                <span style="margin:5px 0 0 10px;" id="loginName">bashar</span>
+                <div class="i-m-u">
+                    <div class="menu-user"></div>
+                </div>
+            </div>
+        </footer>
+
     </menu>
 
     <!--FOLLOW INSTAGRAM-->
@@ -77,7 +89,7 @@
 
     <!--HEADER ...-->
     <header>
-        <img id="header_image" src="image.jpg" alt="icon">
+        <img id="header_image" alt="icon">
         <div style="margin-top: 5px;">
             <h4>1.5 help full</h4>
             <div id="online"></div>
@@ -101,6 +113,7 @@
     <!-- CONTAINER ... -->
     <ul id="message_container">
 
+
     </ul>
 
     <!--FORM MESSAGE -->
@@ -109,9 +122,7 @@
             <button class="buttons-w" id="button_audio">
                 <div class="b1"></div>
             </button>
-            <button class="buttons-w" id="button_msg">
-                ➜
-            </button>
+            <button class="buttons-w" id="button_msg">➜</button>
         </div>
 
         <div class="div-more">
