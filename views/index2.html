@@ -22,18 +22,11 @@
     <menu id="menu">
 
         <div class="menu-head">
-            <button onclick="menu.style.display = 'none' ">x</button>
+            <button onclick="menu.style.display = 'none' ">×</button>
             <li>help full 1.5</li>
         </div>
-        <p class="info-menu">This version of the application is still experimental at the moment. If you encounter any problem, do not hesitate to send a report about the problem to be resolved as soon as possible. Thank you for your help.</p>
         <div class="content-menu">
             
-            <div class="menu-sendERR">
-                <p>أرسل تقريرك عن التطبيق</p>
-                <input type="text" id="menu_input">
-                <button onclick="sendERR()">send</button>
-            </div>
-
             <p>:احصل على الأرشادات والتحديثات من خلال</p>
             <ul>
                 <a href="https://whatsapp.com/channel/0029VagLHct0lwgkIY0Zbk3V">whatsapp</a>
@@ -41,12 +34,20 @@
                 <a href="https://www.facebook.com/groups/1161673915271837/?mibextid=WaXdOe">facebook</a>
             </ul>
             
+            <div class="menu-sendERR">
+                <p>:أرسل تقريرك عن التطبيق</p>
+                <input type="text" id="menu_input">
+                <button onclick="sendERR()">send</button>
+            </div>
+
+            
+            
         </div>
-        <p class="author-menu">author: bashar haywi</p>
+        <a href="https://instagram.com/bashar1_x"><p class="author-menu">author: bashar haywi</p></a>
         <footer>
             <button onclick="localStorage.removeItem('chats'), message_container.innerHTML = ''" class="menu-remove">مسح الدردشة</button>
             <div style="display: flex;">
-                <span style="margin:5px 0 0 10px; font-size: 15px;" id="loginName">bashar</span>
+                <span style="margin:6px 0 0 10px; font-size: 15px;" id="loginName">bashar</span>
                 <div class="i-m-u">
                     <div class="menu-user"></div>
                 </div>
@@ -68,7 +69,7 @@
     <!-- PROMPT  ... -->
     <div id="prompt">
         <div class="prompt-div-close">
-            <button onclick="closePrompt()" id="prompt-close">メ⁠</button>
+            <button onclick="closePrompt()" id="prompt-close">×⁠</button>
             <p style="font-size: 16px; color: #fff;">
                 help full
             </p>
@@ -106,7 +107,7 @@
                 <i style="height: 15px;"></i>
                 <i style="height: 6px;"></i>
             </div>
-            <span onclick="menu.style.display = 'block'" id="menu_button">彡</span>
+            <span onclick="menu.style.display = 'block'" id="menu_button">|||</span>
         </div>
     </header>
 
