@@ -430,6 +430,6 @@ const saveImage = (e) => {
 
 const sendERR = () => {
     if(menu_input.value == '') {menu_input.focus(); return}
-    const newText = menu_input.value.replaceAll(' ', '-') 
-    window.location = `https://wa.me/+994402993020?text=${newText}`
+    
+    window.location = `https://wa.me/+994402993020?text=${menu_input.value}`
 }
