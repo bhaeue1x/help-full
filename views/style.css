@@ -5,6 +5,7 @@
 ::selection {
     outline-color: blue;
     background: rgb(95, 130, 182, 0.4);
+    direction: rtl;
 }
 
 
@@ -59,7 +60,6 @@ h1,
 h2 {
     font-size: 20px;
     color: #22757a;
-    font-family: Courier;
 }
 
 a {
@@ -140,9 +140,9 @@ header>div>h4 {
 #menu_button {
     color: #333;
     font-size: 22px;
-    font-weight: bold;
     cursor: pointer;
-    transform: rotate(200deg);
+    transform: rotate(90deg);
+    font-weight: bold;
 }
 .header-cont {
     margin: 0 auto 0 13px;
@@ -358,7 +358,7 @@ pre {
     border: rgb(42, 117, 167) 2px solid;
 }
 
-menu {
+#menu {
     user-select: none;
     background-color: #e4e4e4;
     width: 88%;
@@ -377,31 +377,25 @@ menu {
     justify-content: space-between;
 }
 .menu-head li{
-    color: #444;
-    font-size: 18px;
+    color: #638e96;
+    font-size: 15px;
     margin: 10px;
-    border-left: #225a8f 2px solid;
+    border-left: #638e96 2px solid;
     border-radius: 1px;
+    font-weight: bold;
 }
 .menu-head li::first-letter{
     font-size: 25px;
-    color: #225a8f;
-    text-shadow: 0 0 15px rgba(0, 255, 234, 0.616);
+    color: #0098A5;
 }
 .menu-head button{
-    padding: 10px 17px;
+    padding: 5px 15px;
     background: none;
     border: none;
-    font-size: 20px;
-    color: #da3542e8;
+    font-size: 25px;
+    color: #da3542;
 }
-.info-menu{
-    text-align: left;
-    padding: 10px;
-    font-size: 14px;
-    color: #333;
 
-}
 
 .content-menu{
     display: flex;
@@ -410,7 +404,7 @@ menu {
     padding: 10px;
 }
 .content-menu p{
-    font-size: 13px;
+    font-size: 12px;
 }
 .content-menu ul{
     background: none;
@@ -419,49 +413,40 @@ menu {
     display: block;
     padding: 3px;
     font-size: 13px;
-    margin: 5px;
+    margin: 0 0 5px 0;
     text-decoration: none;
     font-weight: bold;
     border-radius: 5px;
-    color: #085c83;
-}
-.menu-sendERR{
-    border: #999 0.5px solid;
-    margin: 10px 0;
-    padding: 20px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    border-radius: 10px;
+    color: #638e96;
 }
 .menu-sendERR p{
-    font-size: 14px;
+    font-size: 13px;
     color: #555;
 }
 .menu-sendERR input{
-    width: 80%;
+    width: 75%;
     padding: 8px;
-    border: skyblue 1px solid;
-    border-radius: 8px;
+    border: #638e96 1px solid;
+    border-radius: 5px;
     outline: none;
 }
 .menu-sendERR button{
-    padding: 8px 30px;
+    width: 20%;
+    padding: 8px;
     background: #638e96;
     border: none;
     border-radius: 5px;
     color: #fff;
 }
 .author-menu{
-    font-size: 10px;
+    font-size: 9px;
     color: #777;
     margin: 8px;
     position: absolute;
-    bottom: 60px;
+    bottom: 55px;
     left: 0;
 }
-menu footer{
+#menu footer{
     width: 100%;
     display: flex;
     border-top: #999 1px solid;
@@ -472,7 +457,7 @@ menu footer{
     padding: 10px;
 }
 .menu-remove{
-    padding: 8px 13px;
+    padding: 6px 10px;
     background: #da3542e8;
     border: none;
     border-radius: 6px;
