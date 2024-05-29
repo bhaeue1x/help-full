@@ -236,11 +236,11 @@ app.get('/', (req, res) => { res.sendFile(__dirname + '/views/download.html') })
 
 
 // PING BOT ----
-setInterval(async () => {
-  try {
-    const res = await fetch('https://gemini-wjs-b.onrender.com/run')
-    const data1 = await res.json()
-  } catch (err) { console.log('errRun') }
-}, 100 * 1000)
+// setInterval(async () => {
+//  try {
+   // const res = await fetch('https://gemini-wjs-b.onrender.com/run')
+  //  const data1 = await res.json()
+ // } catch (err) { console.log('errRun') }
+//}, 100 * 1000)
 
 app.listen(process.env.PORT || 3000, () => { console.log(`app listen now ...`) })
