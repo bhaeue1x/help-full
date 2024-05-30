@@ -1,43 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تحويل النص إلى صوت</title>
+    <meta name="google" content="notranslate">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>full call</title>
+
 </head>
+
 <body>
+<button onclick="startSpeechRecognition()">start</button>
+<div id="it">
+    
+</div>
 
-<textarea id="text-input" placeholder="أدخل النص هنا"></textarea>
-<button id="speak-button">انطق النص</button>
-<p id="support-message"></p>
-
-<script>
-    const textInput = document.getElementById('text-input');
-    const speakButton = document.getElementById('speak-button');
-    const supportMessage = document.getElementById('support-message');
-
-    //  التحقق من دعم المتصفح 
-    if ('speechSynthesis' in window) {
-        supportMessage.textContent = 'متصفحك يدعم تحويل النص إلى صوت!';
-        speakButton.addEventListener('click', () => {
-            const text = textInput.value;
-            if (text.trim() !== '') {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'ar-SA';
-
-                //  تشغيل الدالة عند الانتهاء 
-                utterance.onend = () => {
-                    console.log('انتهى التكلم!');
-                    //  يمكنك إضافة أي كود هنا لتنفيذه عند انتهاء التكلم 
-                };
-
-                window.speechSynthesis.speak(utterance);
-            }
-        });
-    } else {
-        supportMessage.textContent = 'متصفحك لا يدعم تحويل النص إلى صوت.';
-        speakButton.disabled = true;
-    }
-</script>
 </body>
+<script>
+
+    const it = document.getElementById('it')
+
+
+    function startSpeechRecognition() {
+
+        if ('webkitSpeechRecognition' in window) {
+            const recognition = new webkitSpeechRecognition();
+
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.lang = 'ar-SA';
+
+            recognition.onstart = () => {
+                console.log('بدأ التسجيل');
+            };
+            let finfhTyping;
+            recognition.onresult = (event) => {
+                let transcript = '';
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    if (event.results[i].isFinal) {
+                        transcript += event.results[i][0].transcript;
+                    } else {
+                        transcript += event.results[i][0].transcript + ' ';
+                    }
+                }
+                finfhTyping = transcript
+                
+            };
+
+            recognition.onerror = (event) => {
+                console.error('حدث خطأ:', event.error);
+                it.innerText = "err"
+            };
+
+            recognition.onend = () => {
+                console.log('انتهى التسجيل');
+                console.log(finfhTyping)
+                it.innerText = finfhTyping
+            };
+
+
+            recognition.start();
+        } else {
+            it.innerText = "no inebl"
+        }
+    }
+
+</script>
+
 </html>
