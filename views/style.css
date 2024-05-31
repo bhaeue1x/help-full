@@ -5,7 +5,7 @@
 ::selection {
     outline-color: blue;
     background: rgb(95, 130, 182, 0.4);
-    direction: ltr;
+    direction: rtl;
 }
 
 
@@ -84,6 +84,7 @@ code {
 }
 
 [class^="language"] {
+    direction: ltr;
     margin: 5px 0;
     background: #ececec;
     border-radius: 20px;
@@ -93,9 +94,9 @@ code {
     color: #0e4b43;
 }
 [class^="language"]::after {
-    content: "copy";
+    content: "⎘";
     background: #4283a8;
-    padding: 6px 16px;
+    padding: 4px 14px;
     border-radius: 10px;
     float: right;
     color: #FFF;
@@ -166,6 +167,7 @@ header>div>h4 {
 
 .message-left,
 .message-right {
+    direction: rtl;
     list-style: none;
     padding: 2px;
     margin: 5px 8px;
@@ -571,6 +573,8 @@ pre {
     height: 30px;
     width: 30px;
     border-radius: 50%;
+    direction: ltr;
+    display: inline-block;
 }
 .i-m-u>div {
     width: 11px;
