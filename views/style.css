@@ -177,7 +177,6 @@ header>div>h4 {
     width: 100%
     font-size: 15px;
     word-wrap: break-word;
-    /*align-self: flex-end;*/
     display: flex;
     flex-direction: column;
 }
@@ -216,6 +215,7 @@ pre {
     display: flex;
     align-items: center;
     margin-bottom: 6px;
+    user-select: none;
 }
 
 .buttons-w,
@@ -573,6 +573,7 @@ pre {
     width: 30px;
     border-radius: 50%;
     align-self: flex-end;
+    user-select: none;
 }
 .i-m-u {
     background: #333;
@@ -656,3 +657,4 @@ pre {
     width: 98%;
     border-radius: 10px;
     border: solid 1px #eee;
+}
