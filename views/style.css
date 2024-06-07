@@ -5,12 +5,13 @@
 ::selection {
     outline-color: blue;
     background: rgb(95, 130, 182, 0.4);
-    direction: rtl;
 }
 
-
+.audio2{
+    align-self: flex-end;
+}
 audio::-webkit-media-controls-panel {
-    background-color: #333;
+    background-color: #fff !important;
 }
 
 .audio2::-webkit-media-controls-panel {
@@ -54,11 +55,13 @@ ul {
     border-radius: 15px;
     padding: 3px;
 }
-
+table{
+    align-self: flex-end;
+}
 
 h1,
 h2 {
-    font-size: 20px;
+    font-size: 18px;
     color: #22757a;
 }
 
@@ -74,7 +77,7 @@ th {
 }
 
 td {
-    background-color: rgba(16, 99, 194, 0.2);
+    background-color: #85b7ca3b;
     text-align: center;
     border-radius: 2px;
     padding: 4px;
@@ -86,12 +89,12 @@ code {
 [class^="language"] {
     direction: ltr;
     margin: 5px 0;
-    background: #ececec;
+    background: #F7F7F7;
     border-radius: 20px;
     display: block;
     padding: 10px;
     user-select: all;
-    color: #0e4b43;
+    color: #444;
 }
 [class^="language"]::after {
     content: "⎘";
@@ -169,13 +172,14 @@ header>div>h4 {
 .message-right {
     direction: rtl;
     list-style: none;
-    padding: 2px;
-    margin: 5px 8px;
-    max-width: 98%;
-    min-width: 90px;
+    padding: 0 5px;
+    margin-top: 10px;
+    width: 100%
     font-size: 15px;
     word-wrap: break-word;
-    align-self: flex-start;
+    /*align-self: flex-end;*/
+    display: flex;
+    flex-direction: column;
 }
 
 pre {
@@ -200,6 +204,7 @@ pre {
     border-radius: 20px;
     object-fit: cover;
     margin: 3px;
+    align-self: flex-end;
 }
 
 #form_message {
@@ -467,7 +472,7 @@ pre {
     font-size: 20px;
 }
 .menu-user::after{
-    left: 3px !important;
+    left: -3px !important;
 }
 
 
@@ -567,6 +572,7 @@ pre {
 .i-m-r {
     width: 30px;
     border-radius: 50%;
+    align-self: flex-end;
 }
 .i-m-u {
     background: #333;
@@ -574,7 +580,9 @@ pre {
     width: 30px;
     border-radius: 50%;
     direction: ltr;
-    display: inline-block;
+    display: block;
+    align-self: flex-end;
+    
 }
 .i-m-u>div {
     width: 11px;
@@ -635,6 +643,7 @@ pre {
     max-height: 170px;
     object-fit: cover;
     border-radius: 10px;
+    
 }
 
 .for-video{
@@ -647,4 +656,3 @@ pre {
     width: 98%;
     border-radius: 10px;
     border: solid 1px #eee;
-}
