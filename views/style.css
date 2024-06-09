@@ -94,7 +94,7 @@ code {
     display: block;
     padding: 10px;
     user-select: all;
-    color: #444;
+    color: #22757a;
 }
 [class^="language"]::after {
     content: "⎘";
