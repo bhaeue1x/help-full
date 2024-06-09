@@ -110,7 +110,7 @@
         <input id="inp_user" required type="text" title="مسموح بلأرقام والأحرف الأنكليزية الصغيرة" pattern="[a-z0-9]*"
             placeholder="اسم المستخدم">
         <input id="inp_number" required type="number" placeholder="رقم الهاتف">
-        <button type="submit">SEND</button>
+        <button id="button-submit" type="submit">SEND</button>
 
     </form>
 </body>
@@ -119,11 +119,13 @@
         inp_name = document.getElementById('inp_name'),
         inp_user = document.getElementById('inp_user'),
         inp_number = document.getElementById('inp_number'),
+        button_submit = document.getElementById('button-submit'),
         error = document.getElementById('error')
     form.onsubmit = async (e) => {
         try {
             e.preventDefault();
             error.innerHTML = 'جاري التحميل'
+            button_submit.disabled = true;
             const rendom = Math.floor(Math.random() * 9999999999) + 1
             const parssToJson = await JSON.stringify({
                 name: inp_name.value,
@@ -150,6 +152,7 @@
             }
         } catch (err) {
             error.innerHTML = 'تحقق من الأتصال'
+            button_submit.disabled = false;
         }
 
     }
