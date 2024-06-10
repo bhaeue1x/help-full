@@ -228,7 +228,7 @@ pre {
     background: none;
 }
 .buttons-w {
-    background: #555;
+    background: #444;
 }
 #button_msg {
     color: #fff;
@@ -254,7 +254,7 @@ pre {
 }
 
 .div-more {
-    background: #e3e3e3;
+    background: #EEE;
     border-radius: 2px 40px 40px 2px;
 }
 
@@ -265,7 +265,7 @@ pre {
     border: none;
     border-radius: 40px 2px 2px 40px;
     outline: none;
-    background: #e3e3e3;
+    background: #EEE;
     padding: 13px 8px 5px 8px;
     resize: none;
     font-size: 15px;
