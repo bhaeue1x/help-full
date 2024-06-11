@@ -107,7 +107,7 @@
     <form id="form" action="" method="post">
         <p style="text-align: center;" id="error"></p>
         <input id="inp_name" required type="text" placeholder="الأسم الكامل">
-        <input id="inp_user" required type="text" title="مسموح بلأرقام والأحرف الأنكليزية الصغيرة" pattern="[a-z0-9]*"
+        <input id="inp_user" required type="text" title="مسموح بادخال الأحرف والأرقام الأنجليزية" pattern="[a-zA-Z0-9]*"
             placeholder="اسم المستخدم">
         <input id="inp_number" required type="number" placeholder="رقم الهاتف">
         <button id="button-submit" type="submit">SEND</button>
@@ -117,13 +117,16 @@
 <script>
     const form = document.getElementById('form'),
         inp_name = document.getElementById('inp_name'),
-        inp_user = document.getElementById('inp_user'),
         inp_number = document.getElementById('inp_number'),
         button_submit = document.getElementById('button-submit'),
         error = document.getElementById('error')
+        
     form.onsubmit = async (e) => {
         try {
+            const inp_user = document.getElementById('inp_user').value.toLowerCase()
             e.preventDefault();
+            console.log(inp_user)
+            
             error.innerHTML = 'جاري التحميل'
             button_submit.disabled = true;
             const rendom = Math.floor(Math.random() * 9999999999) + 1
