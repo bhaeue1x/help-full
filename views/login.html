@@ -124,15 +124,15 @@
     form.onsubmit = async (e) => {
         try {
             const inp_user = document.getElementById('inp_user').value.toLowerCase()
+
             e.preventDefault();
-            console.log(inp_user)
             
             error.innerHTML = 'جاري التحميل'
             button_submit.disabled = true;
             const rendom = Math.floor(Math.random() * 9999999999) + 1
             const parssToJson = await JSON.stringify({
                 name: inp_name.value,
-                user: inp_user.value,
+                user: inp_user,
                 number: inp_number.value,
                 ip: rendom
             })
@@ -145,7 +145,7 @@
             const data = await res.json()
             if (data.message == true) {
                 
-                localStorage.setItem('login', inp_user.value+rendom)
+                localStorage.setItem('login', inp_user+rendom)
                 localStorage.setItem('name', inp_name.value)
                 window.location = 'index2.html'
             } else {
