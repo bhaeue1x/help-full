@@ -638,6 +638,14 @@ pre {
     background: #555;
     clip-path: polygon(69% 30%, 100% 69%, 100% 89%, 100% 100%, 100% 100%, 0 100%, 0 85%, 27% 50%, 42% 67%);
 }
+.image-but{
+    clip-path: polygon(69% 30%, 100% 69%, 100% 89%, 100% 100%, 100% 100%, 0 100%, 0 85%, 27% 50%, 42% 67%);
+width: 50%;
+height: 50%;
+background: #fff;
+margin: 0 auto;
+border-radius: 2px;
+}
 
 .for-image img{
     width: 47%;
