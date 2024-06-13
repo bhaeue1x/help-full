@@ -45,7 +45,6 @@ for_image = document.getElementById("for_image"),
 
 menu_input = document.getElementById("menu_input")
 
-const audio = new Audio('audio.mp3')
 
 const now = new Date(); let hours12 = now.getHours() % 12; if (hours12 === 0) {
     hours12 = 12
@@ -156,7 +155,7 @@ button_msg.onclick = async () => {
 
     button_audio.style.left = '0'
     header_genr.style.left = '0'
-    audio.play(); input_msg.blur(); onLine(); scroll();
+    input_msg.blur(); onLine(); scroll();
 
     const parssToJson = await JSON.stringify({
         text: input_msg.value, historyData, varGenr
@@ -225,7 +224,7 @@ prompt_send.onclick = async () => {
     <span>انـت - ${time}</span>
     </li>`
     promptU.style.display = "none"
-    audio.play(); scroll(); onLine()
+    scroll(); onLine()
 
     const formData = new FormData();
     formData.append('media', whatMedia);
@@ -361,7 +360,7 @@ button_audio.onmousedown = async () => {
             <audio class="audio2" controls src="${blobUrl}"></audio>
             <span>انـت - ${time}</span>
             </li>`
-            scroll(); audio.play(); onLine()
+            scroll(); onLine()
             const formData = new FormData()
             formData.append('audio', e.data, 'audio.webm')
             try {
