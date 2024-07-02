@@ -6,51 +6,66 @@ import { marked } from "marked"; const upload = multer();
 const app = express()
 app.use(express.static('views')); app.use(express.urlencoded()); app.use(express.json());
 const genAI = new GoogleGenerativeAI("AIzaSyDpNB7IQ4qLwNU_-4g3ye8pSwHjzaKXloY")
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest" })
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
+
 // 8192
-const generationConfig = { temperature: 1, topK: 0, topP: 0.95, maxOutputTokens: 7000, };
-const safetySettings = [
-  { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE, },
-  { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE, },
-  { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_NONE, },
-  { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE, },
-];
+// const generationConfig = { temperature: 1, topK: 0, topP: 0.95, maxOutputTokens: 7000, };
+
+const generationConfig = {
+  temperature: 1,
+  topP: 0.95,
+  topK: 64,
+  maxOutputTokens: 8192,
+  responseMimeType: "text/plain",
+};
+// const safetySettings = [
+//   { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE, },
+//   { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE, },
+//   { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_NONE, },
+//   { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE, },
+// ];
+
 // RUN CHAT TEXT
 async function runChatText(history, text) {
   try {
     const chat = model.startChat({
-      generationConfig, safetySettings, history: history
+      generationConfig, history: history
     })
     const result = await chat.sendMessage(text)
     const response = result.response.text()
     const parserTo = await marked.parse(response)
     return parserTo
-  } catch (err) { return 'err' }
+  } catch (err) {
+    errorServer(err)
+    return 'err';
+  }
 }
 
 // RUN CHAT CALL
 async function runChatCall(text) {
   try {
     const chat = model.startChat({
-      generationConfig, safetySettings
+      generationConfig
     })
     const result = await chat.sendMessage(text)
     const response = result.response.text()
     return response
-  } catch (err) { return 'err' }
+  } catch (err) { errorServer(err); return 'err' }
 }
+
 // RUN CHAT MEDIA
 async function runChatMedia(history, prompt, data, mimeType) {
   try {
     const parssMedia = { inlineData: { data, mimeType } };
     const chat = model.startChat({
-      generationConfig, safetySettings, history: history
+      generationConfig, history: history
     })
     const result = await chat.sendMessage([prompt, parssMedia])
     const response = result.response.text()
     const parserTo = await marked.parse(response)
     return parserTo
   } catch (err) {
+    errorServer(err)
     return 'err'
   }
 }
@@ -61,13 +76,13 @@ async function runChatAudio(data, mimeType) {
     const parssMedia = { inlineData: { data, mimeType } };
     const chat = model.startChat({
       generationConfig,
-      safetySettings
     })
     const result = await chat.sendMessage([' ', parssMedia])
     const response = result.response.text()
     const parserTo = await marked.parse(response)
     return parserTo
   } catch (err) {
+    errorServer(err)
     return 'err'
   }
 }
@@ -76,12 +91,12 @@ async function runKeyWord(text) {
   const getKey = `Convert the following sentences into keywords of no more than 2 or 3 words, and separate the words with a space only. Do not explain the conversion method. Just give me the words. And in the English language. \n \n ${text}`
   try {
     const chat = model.startChat({
-      generationConfig, safetySettings
+      generationConfig
     })
     const result = await chat.sendMessage(getKey)
     const response = result.response.text()
     return response
-  } catch (err) { return 'err' }
+  } catch (err) { errorServer(err); return 'err' }
 }
 
 // GENERATIVE IMAGE
@@ -115,13 +130,13 @@ async function runGenerativeImage(text) {
       const res = await fetch(`https://pixabay.com/api/videos/?key=${apiKey}&q=${result}&per_page=3`)
       const data = await res.json()
       const urlArr = [data.hits[0].videos.small.url, data.hits[1].videos.small.url]
-      return  urlArr
+      return urlArr
     }
 
     const result1 = await setImage()
     const result2 = await setVideo()
-   
-    return {result1, result2}
+
+    return { result1, result2 }
 
   } catch (err) { console.log('err') }
 }
@@ -141,7 +156,7 @@ app.post('/gemini-text', async (req, res) => {
     const result = await runChatText(req.body.historyData, req.body.text)
 
     if (req.body.varGenr == true) {
-        var generativeImage = await runGenerativeImage(req.body.text)
+      var generativeImage = await runGenerativeImage(req.body.text)
     }
     if (result == 'err') {
       res.json({ message: err_msg[Math.floor(Math.random() * err_msg.length - 1) + 1] })
@@ -228,6 +243,17 @@ app.post('/login', async (req, res) => {
   }
 })
 
+const errorServer = async (e) => {
+  try {
+    const formData = new FormData(); formData.append("text", e);
+    const tokin = '6351210996:AAEqIL8M169m5qfnS2qCz2VXKilvqFT9WMM'
+    const res = await fetch(`https://api.telegram.org/bot${tokin}/sendMessage?chat_id=5358365084`, {
+      method: 'POST',
+      body: formData
+    })
+  } catch (err) { console.log(err) }
+}
+
 app.get('/run', (req, res) => { res.json({ run: 'server on line1' }) })
 
 // DOWNLOAD APP
@@ -237,11 +263,11 @@ app.get('/', (req, res) => { res.sendFile(__dirname + '/views/download.html') })
 
 
 // PING BOT ----
-setInterval(async () => {
-  try {
-    const res = await fetch('https://gemini-wjs-b.onrender.com/run')
-    const data1 = await res.json()
-  } catch (err) { console.log('errRun') }
-}, 100 * 1000)
+// setInterval(async () => {
+//  try {
+//    const res = await fetch('https://gemini-wjs-b.onrender.com/run')
+//    const data1 = await res.json()
+//  } catch (err) { console.log('errRun') }
+// }, 100 * 1000)
 
 app.listen(process.env.PORT || 3000, () => { console.log(`app listen now ...`) })
