@@ -245,7 +245,7 @@ const errorServer = async (e) => {
     })
   } catch (err) { console.log(err) }
 }
-errorServer()
+
 app.get('/run', (req, res) => { res.json({ run: 'server on line1' }) })
 
 // DOWNLOAD APP
