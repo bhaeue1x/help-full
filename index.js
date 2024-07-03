@@ -1,15 +1,13 @@
 import { fileURLToPath } from 'url'; import path, { dirname } from 'path'; const __filename = fileURLToPath(import.meta.url); const __dirname = path.dirname(__filename);
-import express, { text } from "express";
-import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
-import multer from "multer";
-import { marked } from "marked"; const upload = multer();
+import express from "express";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import multer from "multer"; const upload = multer();
+import { marked } from "marked";
+
 const app = express()
 app.use(express.static('views')); app.use(express.urlencoded()); app.use(express.json());
 const genAI = new GoogleGenerativeAI("AIzaSyDpNB7IQ4qLwNU_-4g3ye8pSwHjzaKXloY")
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
-
-// 8192
-// const generationConfig = { temperature: 1, topK: 0, topP: 0.95, maxOutputTokens: 7000, };
 
 const generationConfig = {
   temperature: 1,
@@ -18,12 +16,7 @@ const generationConfig = {
   maxOutputTokens: 8192,
   responseMimeType: "text/plain",
 };
-// const safetySettings = [
-//   { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE, },
-//   { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE, },
-//   { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_NONE, },
-//   { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE, },
-// ];
+
 
 // RUN CHAT TEXT
 async function runChatText(history, text) {
@@ -36,7 +29,7 @@ async function runChatText(history, text) {
     const parserTo = await marked.parse(response)
     return parserTo
   } catch (err) {
-    errorServer(err)
+    errorServer(`runChatText: ${err}`)
     return 'err';
   }
 }
@@ -50,7 +43,7 @@ async function runChatCall(text) {
     const result = await chat.sendMessage(text)
     const response = result.response.text()
     return response
-  } catch (err) { errorServer(err); return 'err' }
+  } catch (err) { errorServer(`runChatCall: ${err}`); return 'err' }
 }
 
 // RUN CHAT MEDIA
@@ -65,7 +58,7 @@ async function runChatMedia(history, prompt, data, mimeType) {
     const parserTo = await marked.parse(response)
     return parserTo
   } catch (err) {
-    errorServer(err)
+    errorServer(`runChatMedia: ${err}`)
     return 'err'
   }
 }
@@ -82,7 +75,7 @@ async function runChatAudio(data, mimeType) {
     const parserTo = await marked.parse(response)
     return parserTo
   } catch (err) {
-    errorServer(err)
+    errorServer(`runChatAudio: ${err}`)
     return 'err'
   }
 }
@@ -96,14 +89,13 @@ async function runKeyWord(text) {
     const result = await chat.sendMessage(getKey)
     const response = result.response.text()
     return response
-  } catch (err) { errorServer(err); return 'err' }
+  } catch (err) { errorServer(`runKeyWord: ${err}`); return 'err' }
 }
 
 // GENERATIVE IMAGE
 async function runGenerativeImage(text) {
   try {
     const result = await runKeyWord(text)
-    console.log(result)
     const apiKey = "43932533-db73b3b74be307af2e5c8099a";
 
     const setImage = async () => {
@@ -253,7 +245,7 @@ const errorServer = async (e) => {
     })
   } catch (err) { console.log(err) }
 }
-
+errorServer()
 app.get('/run', (req, res) => { res.json({ run: 'server on line1' }) })
 
 // DOWNLOAD APP
@@ -263,11 +255,11 @@ app.get('/', (req, res) => { res.sendFile(__dirname + '/views/download.html') })
 
 
 // PING BOT ----
-// setInterval(async () => {
-//  try {
-//    const res = await fetch('https://gemini-wjs-b.onrender.com/run')
-//    const data1 = await res.json()
-//  } catch (err) { console.log('errRun') }
-// }, 100 * 1000)
+setInterval(async () => {
+ try {
+   const res = await fetch('https://gemini-wjs-b.onrender.com/run')
+   const data1 = await res.json()
+ } catch (err) { console.log('errRun') }
+}, 100 * 1000)
 
 app.listen(process.env.PORT || 3000, () => { console.log(`app listen now ...`) })
