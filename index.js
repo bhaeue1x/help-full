@@ -1,13 +1,20 @@
 import { fileURLToPath } from 'url'; import path, { dirname } from 'path'; const __filename = fileURLToPath(import.meta.url); const __dirname = path.dirname(__filename);
 import express from "express";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from "@google/generative-ai";
 import multer from "multer"; const upload = multer();
 import { marked } from "marked";
 
 const app = express()
 app.use(express.static('views')); app.use(express.urlencoded()); app.use(express.json());
 const genAI = new GoogleGenerativeAI("AIzaSyDpNB7IQ4qLwNU_-4g3ye8pSwHjzaKXloY")
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
+const safetySettings = [
+  { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE, },
+  { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE, },
+  { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_NONE, },
+  { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE, },
+];
+
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash", safetySettings })
 
 const generationConfig = {
   temperature: 1,
