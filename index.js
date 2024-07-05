@@ -265,7 +265,6 @@ app.get('/', (req, res) => { res.sendFile(__dirname + '/views/download.html') })
 setInterval(async () => {
  try {
    const res = await fetch('https://gemini-wjs-b.onrender.com/run')
-   const data1 = await res.json()
  } catch (err) { console.log('errRun') }
 }, 100 * 1000)
 
