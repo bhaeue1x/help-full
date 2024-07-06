@@ -174,7 +174,7 @@ header>div>h4 {
     list-style: none;
     padding: 0 5px;
     margin-top: 10px;
-    width: 100%
+    width: 100%;
     font-size: 15px;
     word-wrap: break-word;
     display: flex;
@@ -329,37 +329,6 @@ pre {
     border: none;
     border-radius: 40px;
     color: #fff;
-}
-
-#follow_insta {
-    position: absolute;
-    width: 100%;
-    min-height: 100%;
-    z-index: 9999999;
-    background-color: #000000af;
-    display: none;
-    justify-content: center;
-    align-items: center;
-}
-
-.follow_div {
-    background: linear-gradient(30deg, #e0043baf 20%, #3b508a, #d1c304);
-    padding: 70px;
-    border-radius: 10px;
-    max-width: 90%;
-}
-
-.follow_div>p {
-    font-size: 20px;
-    font-weight: bold;
-    color: #FFF;
-}
-
-.follow_div>button {
-    padding: 15px 10px;
-    margin: 7px 0;
-    border-radius: 5px;
-    border: rgb(42, 117, 167) 2px solid;
 }
 
 #menu {
