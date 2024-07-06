@@ -142,7 +142,7 @@ async function runGenerativeImage(text) {
 
 
 // runChat('hi')
-const err_msg = ['حاول مجددا', 'هنالك مشكلة حدثت للتو, من فضلك ابلغ مطوري ليقوم بحلها, شكرا لك على تعاونك روابط التواصل في القائمة الجانبية']
+const err_msg = ['حاول مجددا', 'لم اتمنك من فهم صيغة سؤالك, حاول صياغة سؤالك بطريقا اخرى']
 const arr_bad = ['مرحبا بك كيف حالك اليوم هل انت بحاجة الى مساعدة انا ذكاء اصطناعي قادر على مساعدتك', 'مرحبا انا نموذج ذكاء اصطناعي تم تطويري بواسطة بشار الحيوي', 'انا ذكاء اصطناعي تم تدريبي بواسطة بشار مرشد الحيوي']
 
 // HANDLING RAOTER ...
@@ -265,6 +265,7 @@ app.get('/', (req, res) => { res.sendFile(__dirname + '/views/download.html') })
 setInterval(async () => {
  try {
    const res = await fetch('https://gemini-wjs-b.onrender.com/run')
+   const data1 = await res.json()
  } catch (err) { console.log('errRun') }
 }, 100 * 1000)
 
