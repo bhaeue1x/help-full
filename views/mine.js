@@ -31,8 +31,7 @@ promptU = document.getElementById("prompt"),
 prompt_send = document.getElementById("prompt-send"),
 prompt_input = document.getElementById("prompt-input"),
 
-follow_insta = document.getElementById("follow_insta"),
-follow_button = document.getElementById("follow_button"),
+
 imr = document.querySelector(".i-m-r"),
 header_image = document.getElementById("header_image"),
 
@@ -74,7 +73,6 @@ function setHistory(UorM, text) {
 
 }
 
-let numDon = 0;
 function handlingMessage(data, type, dataGen) {
     if(dataGen){
         var im = `
@@ -115,12 +113,6 @@ function handlingMessage(data, type, dataGen) {
         historyData = []
     }
 
-    if (!localStorage.getItem('keyFollow')) {
-        numDon++
-        if (numDon == 5) {
-            follow_insta.style.display = 'flex'
-        }
-    }
     saveChats(message_container.innerHTML)
 }
 
@@ -170,7 +162,6 @@ button_msg.onclick = async () => {
             body: parssToJson
         })
         const data = await res.json()
-        console.log(data)
         
         form_message.style.bottom = '0'
         disabled = true
@@ -261,11 +252,6 @@ function scroll() {
     });
 }
 scroll()
-
-follow_button.onclick = () => {
-    window.localStorage.setItem('keyFollow', 'userFollow')
-    location = 'https://instagram.com/bashar1_x'
-}
 
 // SAVE CHAT IN LOCALE
 const saveChats = (save) => {
