@@ -50,33 +50,32 @@ li {
     margin: 0;
 }
 
-ul {
+.message-right ul {
     background-color: #85b7ca3b;
     border-radius: 15px;
     padding: 3px;
 }
-table{
+.message-right table{
     align-self: flex-end;
 }
 
-h1,
-h2 {
+.message-right h1, .message-right h2 {
     font-size: 18px;
     color: #22757a;
 }
 
-a {
+.message-right a {
     color: #225a8f;
 }
 
-th {
+.message-right th {
     padding: 4px;
     background-color: rgba(16, 99, 194, 0.5);
     text-align: center;
     border-radius: 4px;
 }
 
-td {
+.message-right td {
     background-color: #85b7ca3b;
     text-align: center;
     border-radius: 2px;
@@ -95,7 +94,6 @@ code {
     padding: 10px;
     user-select: all;
     color: #22757a;
-    font-size: 12px;
 }
 [class^="language"]::after {
     content: "⎘";
@@ -105,6 +103,8 @@ code {
     float: right;
     color: #FFF;
 }
+
+
 body {
     height: 100vh;
     max-height: 100vh;
