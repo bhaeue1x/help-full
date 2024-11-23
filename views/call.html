@@ -227,7 +227,7 @@
     const postBack = async (e) => {
         const parssToJson = await JSON.stringify({ text: e })
         try {
-            const res = await fetch('./gemini-call', {
+            const res = await fetch('./gemini-call1', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: parssToJson
