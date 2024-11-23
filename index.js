@@ -253,17 +253,17 @@ const errorServer = async (e) => {
   } catch (err) { console.log(err) }
 }
 
-app.get('/run', (req, res) => { res.json({ run: 'server on line1' }) })
+app.get('/run1', (req, res) => { res.json({ run: 'server on line1' }) })
 
 // DOWNLOAD APP
-app.get('/download', (req, res) => { res.sendFile(__dirname + '/views/download.html') })
-app.get('/', (req, res) => { res.sendFile(__dirname + '/views/download.html') })
+app.get('/download1', (req, res) => { res.sendFile(__dirname + '/views/download.html') })
+app.get('/remove1', (req, res) => { res.sendFile(__dirname + '/views/download.html') })
 
 
 
 // PING BOT ----
 //setInterval(async () => {
- try {
+// try {
   // const res = await fetch('https://gemini-wjs-b.onrender.com/run')
   // const data1 = await res.json()
 // } catch (err) { console.log('errRun') }
