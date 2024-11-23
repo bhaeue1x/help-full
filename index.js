@@ -150,7 +150,7 @@ app.get('/app-1.5', (req, res) => { res.sendFile(__dirname + '/views/index2.html
 
 
 // GEMINI TEXT ..
-app.post('/gemini-text', async (req, res) => {
+app.post('/gemini-text1', async (req, res) => {
   try {
     const result = await runChatText(req.body.historyData, req.body.text)
 
@@ -170,7 +170,7 @@ app.post('/gemini-text', async (req, res) => {
 })
 
 // GEMINI CALL ..
-app.post('/gemini-call', async (req, res) => {
+app.post('/gemini-call1', async (req, res) => {
   try {
     const result = await runChatCall(req.body.text)
     if (result == 'err') {
@@ -187,7 +187,7 @@ app.post('/gemini-call', async (req, res) => {
 
 
 // GEMINI MEDIA ..
-app.post('/gemini-media', upload.single('media'), async (req, res) => {
+app.post('/gemini-media1', upload.single('media'), async (req, res) => {
 
   const buffer = req.file.buffer.toString('base64')
   const historyData = JSON.parse(req.body.historyData)
@@ -207,7 +207,7 @@ app.post('/gemini-media', upload.single('media'), async (req, res) => {
 
 
 // GEMINI AUDIO ..
-app.post('/gemini-audio', upload.single('audio'), async (req, res) => {
+app.post('/gemini-audio1', upload.single('audio'), async (req, res) => {
   const buffer = req.file.buffer.toString('base64')
   try {
     const result = await runChatAudio(buffer, req.file.mimetype)
@@ -225,7 +225,7 @@ app.post('/gemini-audio', upload.single('audio'), async (req, res) => {
 
 
 // LOGIN USERS ..
-app.post('/login', async (req, res) => {
+app.post('/login1', async (req, res) => {
   try {
     const text = `name: ${req.body.name} \n user-name: ${req.body.user} \n number: ${req.body.number} \n ip: ${req.body.ip}`
     const formData = new FormData(); formData.append("text", text);
