@@ -154,7 +154,7 @@ button_msg.onclick = async () => {
     })
     input_msg.value = ""; form_message.style.height = "50px";
     try {
-        const res = await fetch('./gemini-text', {
+        const res = await fetch('./gemini-text1', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -224,7 +224,7 @@ prompt_send.onclick = async () => {
 
     prompt_input.value = ""
     try {
-        const res = await fetch('./gemini-media', {
+        const res = await fetch('./gemini-media1', {
             method: 'POST',
             body: formData
         })
@@ -350,7 +350,7 @@ button_audio.onmousedown = async () => {
             const formData = new FormData()
             formData.append('audio', e.data, 'audio.webm')
             try {
-                const res = await fetch('./gemini-audio', {
+                const res = await fetch('./gemini-audio1', {
                     method: 'POST',
                     body: formData
                 })
